@@ -1,0 +1,25 @@
+inicio
+{
+	entero aA, bB;
+	decimal aAA[10];
+	decimal ididD[100];
+	if(aV > bB) {
+
+	}
+
+	leer aA;
+
+	while(aB > aB) {
+
+	}
+
+	aA = 10;
+
+	aA = 2 + 3;
+	for(aA = 2; bA < 1 ; aA = 2 + 3;){}
+
+	mueve derecha aA 10;
+	dibujar(aA (1,2) verde);
+
+}
+fin
