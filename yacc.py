@@ -1,17 +1,27 @@
 import ply.yacc as yacc
+from TFunc import TFunc
 
 # Get the token map from the lexer.  This is required.
 from lex import tokens
 
+listaFunciones = []
+funcionActual = ""
+tipoActual = 0
 DEBUG = True
 
 # BNF
 def p_programa(p):
-	'''programa : INICIO bloque  FIN 
+	'''programa : INICIO funcAgregarInicio bloque  FIN 
 	  			| INICIO FIN
 	  			| funcion programa '''
 	print("SE TERMINO EL PROGRAMA PATIO CON EXITO!")
 	pass
+
+def p_funcAgregarInicio(p):
+	'''funcAgregarInicio : '''
+	funcionActual = p[-1]
+	objetoFuncion = TFunc(p[-1], 0, {})
+	listaFunciones.append(objetoFuncion) 	
 
 def p_bloque(p):
 	'''bloque : "{" vars estatuto "}"
@@ -21,9 +31,9 @@ def p_bloque(p):
 	pass
 
 def p_vars(p):
-	'''vars : tipo ID ";" masTipos
-		| tipo ID arreglo  ";" masTipos
-		| tipo listaIDS ";" masTipos'''
+	'''vars : tipo guardarTipo ID guardarIDs ";" masTipos
+		| tipo guardarTipo ID guardarIDs arreglo  ";" masTipos
+		| tipo  guardarTipo listaIDS ";" masTipos'''
 	print("VARS: Estructura basica")
 	pass
 
@@ -34,11 +44,11 @@ def p_masTipos(p):
 	pass
 
 def p_listaIDS(p):
-	''' listaIDS : ID masIDS '''
+	''' listaIDS : ID guardarIDs masIDS '''
 	pass
 
 def p_masIDS(p):
-	'''masIDS : "," ID 
+	'''masIDS : "," ID guardarIDs
 			   | empty '''
 	pass
 def p_arreglo(p):
@@ -51,19 +61,86 @@ def p_matriz(p):
 	pass
 
 def p_funcion(p): 
-	''' funcion : FUNC tipo ID "(" param ")" bloquefunc '''
+	''' funcion : FUNC tipo ID  funcAgregar "(" param ")" bloquefunc '''
 	pass
+
+def p_funcAgregar(p):
+	'''funcAgregar : '''
+	if(p[-2] == "entero"):
+		objetoFuncion = TFunc(p[-1], 1, {})
+		funcionActual = p[-1]
+	elif(p[-2] == "decimal"):
+		objetoFuncion = TFunc(p[-1], 2, {})
+		funcionActual = p[-1]
+	elif(p[-2] == "cuadrado"):
+		objetoFuncion = TFunc(p[-1], 3, {})
+		funcionActual = p[-1]
+	elif(p[-2] == "rectangulo"):
+		objetoFuncion = TFunc(p[-1], 4, {})
+		funcionActual = p[-1]
+	elif(p[-2] == "circulo"):
+		objetoFuncion = TFunc(p[-1], 5, {})
+		funcionActual = p[-1]
+	elif(p[-2] == "linea"):
+		objetoFuncion = TFunc(p[-1], 6, {})
+		funcionActual = p[-1]
+	elif(p[-2] == "estrella"):
+		objetoFuncion = TFunc(p[-1], 7, {})
+		funcionActual = p[-1]
+	elif(p[-2] == "void"):
+		objetoFuncion = TFunc(p[-1], 8, {})
+		funcionActual = p[-1]
+	elif(p[-2] == "bool"):
+		objetoFuncion = TFunc(p[-1], 9, {})
+		funcionActual = p[-1]
+
+	try:
+		posicion = listaFunciones.index(funcionActual)
+		print "FUNCION PREVIAMENTE DECLARADA"
+	except ValueError:
+		listaFunciones.append(objetoFuncion)
 
 def p_param(p):
-	''' param : tipo listapaID '''
+	''' param : tipo guardarTipo listapaID '''
 	pass
+
+def p_guardarTipo(p):
+	''' guardarTipo : '''
+	if(p[-1] == "entero"):
+		tipoActual = 1
+	elif(p[-1] == "decimal"):
+		tipoActual = 2
+	elif(p[-1] == "cuadrado"):
+		tipoActual = 3
+	elif(p[-1] == "rectangulo"):
+		tipoActual = 4
+	elif(p[-1] == "circulo"):
+		tipoActual = 5
+	elif(p[-1] == "linea"):
+		tipoActual = 6
+	elif(p[-1] == "estrella"):
+		tipoActual = 7
+	elif(p[-1] == "void"):
+		tipoActual = 8
+	elif(p[-1] == "bool"):
+		tipoActual = 9
+	
 
 def p_listapaID(p):
-	''' listapaID : ID maspaID maspaTip '''
+	''' listapaID : ID guardarIDs maspaID maspaTip '''
 	pass
 
+def p_guardarIDs(p):
+	''' guardarIDs : '''
+	try:
+		posicion = listaFunciones.index(funcionActual)
+		listaFunciones[posicion].diccvars[p[-1]] = tipoActual
+	except ValueError:
+		print "SE DECLARO UNA VARIABLE EN UN LUGAR INDEVIDO"
+	
+
 def p_maspaID(p):
-	''' maspaID : "," ID
+	''' maspaID : "," ID guardarIDs
 				| empty '''
 	pass
 
