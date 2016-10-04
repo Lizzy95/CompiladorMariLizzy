@@ -10,6 +10,8 @@ tipoActual = 0
 DEBUG = True
 
 # BNF
+
+
 def p_programa(p):
 	'''programa : INICIO funcAgregarInicio bloque  FIN 
 	  			| INICIO FIN
@@ -19,9 +21,13 @@ def p_programa(p):
 
 def p_funcAgregarInicio(p):
 	'''funcAgregarInicio : '''
+	global funcionActual
+	global listaFunciones
 	funcionActual = p[-1]
-	objetoFuncion = TFunc(p[-1], 0, {})
-	listaFunciones.append(objetoFuncion) 	
+	objetoFuncion = TFunc(funcionActual, 0, {})
+	listaFunciones.append(objetoFuncion)
+
+
 
 def p_bloque(p):
 	'''bloque : "{" vars estatuto "}"
@@ -31,9 +37,9 @@ def p_bloque(p):
 	pass
 
 def p_vars(p):
-	'''vars : tipo guardarTipo ID guardarIDs ";" masTipos
-		| tipo guardarTipo ID guardarIDs arreglo  ";" masTipos
-		| tipo  guardarTipo listaIDS ";" masTipos'''
+	'''vars : tipo ID guardarIDs ";" masTipos
+		| tipo ID guardarIDs arreglo  ";" masTipos
+		| tipo listaIDS ";" masTipos'''
 	print("VARS: Estructura basica")
 	pass
 
@@ -66,78 +72,66 @@ def p_funcion(p):
 
 def p_funcAgregar(p):
 	'''funcAgregar : '''
-	if(p[-2] == "entero"):
-		objetoFuncion = TFunc(p[-1], 1, {})
-		funcionActual = p[-1]
-	elif(p[-2] == "decimal"):
-		objetoFuncion = TFunc(p[-1], 2, {})
-		funcionActual = p[-1]
-	elif(p[-2] == "cuadrado"):
-		objetoFuncion = TFunc(p[-1], 3, {})
-		funcionActual = p[-1]
-	elif(p[-2] == "rectangulo"):
-		objetoFuncion = TFunc(p[-1], 4, {})
-		funcionActual = p[-1]
-	elif(p[-2] == "circulo"):
-		objetoFuncion = TFunc(p[-1], 5, {})
-		funcionActual = p[-1]
-	elif(p[-2] == "linea"):
-		objetoFuncion = TFunc(p[-1], 6, {})
-		funcionActual = p[-1]
-	elif(p[-2] == "estrella"):
-		objetoFuncion = TFunc(p[-1], 7, {})
-		funcionActual = p[-1]
-	elif(p[-2] == "void"):
-		objetoFuncion = TFunc(p[-1], 8, {})
-		funcionActual = p[-1]
-	elif(p[-2] == "bool"):
-		objetoFuncion = TFunc(p[-1], 9, {})
-		funcionActual = p[-1]
-
-	try:
-		posicion = listaFunciones.index(funcionActual)
+	global funcionActual
+	global listaFunciones
+	global tipoActual
+	funcionActual = p[-1]
+	objetoFuncion = TFunc(p[-1], tipoActual, {})
+	#checar si ya existe una funcion
+	posicion = busquedaLista()
+	if posicion == -1:
 		print "FUNCION PREVIAMENTE DECLARADA"
-	except ValueError:
+	else:
 		listaFunciones.append(objetoFuncion)
 
 def p_param(p):
-	''' param : tipo guardarTipo listapaID '''
+	''' param : tipo listapaID '''
 	pass
-
-def p_guardarTipo(p):
-	''' guardarTipo : '''
-	if(p[-1] == "entero"):
-		tipoActual = 1
-	elif(p[-1] == "decimal"):
-		tipoActual = 2
-	elif(p[-1] == "cuadrado"):
-		tipoActual = 3
-	elif(p[-1] == "rectangulo"):
-		tipoActual = 4
-	elif(p[-1] == "circulo"):
-		tipoActual = 5
-	elif(p[-1] == "linea"):
-		tipoActual = 6
-	elif(p[-1] == "estrella"):
-		tipoActual = 7
-	elif(p[-1] == "void"):
-		tipoActual = 8
-	elif(p[-1] == "bool"):
-		tipoActual = 9
 	
-
 def p_listapaID(p):
 	''' listapaID : ID guardarIDs maspaID maspaTip '''
 	pass
 
+def busquedaLista():
+	cont = 0
+	global listaFunciones
+	global funcionActual
+	for elemento in listaFunciones:
+		if elemento.nombre == funcionActual : 
+			return cont
+		else:
+			return -1
+		cont += cont
+
+def busquedaVar(varActual):
+	global listaFunciones
+	global funcionActual
+	#imprimirLista()
+	for elemento in listaFunciones:
+		if funcionActual == elemento.nombre:
+			for elemento2 in elemento.diccvars:
+				return (elemento2 == varActual)
+
+#def imprimirLista():
+#	print"imprime elementos"
+#	for elemento in listaFunciones:
+#		print elemento.nombre
+
+
 def p_guardarIDs(p):
 	''' guardarIDs : '''
-	try:
-		posicion = listaFunciones.index(funcionActual)
-		listaFunciones[posicion].diccvars[p[-1]] = tipoActual
-	except ValueError:
-		print "SE DECLARO UNA VARIABLE EN UN LUGAR INDEVIDO"
+	global funcionActual
+	global listaFunciones
+	global tipoActual
 	
+	#checar si ya existe una variable
+	if busquedaVar(p[-1]):
+		print "SE DECLARO UNA VARIABLE EN UN LUGAR INDEVIDO"
+	else:
+		posicion = busquedaLista()
+		listaFunciones[posicion].diccvars[p[-1]] = tipoActual
+	
+
 
 def p_maspaID(p):
 	''' maspaID : "," ID guardarIDs
@@ -291,6 +285,25 @@ def p_tipo(p):
 			 | CIRCULO 
 			 | LINEA 
 			 | ESTRELLA '''
+	global tipoActual
+	if(p[1] == "entero"):
+		tipoActual = 1
+	elif(p[1] == "decimal"):
+		tipoActual = 2
+	elif(p[1] == "cuadrado"):
+		tipoActual = 3
+	elif(p[1] == "rectangulo"):
+		tipoActual = 4
+	elif(p[1] == "circulo"):
+		tipoActual = 5
+	elif(p[1] == "linea"):
+		tipoActual = 6
+	elif(p[1] == "estrella"):
+		tipoActual = 7
+	elif(p[1] == "void"):
+		tipoActual = 8
+	elif(p[1] == "bool"):
+		tipoActual = 9
 	pass
 
 def p_mueve(p):

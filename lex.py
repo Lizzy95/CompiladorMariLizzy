@@ -8,7 +8,6 @@
 
 import ply.lex as lex
 
-
 # Palabras reservadas
 reserved = {
 #    'if' : 'IF',
