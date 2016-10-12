@@ -1,5 +1,6 @@
 import ply.yacc as yacc
 from TFunc import TFunc
+from CuboSemantico import cuboSemantico
 
 # Get the token map from the lexer.  This is required.
 from lex import tokens
@@ -7,6 +8,12 @@ from lex import tokens
 listaFunciones = []
 funcionActual = ""
 tipoActual = 0
+operando1 = ""
+operando2 = ""
+pilaOperadores = []
+pilaOperandos = []
+operadorActual = 0
+resultado = -1
 DEBUG = True
 
 # BNF
@@ -26,6 +33,7 @@ def p_funcAgregarInicio(p):
 	funcionActual = p[-1]
 	objetoFuncion = TFunc(funcionActual, 0, {})
 	listaFunciones.append(objetoFuncion)
+	print("Se agrego la funcion a la tabla")
 
 
 
@@ -79,7 +87,7 @@ def p_funcAgregar(p):
 	objetoFuncion = TFunc(p[-1], tipoActual, {})
 	#checar si ya existe una funcion
 	posicion = busquedaLista()
-	if posicion == -1:
+	if posicion != -1:
 		print "FUNCION PREVIAMENTE DECLARADA"
 	else:
 		listaFunciones.append(objetoFuncion)
@@ -99,9 +107,8 @@ def busquedaLista():
 	for elemento in listaFunciones:
 		if elemento.nombre == funcionActual : 
 			return cont
-		else:
-			return -1
 		cont += cont
+	return -1
 
 def busquedaVar(varActual):
 	global listaFunciones
@@ -126,7 +133,7 @@ def p_guardarIDs(p):
 	
 	#checar si ya existe una variable
 	if busquedaVar(p[-1]):
-		print "SE DECLARO UNA VARIABLE EN UN LUGAR INDEVIDO"
+		print "SE DECLARO UNA VARIABLE PREVIAMENTE DECLARADA"
 	else:
 		posicion = busquedaLista()
 		listaFunciones[posicion].diccvars[p[-1]] = tipoActual
@@ -210,7 +217,7 @@ def p_condicion(p):
 
 def p_expresion(p):
 	'''expresion :  exp ">" exp 
-				 | exp "<" exp
+				 | exp "<" exp 
 				 | exp MENORIGUAL exp 
 				 | exp MAYORIGUAL exp 
 				 | exp IGUALIGUAL exp 
@@ -220,42 +227,91 @@ def p_expresion(p):
 	pass
 
 def p_exp(p):
-	''' exp : "(" expresion ")" 
-			| "(" varcte  operacion ")" 
+	''' exp : parentesis expresion ")" 
+			| parentesis varcte  operacion ")" 
 			| varcte operacion 
-			| varcte
+			| varcte 
 			| empty '''
 	pass
 
+def p_parentesis(p):
+	'''parentesis : "(" '''
+	pilaOperadores.append(14)
+	pass
+
 def p_operacion(p):
-	'''operacion : termino 
-		   		 | termino signo '''
+	'''operacion : termino checaroperador4
+		   		 | termino checaroperador4 signo '''
+	pass
+
+def p_checaroperador4(p):
+	'''checaroperador4 : '''
+	opr = len(pilaOperadores)
+	if(opr != 0):
+		if((pilaOperadores[opr-1] == 1) | (pilaOperadores[opr-1] == 2)):
+			operando2 = pilaOperandos.pop()
+			operando1 = pilaOperandos.pop()
+			operadorActual = pilaOperadores.pop()
+			resultado = cuboSemantico[operando1][operando2][operadorActual]
+			#meter a pila el temporal 
+			if resultado == -1:
+				print "ERROR: Operacion invalida, tipos no compatibles"
+			else:
+				print "SE CHECO EL CUADRUPLO Y ES CORRECTO"
+				pilaOperandos.append(resultado)
 	pass
 
 def p_signo(p):
 	'''signo : "+" exp 
 			| "-" exp '''
+	print("OPERADOR: ", p[1])
+	if p[1] == "+":
+		pilaOperadores.append(1)
+	else:
+		pilaOperadores.append(2)
 	pass
 
 def p_termino(p):
-	'''termino : factor 
-			   | factor masop '''
+	'''termino : factor checaroperador5
+			   | factor checaroperador5 masop '''
+	pass
+
+def p_checaroperador5(p):
+	'''checaroperador5 : '''
+	opr = len(pilaOperadores)
+	if(opr != 0):
+		if((pilaOperadores[opr-1] == 3) | (pilaOperadores[opr-1] == 4)):
+			operando2 = pilaOperandos.pop()
+			operando1 = pilaOperandos.pop()
+			operadorActual = pilaOperadores.pop()
+			resultado = CuboSemantico[operando1][operando2][operadorActual]
+			#meter a pila el temporal 
+			if resultado == -1:
+				print "ERROR: Operacion invalida, tipos no compatibles"
+			else:
+				print "SE CHECO EL CUADRUPLO Y ES CORRECTO"
+				pilaOperandos.append(resultado)
 	pass
 
 def p_masop(p):
 	'''masop : "*" termino 
- 			 | "/" termino''' 
+ 			 | "/" termino'''
+ 	print("OPERADOR: ", p[1])
+	if p[1] == "*":
+		pilaOperadores.append(3)
+	else:
+		pilaOperadores.append(4)
  	pass
 
 def p_factor(p):
-	'''factor : "(" expresion ")" 
+	'''factor : parentesis expresion ")" 
 			  | varcte 
-	    	  | "+" varcte 
-			  | "-" varcte '''
+	    	  | signo 
+			  | signo varcte '''
 	pass
 
 def p_for(p):
-	'''fors : FOR "(" asignacion expresion ";" asignacion ")" bloque '''
+	'''fors : FOR parentesis asignacion expresion ";" asignacion ")" bloque '''
 	pass
 
 def p_pos(p):
@@ -267,12 +323,53 @@ def p_whiles(p):
 	pass
 
 def p_varcte(p):
-	''' varcte : ID 
-			   | CTF 
-			   | CTI 
-			   | CTS 
-			   | TRUE 
-			   | FALSE '''
+	''' varcte : recibe_ID 
+			   | recibe_CTF 
+			   | recibe_CTI 
+			   | recibe_CTS 
+			   | recibe_TRUE 
+			   | recibe_FALSE '''
+	pass
+
+def p_recibe_ID(p):
+	''' recibe_ID : ID '''
+	print("VARCTE: ", p[1])
+	pos = busquedaLista()
+	dicc = listaFunciones[pos].diccvars
+	if p[1] in dicc:
+		var = dicc[p[1]]
+		pilaOperandos.append(var)
+	else:
+		print "ERROR: NO SE ENCUENTRA EL ID QUE QUIERES USAR"
+	pass
+
+def p_recibe_CTF(p):
+	''' recibe_CTF : CTF '''
+	print("VARCTE: ", p[1])
+	pilaOperandos.append(7)
+	pass
+
+def p_recibe_CTI(p):
+	''' recibe_CTI : CTI '''
+	print("VARCTE: ", p[1])
+	pilaOperandos.append(1)
+	pass
+
+def p_recibe_CTS(p):
+	''' recibe_CTS : CTS '''
+	print("VARCTE: ", p[1])
+	pass
+
+def p_recibe_TRUE(p):
+	''' recibe_TRUE : TRUE '''
+	print("VARCTE: ", p[1])
+	pilaOperandos.append(8)
+	pass
+
+def p_recibe_FALSE(p):
+	''' recibe_FALSE : FALSE '''
+	print("VARCTE: ", p[1])
+	pilaOperandos.append(8)
 	pass
 
 def p_tipo(p):
@@ -319,7 +416,7 @@ def p_opcionMue(p):
 
 def p_empty(p):
     'empty : '
-    print("VACIO")
+    print("SALTO DE LINEA")
     pass
 
 def p_error(p):
