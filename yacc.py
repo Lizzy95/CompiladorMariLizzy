@@ -227,27 +227,40 @@ def p_expresion(p):
 	pass
 
 def p_exp(p):
-	''' exp : parentesis expresion ")" 
-			| parentesis varcte  operacion ")" 
+	''' exp : fondoFalso expresion finFondoFalso
+			| fondoFalso varcte  operacion finFondoFalso
 			| varcte operacion 
 			| varcte 
 			| empty '''
 	pass
 
-def p_parentesis(p):
-	'''parentesis : "(" '''
+def p_fondoFalso(p):
+	'''fondoFalso : "(" '''
+	print "PARENTESIS ( "
 	pilaOperadores.append(14)
+	pass
+
+
+
+
+def p_finFondoFalso(p):
+	'''finFondoFalso : ")" ''' 
+	print "PARENTESIS ) "
+	print(pilaOperadores.pop())
+	
 	pass
 
 def p_operacion(p):
 	'''operacion : termino checaroperador4
 		   		 | termino checaroperador4 signo '''
+	print "entre a operacion"
 	pass
 
 def p_checaroperador4(p):
 	'''checaroperador4 : '''
 	opr = len(pilaOperadores)
 	if(opr != 0):
+		print "ENTRA checaroperador4"
 		if((pilaOperadores[opr-1] == 1) | (pilaOperadores[opr-1] == 2)):
 			operando2 = pilaOperandos.pop()
 			operando1 = pilaOperandos.pop()
@@ -257,7 +270,7 @@ def p_checaroperador4(p):
 			if resultado == -1:
 				print "ERROR: Operacion invalida, tipos no compatibles"
 			else:
-				print "SE CHECO EL CUADRUPLO Y ES CORRECTO"
+				print("SE CHECO EL CUADRUPLO Y ES CORRECTO", operando2, operando1, operadorActual)
 				pilaOperandos.append(resultado)
 	pass
 
@@ -274,27 +287,32 @@ def p_signo(p):
 def p_termino(p):
 	'''termino : factor checaroperador5
 			   | factor checaroperador5 masop '''
+
+	print " ENTRE A TERMINO "
 	pass
 
 def p_checaroperador5(p):
 	'''checaroperador5 : '''
 	opr = len(pilaOperadores)
+	print "Entre a checaroperador5"
 	if(opr != 0):
+		print("pila operadores",pilaOperadores[opr-1] )
 		if((pilaOperadores[opr-1] == 3) | (pilaOperadores[opr-1] == 4)):
 			operando2 = pilaOperandos.pop()
 			operando1 = pilaOperandos.pop()
 			operadorActual = pilaOperadores.pop()
-			resultado = CuboSemantico[operando1][operando2][operadorActual]
+			resultado = cuboSemantico[operando1][operando2][operadorActual]
+			print("resultado checaroperador5", resultado)
 			#meter a pila el temporal 
 			if resultado == -1:
 				print "ERROR: Operacion invalida, tipos no compatibles"
 			else:
-				print "SE CHECO EL CUADRUPLO Y ES CORRECTO"
+				print("SE CHECO EL CUADRUPLO Y ES CORRECTO", operando2, operando1, operadorActual)
 				pilaOperandos.append(resultado)
 	pass
 
 def p_masop(p):
-	'''masop : "*" termino 
+	'''masop : "*" termino
  			 | "/" termino'''
  	print("OPERADOR: ", p[1])
 	if p[1] == "*":
@@ -304,14 +322,15 @@ def p_masop(p):
  	pass
 
 def p_factor(p):
-	'''factor : parentesis expresion ")" 
+	'''factor : fondoFalso expresion finFondoFalso
 			  | varcte 
 	    	  | signo 
 			  | signo varcte '''
+	print "Entre a Factor"
 	pass
 
 def p_for(p):
-	'''fors : FOR parentesis asignacion expresion ";" asignacion ")" bloque '''
+	'''fors : FOR fondoFalso asignacion expresion ";" asignacion finFondoFalso bloque '''
 	pass
 
 def p_pos(p):

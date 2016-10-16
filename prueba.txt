@@ -5,11 +5,9 @@ inicio
 	decimal aAA[10];
 	decimal ididD[100];
 	
-	aA = 3 + 4;
+	aA = (3 + 9 * 10)   ;
 
-	if(aA > bB){
 
-	}
 
 }
 fin

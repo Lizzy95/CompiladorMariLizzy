@@ -42,10 +42,11 @@ reserved = {
 #reserved = {'IF', 'ELSE', 'VAR', 'PRINT', 'INT', 'FLOAT', 'PROGRAM'}
 
 # Lista de los nombres de tokens   
-tokens = ['IF','ID','WHILE', 'CTI', 'CTF', 'CTS', 'MENORIGUAL', 'MAYORIGUAL', 'IGUALIGUAL', 'DIFERENTE', 'COAND', 'COOR', 'TRUE', 'FALSE',] + list(reserved.values())
+tokens = ['IF','ID','WHILE', 'CTI', 'CTF', 'CTS', 'MENORIGUAL', 'MAYORIGUAL', 'IGUALIGUAL', 
+'DIFERENTE', 'COAND', 'COOR', 'TRUE', 'FALSE', 'MULTI','DIV','SUMA','RESTA'] + list(reserved.values())
 
 #Declaracion de simbolos especiales mediatne literales
-literals = ['.', ',', ':', ';', '(', ')', '{', '}', '[', ']', '+', '-', '*', '/', '<', '>', '=']
+literals = "+-*/.,:;(){}[]<>="
 
 t_MENORIGUAL = "<="
 
