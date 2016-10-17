@@ -6,7 +6,11 @@ inicio
 	decimal ididD[100];
 	
 
-	aA =  4 + 3 * (3 + 1);
+	aA =  4 * 3 * 2 ;
+
+	if(6+7 *5 > 3){
+
+	} 
 
 
 

@@ -1,7 +1,8 @@
 import ply.yacc as yacc
 from TFunc import TFunc
+from TVar import TVar
 from CuboSemantico import cuboSemantico
-
+from diccionarioMemoria import diccionarioMemoria
 # Get the token map from the lexer.  This is required.
 from lex import tokens
 
@@ -10,6 +11,7 @@ funcionActual = ""
 tipoActual = 0
 operando1 = ""
 operando2 = ""
+tipofuncMem = '1'
 pilaOperadores = []
 pilaOperandos = []
 operadorActual = 0
@@ -23,6 +25,7 @@ def p_programa(p):
 	'''programa : INICIO funcAgregarInicio bloque  FIN 
 	  			| INICIO FIN
 	  			| funcion programa '''
+	print diccionarioMemoria['3']
 	print("SE TERMINO EL PROGRAMA PATIO CON EXITO!")
 	pass
 
@@ -30,6 +33,8 @@ def p_funcAgregarInicio(p):
 	'''funcAgregarInicio : '''
 	global funcionActual
 	global listaFunciones
+	global tipofuncMem
+	tipofuncMem = '2'
 	funcionActual = p[-1]
 	objetoFuncion = TFunc(funcionActual, 0, {})
 	listaFunciones.append(objetoFuncion)
@@ -83,6 +88,8 @@ def p_funcAgregar(p):
 	global funcionActual
 	global listaFunciones
 	global tipoActual
+	global tipofuncMem
+	tipofuncMem = '2'
 	funcionActual = p[-1]
 	objetoFuncion = TFunc(p[-1], tipoActual, {})
 	#checar si ya existe una funcion
@@ -114,10 +121,15 @@ def busquedaVar(varActual):
 	global listaFunciones
 	global funcionActual
 	#imprimirLista()
+	cont = 0
 	for elemento in listaFunciones:
 		if funcionActual == elemento.nombre:
-			for elemento2 in elemento.diccvars:
-				return (elemento2 == varActual)
+			for elemento2 in elemento.arrVar:
+				if(varActual == elemento2.nombre):
+					return cont
+				else:
+					cont += cont
+	return -1
 
 #def imprimirLista():
 #	print"imprime elementos"
@@ -130,14 +142,19 @@ def p_guardarIDs(p):
 	global funcionActual
 	global listaFunciones
 	global tipoActual
-	
 	#checar si ya existe una variable
-	if busquedaVar(p[-1]):
+	print("mi diccionario: ", diccionarioMemoria['2'])
+	if (busquedaVar(p[-1]) != -1 ):
 		print "SE DECLARO UNA VARIABLE PREVIAMENTE DECLARADA"
 	else:
 		posicion = busquedaLista()
-		listaFunciones[posicion].diccvars[p[-1]] = tipoActual
-	
+		print("funcmen: ", tipofuncMem)
+		var = diccionarioMemoria[tipofuncMem]
+		valormem = var[str(tipoActual)]
+		agregarVar = TVar(p[-1], tipoActual, valormem)
+		var[str(tipoActual)] = valormem + 1
+		listaFunciones[posicion].arrVar.append(agregarVar)
+		print "Se guardo la variable en la tabla ", tipoActual
 
 
 def p_maspaID(p):
@@ -267,6 +284,12 @@ def p_checaroperador4(p):
 			operando1 = pilaOperandos.pop()
 			operadorActual = pilaOperadores.pop()
 			resultado = cuboSemantico[operando1][operando2][operadorActual]
+			posicion = busquedaLista()
+			var = diccionarioMemoria['3']
+			valormem = var[str(resultado)]
+			agregarVar = TVar('temp', resultado, valormem)
+			var[str(resultado)] = valormem + 1
+			listaFunciones[posicion].arrVar.append(agregarVar)
 			print("Resultado: ", resultado)
 			#meter a pila el temporal 
 			if resultado == -1:
@@ -311,6 +334,12 @@ def p_checaroperador5(p):
 			operando1 = pilaOperandos.pop()
 			operadorActual = pilaOperadores.pop()
 			resultado = cuboSemantico[operando1][operando2][operadorActual]
+			posicion = busquedaLista()
+			var = diccionarioMemoria['3']
+			valormem = var[str(resultado)]
+			agregarVar = TVar('temp', resultado, valormem)
+			var[str(resultado)] = valormem + 1
+			listaFunciones[posicion].arrVar.append(agregarVar)
 			print("resultado checaroperador5", resultado)
 			#meter a pila el temporal 
 			if resultado == -1:
@@ -366,10 +395,10 @@ def p_recibe_ID(p):
 	''' recibe_ID : ID '''
 	print("VARCTE: ", p[1])
 	pos = busquedaLista()
-	dicc = listaFunciones[pos].diccvars
 	print("Guardar: ", p[1])
-	if p[1] in dicc:
-		var = dicc[p[1]]
+	pos2 = busquedaVar(p[-1])
+	if(pos2 != -1 ):
+		var = listaFunciones[pos].arrVar[pos2].tipo
 		pilaOperandos.append(var)
 	else:
 		print "ERROR: NO SE ENCUENTRA EL ID QUE QUIERES USAR"
@@ -418,21 +447,21 @@ def p_tipo(p):
 	if(p[1] == "entero"):
 		tipoActual = 1
 	elif(p[1] == "decimal"):
-		tipoActual = 2
-	elif(p[1] == "cuadrado"):
-		tipoActual = 3
-	elif(p[1] == "rectangulo"):
-		tipoActual = 4
-	elif(p[1] == "circulo"):
-		tipoActual = 5
-	elif(p[1] == "linea"):
-		tipoActual = 6
-	elif(p[1] == "estrella"):
 		tipoActual = 7
+	elif(p[1] == "cuadrado"):
+		tipoActual = 2
+	elif(p[1] == "rectangulo"):
+		tipoActual = 2
+	elif(p[1] == "circulo"):
+		tipoActual = 4
+	elif(p[1] == "linea"):
+		tipoActual = 5
+	elif(p[1] == "estrella"):
+		tipoActual = 6
 	elif(p[1] == "void"):
-		tipoActual = 8
-	elif(p[1] == "bool"):
 		tipoActual = 9
+	elif(p[1] == "bool"):
+		tipoActual = 8
 	pass
 
 def p_mueve(p):
