@@ -43,7 +43,7 @@ reserved = {
 
 # Lista de los nombres de tokens   
 tokens = ['IF','ID','WHILE', 'CTI', 'CTF', 'CTS', 'MENORIGUAL', 'MAYORIGUAL', 'IGUALIGUAL', 
-'DIFERENTE', 'COAND', 'COOR', 'TRUE', 'FALSE', 'MULTI','DIV','SUMA','RESTA'] + list(reserved.values())
+'DIFERENTE', 'COAND', 'COOR', 'TRUE', 'FALSE',] + list(reserved.values())
 
 #Declaracion de simbolos especiales mediatne literales
 literals = "+-*/.,:;(){}[]<>="

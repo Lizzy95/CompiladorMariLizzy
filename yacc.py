@@ -223,49 +223,51 @@ def p_expresion(p):
 				 | exp IGUALIGUAL exp 
 				 | exp DIFERENTE exp 
 				 | exp COOR exp 
-				 | exp COAND exp '''
+				 | exp COAND exp 
+				 | exp '''
 	pass
 
 def p_exp(p):
-	''' exp : fondoFalso expresion finFondoFalso
-			| fondoFalso varcte  operacion finFondoFalso
-			| varcte operacion 
-			| varcte 
-			| empty '''
+	'''exp : termino checaroperador4 '''
+	print("Entra exp. ", p[1])
+
 	pass
 
 def p_fondoFalso(p):
 	'''fondoFalso : "(" '''
 	print "PARENTESIS ( "
+	global pilaOperadores
 	pilaOperadores.append(14)
 	pass
-
-
-
 
 def p_finFondoFalso(p):
 	'''finFondoFalso : ")" ''' 
 	print "PARENTESIS ) "
-	print(pilaOperadores.pop())
-	
+	global pilaOperadores
+	print("Entra Fondo Folso: ", pilaOperadores.pop())
 	pass
 
-def p_operacion(p):
-	'''operacion : termino checaroperador4
-		   		 | termino checaroperador4 signo '''
-	print "entre a operacion"
-	pass
+# def p_operacion(p):
+# 	'''operacion : termino checaroperador4
+# 		   		 | termino checaroperador4 signo '''
+# 	print "entre a operacion"
+# 	pass
 
 def p_checaroperador4(p):
-	'''checaroperador4 : '''
+	'''checaroperador4 : signo
+					   | '''
+	global pilaOperadores
+	global pilaOperandos
 	opr = len(pilaOperadores)
+	print "Entra checaroperador4"
+	print ("PilaOperadores: ", pilaOperadores)
 	if(opr != 0):
-		print "ENTRA checaroperador4"
 		if((pilaOperadores[opr-1] == 1) | (pilaOperadores[opr-1] == 2)):
 			operando2 = pilaOperandos.pop()
 			operando1 = pilaOperandos.pop()
 			operadorActual = pilaOperadores.pop()
 			resultado = cuboSemantico[operando1][operando2][operadorActual]
+			print("Resultado: ", resultado)
 			#meter a pila el temporal 
 			if resultado == -1:
 				print "ERROR: Operacion invalida, tipos no compatibles"
@@ -275,26 +277,33 @@ def p_checaroperador4(p):
 	pass
 
 def p_signo(p):
-	'''signo : "+" exp 
-			| "-" exp '''
+	'''signo : push_pm exp
+			 | '''
+
+def p_push_pm(p):
+	'''push_pm : "+" 
+			| "-" '''
 	print("OPERADOR: ", p[1])
+	global pilaOperadores
 	if p[1] == "+":
 		pilaOperadores.append(1)
 	else:
 		pilaOperadores.append(2)
-	pass
+	pass 
 
 def p_termino(p):
-	'''termino : factor checaroperador5
-			   | factor checaroperador5 masop '''
-
-	print " ENTRE A TERMINO "
+	'''termino : factor checaroperador5'''
+	print ("Entre Termino ", p[1])
 	pass
 
 def p_checaroperador5(p):
-	'''checaroperador5 : '''
+	'''checaroperador5 : masop
+					   | '''
+	global pilaOperadores
+	global pilaOperandos
 	opr = len(pilaOperadores)
 	print "Entre a checaroperador5"
+	print ("PilaOperadores: ", pilaOperadores)	
 	if(opr != 0):
 		print("pila operadores",pilaOperadores[opr-1] )
 		if((pilaOperadores[opr-1] == 3) | (pilaOperadores[opr-1] == 4)):
@@ -312,8 +321,13 @@ def p_checaroperador5(p):
 	pass
 
 def p_masop(p):
-	'''masop : "*" termino
- 			 | "/" termino'''
+	'''masop : push_td termino
+			| '''
+
+def p_push_td(p):
+	'''push_td : "*"
+ 			   | "/"'''
+ 	global pilaOperadores
  	print("OPERADOR: ", p[1])
 	if p[1] == "*":
 		pilaOperadores.append(3)
@@ -323,9 +337,7 @@ def p_masop(p):
 
 def p_factor(p):
 	'''factor : fondoFalso expresion finFondoFalso
-			  | varcte 
-	    	  | signo 
-			  | signo varcte '''
+			  | varcte '''
 	print "Entre a Factor"
 	pass
 
@@ -355,6 +367,7 @@ def p_recibe_ID(p):
 	print("VARCTE: ", p[1])
 	pos = busquedaLista()
 	dicc = listaFunciones[pos].diccvars
+	print("Guardar: ", p[1])
 	if p[1] in dicc:
 		var = dicc[p[1]]
 		pilaOperandos.append(var)

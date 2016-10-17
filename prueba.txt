@@ -5,7 +5,8 @@ inicio
 	decimal aAA[10];
 	decimal ididD[100];
 	
-	aA = (3 + 9 * 10)   ;
+
+	aA =  4 + 3 * (3 + 1);
 
 
 
