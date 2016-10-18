@@ -3,10 +3,12 @@ from TFunc import TFunc
 from TVar import TVar
 from CuboSemantico import cuboSemantico
 from diccionarioMemoria import diccionarioMemoria
+from Cuadruplo import Cuadruplo
 # Get the token map from the lexer.  This is required.
 from lex import tokens
 
 listaFunciones = []
+listaCuadruplos = []
 funcionActual = ""
 tipoActual = 0
 operando1 = ""
@@ -14,6 +16,7 @@ operando2 = ""
 tipofuncMem = '1'
 pilaOperadores = []
 pilaOperandos = []
+pilaOperandosDirMem = []
 operadorActual = 0
 resultado = -1
 DEBUG = True
@@ -24,8 +27,7 @@ DEBUG = True
 def p_programa(p):
 	'''programa : INICIO funcAgregarInicio bloque  FIN 
 	  			| INICIO FIN
-	  			| funcion programa '''
-	print diccionarioMemoria['3']
+	  			| funcion programa '''	
 	print("SE TERMINO EL PROGRAMA PATIO CON EXITO!")
 	pass
 
@@ -143,12 +145,10 @@ def p_guardarIDs(p):
 	global listaFunciones
 	global tipoActual
 	#checar si ya existe una variable
-	print("mi diccionario: ", diccionarioMemoria['2'])
 	if (busquedaVar(p[-1]) != -1 ):
 		print "SE DECLARO UNA VARIABLE PREVIAMENTE DECLARADA"
 	else:
 		posicion = busquedaLista()
-		print("funcmen: ", tipofuncMem)
 		var = diccionarioMemoria[tipofuncMem]
 		valormem = var[str(tipoActual)]
 		agregarVar = TVar(p[-1], tipoActual, valormem)
@@ -290,12 +290,18 @@ def p_checaroperador4(p):
 			agregarVar = TVar('temp', resultado, valormem)
 			var[str(resultado)] = valormem + 1
 			listaFunciones[posicion].arrVar.append(agregarVar)
+			pilaOperandosDirMem.append(valormem)
 			print("Resultado: ", resultado)
 			#meter a pila el temporal 
 			if resultado == -1:
 				print "ERROR: Operacion invalida, tipos no compatibles"
 			else:
 				print("SE CHECO EL CUADRUPLO Y ES CORRECTO", operando2, operando1, operadorActual)
+				resultadoT = valormem
+				operando2C = pilaOperandosDirMem.pop()
+				operando1C = pilaOperandosDirMem.pop()
+				cuadr = Cuadruplo(operadorActual, operando1C,operando2C,resultadoT)
+				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)
 	pass
 
@@ -340,12 +346,18 @@ def p_checaroperador5(p):
 			agregarVar = TVar('temp', resultado, valormem)
 			var[str(resultado)] = valormem + 1
 			listaFunciones[posicion].arrVar.append(agregarVar)
+			pilaOperandosDirMem.append(valormem)
 			print("resultado checaroperador5", resultado)
 			#meter a pila el temporal 
 			if resultado == -1:
 				print "ERROR: Operacion invalida, tipos no compatibles"
 			else:
 				print("SE CHECO EL CUADRUPLO Y ES CORRECTO", operando2, operando1, operadorActual)
+				resultadoT = valormem
+				operando2C = pilaOperandosDirMem.pop()
+				operando1C = pilaOperandosDirMem.pop()
+				cuadr = Cuadruplo(operadorActual, operando1C,operando2C,resultadoT)
+				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)
 	pass
 
@@ -399,6 +411,8 @@ def p_recibe_ID(p):
 	pos2 = busquedaVar(p[-1])
 	if(pos2 != -1 ):
 		var = listaFunciones[pos].arrVar[pos2].tipo
+		direc = listaFunciones[pos].arrVar[pos2].direcmem
+		pilaOperandosDirMem.append(direc)
 		pilaOperandos.append(var)
 	else:
 		print "ERROR: NO SE ENCUENTRA EL ID QUE QUIERES USAR"
@@ -407,12 +421,26 @@ def p_recibe_ID(p):
 def p_recibe_CTF(p):
 	''' recibe_CTF : CTF '''
 	print("VARCTE: ", p[1])
+	posicion = busquedaLista()
+	var = diccionarioMemoria['4']
+	valormem = var[str(7)]
+	agregarVar = TVar(p[1],7, valormem)
+	var[str(7)] = valormem + 1
+	listaFunciones[posicion].arrVar.append(agregarVar)
+	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(7)
 	pass
 
 def p_recibe_CTI(p):
 	''' recibe_CTI : CTI '''
 	print("VARCTE: ", p[1])
+	posicion = busquedaLista()
+	var = diccionarioMemoria['4']
+	valormem = var[str(1)]
+	agregarVar = TVar(p[1],1, valormem)
+	var[str(1)] = valormem + 1
+	listaFunciones[posicion].arrVar.append(agregarVar)
+	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(1)
 	pass
 
@@ -424,12 +452,26 @@ def p_recibe_CTS(p):
 def p_recibe_TRUE(p):
 	''' recibe_TRUE : TRUE '''
 	print("VARCTE: ", p[1])
+	posicion = busquedaLista()
+	var = diccionarioMemoria['4']
+	valormem = var[str(8)]
+	agregarVar = TVar(p[1],8, valormem)
+	var[str(8)] = valormem + 1
+	listaFunciones[posicion].arrVar.append(agregarVar)
+	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(8)
 	pass
 
 def p_recibe_FALSE(p):
 	''' recibe_FALSE : FALSE '''
 	print("VARCTE: ", p[1])
+	posicion = busquedaLista()
+	var = diccionarioMemoria['4']
+	valormem = var[str(8)]
+	agregarVar = TVar(p[1],8, valormem)
+	var[str(8)] = valormem + 1
+	listaFunciones[posicion].arrVar.append(agregarVar)
+	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(8)
 	pass
 
