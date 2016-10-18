@@ -17,6 +17,7 @@ tipofuncMem = '1'
 pilaOperadores = []
 pilaOperandos = []
 pilaOperandosDirMem = []
+pilaSaltos = []
 operadorActual = 0
 resultado = -1
 DEBUG = True
@@ -182,8 +183,7 @@ def p_estatuto(p):
 				| escritura estatutoAux
 				| condicion estatutoAux
 				| lectura estatutoAux
-				| whiles estatutoAux
-				| fors estatutoAux '''
+				| whiles estatutoAux '''
 	pass
 def p_estatutoAux(p):
 	''' estatutoAux : estatuto
@@ -228,24 +228,126 @@ def p_color(p):
 	pass
 
 def p_condicion(p):
-	''' condicion : IF "(" expresion ")" bloque
-				  | IF "(" expresion ")" bloque ELSE bloque '''
+	''' condicion : IF "(" expresion ")" checarIF finPilaSaltos
+				  | IF "(" expresion ")" bloque checarElse  '''
 	pass
+def p_checarIF(p):
+	'''checarIF : bloque'''
+	print "Entre a checar IF"
+	global pilaOperandos
+	global pilaSaltos
+	aux = pilaOperandos.pop()
+	if aux != 8: 
+		print "Error semantico en condicion IF"
+	else:
+		lenCuadruplos = len(listaCuadruplos)
+		pilaSaltos.append(lenCuadruplos)
+		cuadr = Cuadruplo(16,-1,-1,0)
+		listaCuadruplos.append(cuadr)
+
+	pass
+
+def p_checarElse(p):
+	'''checarElse : ELSE bloque finPilaSaltos '''
+	print "Entre a checar else"
+	global pilaSaltos
+	#meter cuadruplo de go to a la pila
+	cuadr = Cuadruplo(17,-1,-1,0)
+	listaCuadruplos.append(cuadr)
+	#rellena el goto falso
+	lenCuadruplos = len(listaCuadruplos)
+	salto = pilaSaltos.pop()
+	listaCuadruplos[salto].temporal = lenCuadruplos
+	pilaSaltos.append(lenCuadruplos - 1)
+	pass
+
+
+def p_finPilaSaltos(p):
+	'''finPilaSaltos : '''
+	print "Entre fin pila saltos"
+	salto = pilaSaltos.pop()
+	lenCuadruplos = len(listaCuadruplos)
+	listaCuadruplos[salto].temporal = lenCuadruplos - 1
+	pass
+
 
 def p_expresion(p):
-	'''expresion :  exp ">" exp 
-				 | exp "<" exp 
-				 | exp MENORIGUAL exp 
-				 | exp MAYORIGUAL exp 
-				 | exp IGUALIGUAL exp 
-				 | exp DIFERENTE exp 
-				 | exp COOR exp 
-				 | exp COAND exp 
+	'''expresion :  exp operacionLogica checaoperador6
 				 | exp '''
 	pass
+def p_push_logica(p):
+	'''push_logica : 	  ">" 
+						| "<" 
+				 		| MENORIGUAL  
+				 		| MAYORIGUAL 
+				 	   	| IGUALIGUAL  
+				 		| DIFERENTE 
+						| COOR
+						| COAND  '''
+	global pilaOperadores
+	print ("Operador logico: ", p[1])
+	if p[1] == ">":
+		pilaOperadores.append(6)
+	elif p[1] == "<":
+		pilaOperadores.append(7)
+	elif p[1] == "<=":
+		pilaOperadores.append(9)
+	elif p[1] == ">=":
+		pilaOperadores.append(8)
+	elif p[1] == "==":
+		pilaOperadores.append(10)
+	elif p[1] == "!=":
+		pilaOperadores.append(11)
+	elif p[1] == "OR":
+		pilaOperadores.append(12)
+	elif p[1] == "&&":
+		pilaOperadores.append(13)
+	pass
+
+
+
+def p_operacionLogica(p):
+	'''operacionLogica : push_logica exp
+						 | '''
+	pass
+
+def p_checaoperador6(p):
+	'''checaoperador6 : '''
+	global pilaOperadores
+	global pilaOperandos
+	opr = len(pilaOperadores)
+	print "Entra checaroperador 6"
+	print ("PilaOperadores: ", pilaOperadores)
+	if(opr != 0):
+		if((pilaOperadores[opr-1] == 6) | (pilaOperadores[opr-1] == 7) | (pilaOperadores[opr-1] == 8) | (pilaOperadores[opr-1] == 9) | (pilaOperadores[opr-1] == 10) | (pilaOperadores[opr-1] == 11) | (pilaOperadores[opr-1] == 12) | (pilaOperadores[opr-1] == 13) ):
+			operando2 = pilaOperandos.pop()
+			operando1 = pilaOperandos.pop()
+			operadorActual = pilaOperadores.pop()
+			resultado = cuboSemantico[operando1][operando2][operadorActual]
+			posicion = busquedaLista()
+			var = diccionarioMemoria['3']
+			valormem = var[str(resultado)]
+			agregarVar = TVar('temp', resultado, valormem)
+			var[str(resultado)] = valormem + 1
+			listaFunciones[posicion].arrVar.append(agregarVar)
+			pilaOperandosDirMem.append(valormem)
+			print("Resultado: ", resultado)
+			#meter a pila el temporal 
+			if resultado == -1:
+				print "ERROR: Operacion invalida, tipos no compatibles"
+			else:
+				print("SE CHECO EL CUADRUPLO Y ES CORRECTO", operando2, operando1, operadorActual)
+				resultadoT = valormem
+				operando2C = pilaOperandosDirMem.pop()
+				operando1C = pilaOperandosDirMem.pop()
+				cuadr = Cuadruplo(operadorActual, operando1C,operando2C,resultadoT)
+				listaCuadruplos.append(cuadr)
+				pilaOperandos.append(resultado)
+	pass
+
 
 def p_exp(p):
-	'''exp : termino checaroperador4 '''
+	'''exp : termino  checaroperador4'''
 	print("Entra exp. ", p[1])
 
 	pass
@@ -382,23 +484,56 @@ def p_factor(p):
 	print "Entre a Factor"
 	pass
 
-def p_for(p):
-	'''fors : FOR fondoFalso asignacion expresion ";" asignacion finFondoFalso bloque '''
-	pass
 
 def p_pos(p):
 	''' pos : "(" varcte "," varcte ")" '''
 	pass
 
 def p_whiles(p):
-	''' whiles : WHILE "(" expresion ")" bloque '''
+	''' whiles : WHILE checarWhile "(" expresion ")" checarContenido bloque finPilaSaltosWhile '''
+	pass
+def p_checarWhile(p):
+	''' checarWhile : '''
+	global pilaSaltos
+	global listaCuadruplos
+	lenCuadruplos = len(listaCuadruplos)
+	pilaSaltos.append(lenCuadruplos)
+	print "Se guardo el salto. " , len(pilaSaltos)
+	pass
+
+def p_checarContenido(p):
+	''' checarContenido : '''
+	global pilaSaltos
+	global listaCuadruplos
+	global pilaOperandos
+	aux = pilaOperandos.pop()
+	if aux != 8:
+		print "Error semantico en while"
+	else:
+		resultado = aux
+		#GOTO FALSO RESULTADO _____
+		cuadr = Cuadruplo(16,-1, resultado ,0)
+		listaCuadruplos.append(cuadr)
+		pilaSaltos.append(len(listaCuadruplos) - 1)
+		print "Se guardo GOTO FALSO WHILE: ", cuadr.operador, cuadr.temporal
+	pass
+
+def p_finPilaSaltosWhile(p):
+	'''finPilaSaltosWhile : '''
+	global pilaSaltos
+	global listaCuadruplos
+	saltos = pilaSaltos.pop()
+	cuadr = Cuadruplo(17,-1,-1,saltos)
+	listaCuadruplos.append(cuadr)
+	lenCuadruplos = len(listaCuadruplos)
+	listaCuadruplos[saltos].temporal = lenCuadruplos
+	print "Se guardo GOTO RETORNO: ", cuadr.operador, cuadr.temporal
 	pass
 
 def p_varcte(p):
 	''' varcte : recibe_ID 
 			   | recibe_CTF 
-			   | recibe_CTI 
-			   | recibe_CTS 
+			   | recibe_CTI  
 			   | recibe_TRUE 
 			   | recibe_FALSE '''
 	pass
@@ -444,10 +579,6 @@ def p_recibe_CTI(p):
 	pilaOperandos.append(1)
 	pass
 
-def p_recibe_CTS(p):
-	''' recibe_CTS : CTS '''
-	print("VARCTE: ", p[1])
-	pass
 
 def p_recibe_TRUE(p):
 	''' recibe_TRUE : TRUE '''

@@ -11,6 +11,10 @@
 #11 !=
 #12 OR
 #13 &&
+#14 (
+#15 )
+#16 GOTOF
+#17 GOTO 
 
 #enteros
 cuboSemantico = [[[-1 for k in range(13)] for j in range(9)] for i in range(9)]
