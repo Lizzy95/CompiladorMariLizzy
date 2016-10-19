@@ -47,145 +47,149 @@ Rule 36    estatuto -> lectura estatutoAux
 Rule 37    estatuto -> whiles estatutoAux
 Rule 38    estatutoAux -> estatuto
 Rule 39    estatutoAux -> empty
-Rule 40    asignacion -> ID opcionAsignacion valorAsig ;
+Rule 40    asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual
 Rule 41    asignacion -> ID ;
-Rule 42    opcionAsignacion -> [ CTI ]
-Rule 43    opcionAsignacion -> [ CTI ] [ CTI ]
-Rule 44    opcionAsignacion -> empty
-Rule 45    valorAsig -> = exp
-Rule 46    valorAsig -> empty
-Rule 47    lectura -> LEER ID opcionesLectura ;
-Rule 48    opcionesLectura -> [ CTI ]
-Rule 49    opcionesLectura -> [ CTI ] [ CTI ]
-Rule 50    opcionesLectura -> empty
-Rule 51    escritura -> DIBUJAR ( ID pos color ) ;
-Rule 52    escritura -> mueve
-Rule 53    color -> AMARILLO
-Rule 54    color -> VERDE
-Rule 55    color -> ROJO
-Rule 56    color -> AZUL
-Rule 57    condicion -> IF ( expresion ) checarIF finPilaSaltos
-Rule 58    condicion -> IF ( expresion ) bloque checarElse
-Rule 59    checarIF -> bloque
-Rule 60    checarElse -> ELSE bloque finPilaSaltos
-Rule 61    finPilaSaltos -> <empty>
-Rule 62    expresion -> exp operacionLogica checaoperador6
-Rule 63    expresion -> exp
-Rule 64    push_logica -> >
-Rule 65    push_logica -> <
-Rule 66    push_logica -> MENORIGUAL
-Rule 67    push_logica -> MAYORIGUAL
-Rule 68    push_logica -> IGUALIGUAL
-Rule 69    push_logica -> DIFERENTE
-Rule 70    push_logica -> COOR
-Rule 71    push_logica -> COAND
-Rule 72    operacionLogica -> push_logica exp
-Rule 73    operacionLogica -> <empty>
-Rule 74    checaoperador6 -> <empty>
-Rule 75    exp -> termino checaroperador4
-Rule 76    fondoFalso -> (
-Rule 77    finFondoFalso -> )
-Rule 78    checaroperador4 -> signo
-Rule 79    checaroperador4 -> <empty>
-Rule 80    signo -> push_pm exp
-Rule 81    signo -> <empty>
-Rule 82    push_pm -> +
-Rule 83    push_pm -> -
-Rule 84    termino -> factor checaroperador5
-Rule 85    checaroperador5 -> masop
-Rule 86    checaroperador5 -> <empty>
-Rule 87    masop -> push_td termino
-Rule 88    masop -> <empty>
-Rule 89    push_td -> *
-Rule 90    push_td -> /
-Rule 91    factor -> fondoFalso expresion finFondoFalso
-Rule 92    factor -> varcte
-Rule 93    pos -> ( varcte , varcte )
-Rule 94    whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
-Rule 95    checarWhile -> <empty>
-Rule 96    checarContenido -> <empty>
-Rule 97    finPilaSaltosWhile -> <empty>
-Rule 98    varcte -> recibe_ID
-Rule 99    varcte -> recibe_CTF
-Rule 100   varcte -> recibe_CTI
-Rule 101   varcte -> recibe_TRUE
-Rule 102   varcte -> recibe_FALSE
-Rule 103   recibe_ID -> ID
-Rule 104   recibe_CTF -> CTF
-Rule 105   recibe_CTI -> CTI
-Rule 106   recibe_TRUE -> TRUE
-Rule 107   recibe_FALSE -> FALSE
-Rule 108   tipo -> ENTERO
-Rule 109   tipo -> DECIMAL
-Rule 110   tipo -> BOOL
-Rule 111   tipo -> VOID
-Rule 112   tipo -> CUADRADO
-Rule 113   tipo -> RECTANGULO
-Rule 114   tipo -> CIRCULO
-Rule 115   tipo -> LINEA
-Rule 116   tipo -> ESTRELLA
-Rule 117   mueve -> MUEVE opcionMue
-Rule 118   opcionMue -> IZQUIERDA ID CTI ;
-Rule 119   opcionMue -> DERECHA ID CTI ;
-Rule 120   opcionMue -> ARRIBA ID CTI ;
-Rule 121   opcionMue -> ABAJO ID CTI ;
-Rule 122   empty -> <empty>
+Rule 42    guardarIDPila -> <empty>
+Rule 43    checarOperadorIgual -> <empty>
+Rule 44    opcionAsignacion -> [ CTI ]
+Rule 45    opcionAsignacion -> [ CTI ] [ CTI ]
+Rule 46    opcionAsignacion -> empty
+Rule 47    valorAsig -> = exp
+Rule 48    valorAsig -> empty
+Rule 49    guardarToken -> <empty>
+Rule 50    checarLectura -> <empty>
+Rule 51    lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
+Rule 52    opcionesLectura -> [ CTI ]
+Rule 53    opcionesLectura -> [ CTI ] [ CTI ]
+Rule 54    opcionesLectura -> empty
+Rule 55    escritura -> DIBUJAR guardarToken ( ID pos color ) ;
+Rule 56    escritura -> mueve
+Rule 57    color -> AMARILLO
+Rule 58    color -> VERDE
+Rule 59    color -> ROJO
+Rule 60    color -> AZUL
+Rule 61    condicion -> IF ( expresion ) checarIF finPilaSaltos
+Rule 62    condicion -> IF ( expresion ) bloque checarElse
+Rule 63    checarIF -> bloque
+Rule 64    checarElse -> ELSE bloque finPilaSaltos
+Rule 65    finPilaSaltos -> <empty>
+Rule 66    expresion -> exp operacionLogica checaoperador6
+Rule 67    expresion -> exp
+Rule 68    push_logica -> >
+Rule 69    push_logica -> <
+Rule 70    push_logica -> MENORIGUAL
+Rule 71    push_logica -> MAYORIGUAL
+Rule 72    push_logica -> IGUALIGUAL
+Rule 73    push_logica -> DIFERENTE
+Rule 74    push_logica -> COOR
+Rule 75    push_logica -> COAND
+Rule 76    operacionLogica -> push_logica exp
+Rule 77    operacionLogica -> <empty>
+Rule 78    checaoperador6 -> <empty>
+Rule 79    exp -> termino checaroperador4
+Rule 80    fondoFalso -> (
+Rule 81    finFondoFalso -> )
+Rule 82    checaroperador4 -> signo
+Rule 83    checaroperador4 -> <empty>
+Rule 84    signo -> push_pm exp
+Rule 85    signo -> <empty>
+Rule 86    push_pm -> +
+Rule 87    push_pm -> -
+Rule 88    termino -> factor checaroperador5
+Rule 89    checaroperador5 -> masop
+Rule 90    checaroperador5 -> <empty>
+Rule 91    masop -> push_td termino
+Rule 92    masop -> <empty>
+Rule 93    push_td -> *
+Rule 94    push_td -> /
+Rule 95    factor -> fondoFalso expresion finFondoFalso
+Rule 96    factor -> varcte
+Rule 97    pos -> ( varcte , varcte )
+Rule 98    whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
+Rule 99    checarWhile -> <empty>
+Rule 100   checarContenido -> <empty>
+Rule 101   finPilaSaltosWhile -> <empty>
+Rule 102   varcte -> recibe_ID
+Rule 103   varcte -> recibe_CTF
+Rule 104   varcte -> recibe_CTI
+Rule 105   varcte -> recibe_TRUE
+Rule 106   varcte -> recibe_FALSE
+Rule 107   recibe_ID -> ID
+Rule 108   recibe_CTF -> CTF
+Rule 109   recibe_CTI -> CTI
+Rule 110   recibe_TRUE -> TRUE
+Rule 111   recibe_FALSE -> FALSE
+Rule 112   tipo -> ENTERO
+Rule 113   tipo -> DECIMAL
+Rule 114   tipo -> BOOL
+Rule 115   tipo -> VOID
+Rule 116   tipo -> CUADRADO
+Rule 117   tipo -> RECTANGULO
+Rule 118   tipo -> CIRCULO
+Rule 119   tipo -> LINEA
+Rule 120   tipo -> ESTRELLA
+Rule 121   mueve -> MUEVE opcionMue
+Rule 122   opcionMue -> IZQUIERDA ID CTI ;
+Rule 123   opcionMue -> DERECHA ID CTI ;
+Rule 124   opcionMue -> ARRIBA ID CTI ;
+Rule 125   opcionMue -> ABAJO ID CTI ;
+Rule 126   empty -> <empty>
 
 Terminals, with rules where they appear
 
-(                    : 19 51 57 58 76 93 94
-)                    : 19 51 57 58 77 93 94
-*                    : 89
-+                    : 82
-,                    : 14 24 93
--                    : 83
-/                    : 90
-;                    : 8 9 10 40 41 47 51 118 119 120 121
-<                    : 65
-=                    : 45
->                    : 64
-ABAJO                : 121
-AMARILLO             : 53
-ARRIBA               : 120
-AZUL                 : 56
-BOOL                 : 110
-CIRCULO              : 114
-COAND                : 71
-COOR                 : 70
-CTF                  : 104
-CTI                  : 16 17 42 43 43 48 49 49 105 118 119 120 121
+(                    : 19 55 61 62 80 97 98
+)                    : 19 55 61 62 81 97 98
+*                    : 93
++                    : 86
+,                    : 14 24 97
+-                    : 87
+/                    : 94
+;                    : 8 9 10 40 41 51 55 122 123 124 125
+<                    : 69
+=                    : 47
+>                    : 68
+ABAJO                : 125
+AMARILLO             : 57
+ARRIBA               : 124
+AZUL                 : 60
+BOOL                 : 114
+CIRCULO              : 118
+COAND                : 75
+COOR                 : 74
+CTF                  : 108
+CTI                  : 16 17 44 45 45 52 53 53 109 122 123 124 125
 CTS                  : 
-CUADRADO             : 112
-DECIMAL              : 109
-DERECHA              : 119
-DIBUJAR              : 51
-DIFERENTE            : 69
-ELSE                 : 60
-ENTERO               : 108
-ESTRELLA             : 116
-FALSE                : 107
+CUADRADO             : 116
+DECIMAL              : 113
+DERECHA              : 123
+DIBUJAR              : 55
+DIFERENTE            : 73
+ELSE                 : 64
+ENTERO               : 112
+ESTRELLA             : 120
+FALSE                : 111
 FIN                  : 1 2
 FOR                  : 
 FUNC                 : 19
-ID                   : 8 9 13 14 19 22 24 32 40 41 47 51 103 118 119 120 121
-IF                   : 57 58
-IGUALIGUAL           : 68
+ID                   : 8 9 13 14 19 22 24 32 40 41 51 55 107 122 123 124 125
+IF                   : 61 62
+IGUALIGUAL           : 72
 INICIO               : 1 2
-IZQUIERDA            : 118
-LEER                 : 47
-LINEA                : 115
-MAYORIGUAL           : 67
-MENORIGUAL           : 66
-MUEVE                : 117
-RECTANGULO           : 113
+IZQUIERDA            : 122
+LEER                 : 51
+LINEA                : 119
+MAYORIGUAL           : 71
+MENORIGUAL           : 70
+MUEVE                : 121
+RECTANGULO           : 117
 RETURN               : 32
-ROJO                 : 55
-TRUE                 : 106
-VERDE                : 54
-VOID                 : 111
-WHILE                : 94
-[                    : 16 17 42 43 43 48 49 49
-]                    : 16 17 42 43 43 48 49 49
+ROJO                 : 59
+TRUE                 : 110
+VERDE                : 58
+VOID                 : 115
+WHILE                : 98
+[                    : 16 17 44 45 45 52 53 53
+]                    : 16 17 44 45 45 52 53 53
 error                : 
 {                    : 5 6 7 28 29 30 31
 }                    : 5 6 7 28 29 30 31
@@ -194,63 +198,67 @@ Nonterminals, with rules where they appear
 
 arreglo              : 9
 asignacion           : 33
-bloque               : 1 58 59 60 94
+bloque               : 1 62 63 64 98
 bloquefunc           : 19
-checaoperador6       : 62
-checarContenido      : 94
-checarElse           : 58
-checarIF             : 57
-checarWhile          : 94
-checaroperador4      : 75
-checaroperador5      : 84
-color                : 51
+checaoperador6       : 66
+checarContenido      : 98
+checarElse           : 62
+checarIF             : 61
+checarLectura        : 51
+checarOperadorIgual  : 40
+checarWhile          : 98
+checaroperador4      : 79
+checaroperador5      : 88
+color                : 55
 condicion            : 35
-empty                : 12 15 18 25 27 39 44 46 50
+empty                : 12 15 18 25 27 39 46 48 54
 escritura            : 30 34
 estatuto             : 5 28 38
 estatutoAux          : 33 34 35 36 37
-exp                  : 45 62 63 72 80
-expresion            : 57 58 91 94
-factor               : 84
-finFondoFalso        : 91
-finPilaSaltos        : 57 60
-finPilaSaltosWhile   : 94
-fondoFalso           : 91
+exp                  : 47 66 67 76 84
+expresion            : 61 62 95 98
+factor               : 88
+finFondoFalso        : 95
+finPilaSaltos        : 61 64
+finPilaSaltosWhile   : 98
+fondoFalso           : 95
 funcAgregar          : 19
 funcAgregarInicio    : 1
 funcion              : 3
+guardarIDPila        : 40 51
 guardarIDs           : 8 9 13 14 22 24
+guardarToken         : 51 55
 lectura              : 36
 listaIDS             : 10
 listapaID            : 21
 masIDS               : 13
 masTipos             : 8 9 10
-masop                : 85
+masop                : 89
 maspaID              : 22
 maspaTip             : 22
 matriz               : 16
-mueve                : 52
+mueve                : 56
 opcionAsignacion     : 40
-opcionMue            : 117
-opcionesLectura      : 47
-operacionLogica      : 62
+opcionMue            : 121
+opcionesLectura      : 51
+operacionLogica      : 66
 param                : 19
-pos                  : 51
+pos                  : 55
 programa             : 3 0
-push_logica          : 72
-push_pm              : 80
-push_td              : 87
-recibe_CTF           : 99
-recibe_CTI           : 100
-recibe_FALSE         : 102
-recibe_ID            : 98
-recibe_TRUE          : 101
+push_logica          : 76
+push_pm              : 84
+push_td              : 91
+recibe_CTF           : 103
+recibe_CTI           : 104
+recibe_FALSE         : 106
+recibe_ID            : 102
+recibe_TRUE          : 105
 regresa              : 28 29 30
-signo                : 78
-termino              : 75 87
+signo                : 82
+termino              : 79 91
 tipo                 : 8 9 10 19 21
 valorAsig            : 40
-varcte               : 92 93 93
+varcte               : 96 97 97
 vars                 : 5 6 11 26 28 29
 whiles               : 37
 
@@ -279,15 +287,15 @@ state 1
 state 2
 
     (19) funcion -> FUNC . tipo ID funcAgregar ( param ) bloquefunc
-    (108) tipo -> . ENTERO
-    (109) tipo -> . DECIMAL
-    (110) tipo -> . BOOL
-    (111) tipo -> . VOID
-    (112) tipo -> . CUADRADO
-    (113) tipo -> . RECTANGULO
-    (114) tipo -> . CIRCULO
-    (115) tipo -> . LINEA
-    (116) tipo -> . ESTRELLA
+    (112) tipo -> . ENTERO
+    (113) tipo -> . DECIMAL
+    (114) tipo -> . BOOL
+    (115) tipo -> . VOID
+    (116) tipo -> . CUADRADO
+    (117) tipo -> . RECTANGULO
+    (118) tipo -> . CIRCULO
+    (119) tipo -> . LINEA
+    (120) tipo -> . ESTRELLA
 
     ENTERO          shift and go to state 14
     DECIMAL         shift and go to state 6
@@ -335,65 +343,65 @@ state 5
 
 state 6
 
-    (109) tipo -> DECIMAL .
+    (113) tipo -> DECIMAL .
 
-    ID              reduce using rule 109 (tipo -> DECIMAL .)
+    ID              reduce using rule 113 (tipo -> DECIMAL .)
 
 
 state 7
 
-    (116) tipo -> ESTRELLA .
+    (120) tipo -> ESTRELLA .
 
-    ID              reduce using rule 116 (tipo -> ESTRELLA .)
+    ID              reduce using rule 120 (tipo -> ESTRELLA .)
 
 
 state 8
 
-    (113) tipo -> RECTANGULO .
+    (117) tipo -> RECTANGULO .
 
-    ID              reduce using rule 113 (tipo -> RECTANGULO .)
+    ID              reduce using rule 117 (tipo -> RECTANGULO .)
 
 
 state 9
 
-    (111) tipo -> VOID .
+    (115) tipo -> VOID .
 
-    ID              reduce using rule 111 (tipo -> VOID .)
+    ID              reduce using rule 115 (tipo -> VOID .)
 
 
 state 10
 
-    (112) tipo -> CUADRADO .
+    (116) tipo -> CUADRADO .
 
-    ID              reduce using rule 112 (tipo -> CUADRADO .)
+    ID              reduce using rule 116 (tipo -> CUADRADO .)
 
 
 state 11
 
-    (110) tipo -> BOOL .
+    (114) tipo -> BOOL .
 
-    ID              reduce using rule 110 (tipo -> BOOL .)
+    ID              reduce using rule 114 (tipo -> BOOL .)
 
 
 state 12
 
-    (115) tipo -> LINEA .
+    (119) tipo -> LINEA .
 
-    ID              reduce using rule 115 (tipo -> LINEA .)
+    ID              reduce using rule 119 (tipo -> LINEA .)
 
 
 state 13
 
-    (114) tipo -> CIRCULO .
+    (118) tipo -> CIRCULO .
 
-    ID              reduce using rule 114 (tipo -> CIRCULO .)
+    ID              reduce using rule 118 (tipo -> CIRCULO .)
 
 
 state 14
 
-    (108) tipo -> ENTERO .
+    (112) tipo -> ENTERO .
 
-    ID              reduce using rule 108 (tipo -> ENTERO .)
+    ID              reduce using rule 112 (tipo -> ENTERO .)
 
 
 state 15
@@ -445,15 +453,15 @@ state 20
     (8) vars -> . tipo ID guardarIDs ; masTipos
     (9) vars -> . tipo ID guardarIDs arreglo ; masTipos
     (10) vars -> . tipo listaIDS ; masTipos
-    (108) tipo -> . ENTERO
-    (109) tipo -> . DECIMAL
-    (110) tipo -> . BOOL
-    (111) tipo -> . VOID
-    (112) tipo -> . CUADRADO
-    (113) tipo -> . RECTANGULO
-    (114) tipo -> . CIRCULO
-    (115) tipo -> . LINEA
-    (116) tipo -> . ESTRELLA
+    (112) tipo -> . ENTERO
+    (113) tipo -> . DECIMAL
+    (114) tipo -> . BOOL
+    (115) tipo -> . VOID
+    (116) tipo -> . CUADRADO
+    (117) tipo -> . RECTANGULO
+    (118) tipo -> . CIRCULO
+    (119) tipo -> . LINEA
+    (120) tipo -> . ESTRELLA
 
     }               shift and go to state 25
     ENTERO          shift and go to state 14
@@ -492,15 +500,15 @@ state 23
     (35) estatuto -> . condicion estatutoAux
     (36) estatuto -> . lectura estatutoAux
     (37) estatuto -> . whiles estatutoAux
-    (40) asignacion -> . ID opcionAsignacion valorAsig ;
+    (40) asignacion -> . ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual
     (41) asignacion -> . ID ;
-    (51) escritura -> . DIBUJAR ( ID pos color ) ;
-    (52) escritura -> . mueve
-    (57) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (58) condicion -> . IF ( expresion ) bloque checarElse
-    (47) lectura -> . LEER ID opcionesLectura ;
-    (94) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
-    (117) mueve -> . MUEVE opcionMue
+    (55) escritura -> . DIBUJAR guardarToken ( ID pos color ) ;
+    (56) escritura -> . mueve
+    (61) condicion -> . IF ( expresion ) checarIF finPilaSaltos
+    (62) condicion -> . IF ( expresion ) bloque checarElse
+    (51) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
+    (98) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
+    (121) mueve -> . MUEVE opcionMue
 
     }               shift and go to state 39
     ID              shift and go to state 34
@@ -533,6 +541,8 @@ state 25
 
     (7) bloque -> { } .
 
+    FIN             reduce using rule 7 (bloque -> { } .)
+    ELSE            reduce using rule 7 (bloque -> { } .)
     ID              reduce using rule 7 (bloque -> { } .)
     DIBUJAR         reduce using rule 7 (bloque -> { } .)
     IF              reduce using rule 7 (bloque -> { } .)
@@ -541,23 +551,21 @@ state 25
     MUEVE           reduce using rule 7 (bloque -> { } .)
     }               reduce using rule 7 (bloque -> { } .)
     RETURN          reduce using rule 7 (bloque -> { } .)
-    FIN             reduce using rule 7 (bloque -> { } .)
-    ELSE            reduce using rule 7 (bloque -> { } .)
 
 
 state 26
 
     (19) funcion -> FUNC tipo ID funcAgregar ( . param ) bloquefunc
     (21) param -> . tipo listapaID
-    (108) tipo -> . ENTERO
-    (109) tipo -> . DECIMAL
-    (110) tipo -> . BOOL
-    (111) tipo -> . VOID
-    (112) tipo -> . CUADRADO
-    (113) tipo -> . RECTANGULO
-    (114) tipo -> . CIRCULO
-    (115) tipo -> . LINEA
-    (116) tipo -> . ESTRELLA
+    (112) tipo -> . ENTERO
+    (113) tipo -> . DECIMAL
+    (114) tipo -> . BOOL
+    (115) tipo -> . VOID
+    (116) tipo -> . CUADRADO
+    (117) tipo -> . RECTANGULO
+    (118) tipo -> . CIRCULO
+    (119) tipo -> . LINEA
+    (120) tipo -> . ESTRELLA
 
     ENTERO          shift and go to state 14
     DECIMAL         shift and go to state 6
@@ -574,20 +582,20 @@ state 26
 
 state 27
 
-    (94) whiles -> WHILE . checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
-    (95) checarWhile -> .
+    (98) whiles -> WHILE . checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
+    (99) checarWhile -> .
 
-    (               reduce using rule 95 (checarWhile -> .)
+    (               reduce using rule 99 (checarWhile -> .)
 
     checarWhile                    shift and go to state 45
 
 state 28
 
-    (117) mueve -> MUEVE . opcionMue
-    (118) opcionMue -> . IZQUIERDA ID CTI ;
-    (119) opcionMue -> . DERECHA ID CTI ;
-    (120) opcionMue -> . ARRIBA ID CTI ;
-    (121) opcionMue -> . ABAJO ID CTI ;
+    (121) mueve -> MUEVE . opcionMue
+    (122) opcionMue -> . IZQUIERDA ID CTI ;
+    (123) opcionMue -> . DERECHA ID CTI ;
+    (124) opcionMue -> . ARRIBA ID CTI ;
+    (125) opcionMue -> . ABAJO ID CTI ;
 
     IZQUIERDA       shift and go to state 47
     DERECHA         shift and go to state 49
@@ -605,16 +613,16 @@ state 29
 
 state 30
 
-    (52) escritura -> mueve .
+    (56) escritura -> mueve .
 
-    ID              reduce using rule 52 (escritura -> mueve .)
-    DIBUJAR         reduce using rule 52 (escritura -> mueve .)
-    IF              reduce using rule 52 (escritura -> mueve .)
-    LEER            reduce using rule 52 (escritura -> mueve .)
-    WHILE           reduce using rule 52 (escritura -> mueve .)
-    MUEVE           reduce using rule 52 (escritura -> mueve .)
-    }               reduce using rule 52 (escritura -> mueve .)
-    RETURN          reduce using rule 52 (escritura -> mueve .)
+    ID              reduce using rule 56 (escritura -> mueve .)
+    DIBUJAR         reduce using rule 56 (escritura -> mueve .)
+    IF              reduce using rule 56 (escritura -> mueve .)
+    LEER            reduce using rule 56 (escritura -> mueve .)
+    WHILE           reduce using rule 56 (escritura -> mueve .)
+    MUEVE           reduce using rule 56 (escritura -> mueve .)
+    }               reduce using rule 56 (escritura -> mueve .)
+    RETURN          reduce using rule 56 (escritura -> mueve .)
 
 
 state 31
@@ -627,19 +635,19 @@ state 31
     (35) estatuto -> . condicion estatutoAux
     (36) estatuto -> . lectura estatutoAux
     (37) estatuto -> . whiles estatutoAux
-    (122) empty -> .
-    (40) asignacion -> . ID opcionAsignacion valorAsig ;
+    (126) empty -> .
+    (40) asignacion -> . ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual
     (41) asignacion -> . ID ;
-    (51) escritura -> . DIBUJAR ( ID pos color ) ;
-    (52) escritura -> . mueve
-    (57) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (58) condicion -> . IF ( expresion ) bloque checarElse
-    (47) lectura -> . LEER ID opcionesLectura ;
-    (94) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
-    (117) mueve -> . MUEVE opcionMue
+    (55) escritura -> . DIBUJAR guardarToken ( ID pos color ) ;
+    (56) escritura -> . mueve
+    (61) condicion -> . IF ( expresion ) checarIF finPilaSaltos
+    (62) condicion -> . IF ( expresion ) bloque checarElse
+    (51) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
+    (98) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
+    (121) mueve -> . MUEVE opcionMue
 
-    }               reduce using rule 122 (empty -> .)
-    RETURN          reduce using rule 122 (empty -> .)
+    }               reduce using rule 126 (empty -> .)
+    RETURN          reduce using rule 126 (empty -> .)
     ID              shift and go to state 34
     DIBUJAR         shift and go to state 38
     IF              shift and go to state 35
@@ -667,19 +675,19 @@ state 32
     (35) estatuto -> . condicion estatutoAux
     (36) estatuto -> . lectura estatutoAux
     (37) estatuto -> . whiles estatutoAux
-    (122) empty -> .
-    (40) asignacion -> . ID opcionAsignacion valorAsig ;
+    (126) empty -> .
+    (40) asignacion -> . ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual
     (41) asignacion -> . ID ;
-    (51) escritura -> . DIBUJAR ( ID pos color ) ;
-    (52) escritura -> . mueve
-    (57) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (58) condicion -> . IF ( expresion ) bloque checarElse
-    (47) lectura -> . LEER ID opcionesLectura ;
-    (94) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
-    (117) mueve -> . MUEVE opcionMue
+    (55) escritura -> . DIBUJAR guardarToken ( ID pos color ) ;
+    (56) escritura -> . mueve
+    (61) condicion -> . IF ( expresion ) checarIF finPilaSaltos
+    (62) condicion -> . IF ( expresion ) bloque checarElse
+    (51) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
+    (98) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
+    (121) mueve -> . MUEVE opcionMue
 
-    }               reduce using rule 122 (empty -> .)
-    RETURN          reduce using rule 122 (empty -> .)
+    }               reduce using rule 126 (empty -> .)
+    RETURN          reduce using rule 126 (empty -> .)
     ID              shift and go to state 34
     DIBUJAR         shift and go to state 38
     IF              shift and go to state 35
@@ -707,19 +715,19 @@ state 33
     (35) estatuto -> . condicion estatutoAux
     (36) estatuto -> . lectura estatutoAux
     (37) estatuto -> . whiles estatutoAux
-    (122) empty -> .
-    (40) asignacion -> . ID opcionAsignacion valorAsig ;
+    (126) empty -> .
+    (40) asignacion -> . ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual
     (41) asignacion -> . ID ;
-    (51) escritura -> . DIBUJAR ( ID pos color ) ;
-    (52) escritura -> . mueve
-    (57) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (58) condicion -> . IF ( expresion ) bloque checarElse
-    (47) lectura -> . LEER ID opcionesLectura ;
-    (94) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
-    (117) mueve -> . MUEVE opcionMue
+    (55) escritura -> . DIBUJAR guardarToken ( ID pos color ) ;
+    (56) escritura -> . mueve
+    (61) condicion -> . IF ( expresion ) checarIF finPilaSaltos
+    (62) condicion -> . IF ( expresion ) bloque checarElse
+    (51) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
+    (98) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
+    (121) mueve -> . MUEVE opcionMue
 
-    }               reduce using rule 122 (empty -> .)
-    RETURN          reduce using rule 122 (empty -> .)
+    }               reduce using rule 126 (empty -> .)
+    RETURN          reduce using rule 126 (empty -> .)
     ID              shift and go to state 34
     DIBUJAR         shift and go to state 38
     IF              shift and go to state 35
@@ -739,37 +747,35 @@ state 33
 
 state 34
 
-    (40) asignacion -> ID . opcionAsignacion valorAsig ;
+    (40) asignacion -> ID . guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual
     (41) asignacion -> ID . ;
-    (42) opcionAsignacion -> . [ CTI ]
-    (43) opcionAsignacion -> . [ CTI ] [ CTI ]
-    (44) opcionAsignacion -> . empty
-    (122) empty -> .
+    (42) guardarIDPila -> .
 
   ! shift/reduce conflict for ; resolved as shift
-    ;               shift and go to state 59
-    [               shift and go to state 60
-    =               reduce using rule 122 (empty -> .)
+    ;               shift and go to state 58
+    [               reduce using rule 42 (guardarIDPila -> .)
+    =               reduce using rule 42 (guardarIDPila -> .)
 
-  ! ;               [ reduce using rule 122 (empty -> .) ]
+  ! ;               [ reduce using rule 42 (guardarIDPila -> .) ]
 
-    opcionAsignacion               shift and go to state 57
-    empty                          shift and go to state 58
+    guardarIDPila                  shift and go to state 57
 
 state 35
 
-    (57) condicion -> IF . ( expresion ) checarIF finPilaSaltos
-    (58) condicion -> IF . ( expresion ) bloque checarElse
+    (61) condicion -> IF . ( expresion ) checarIF finPilaSaltos
+    (62) condicion -> IF . ( expresion ) bloque checarElse
 
-    (               shift and go to state 61
+    (               shift and go to state 59
 
 
 state 36
 
-    (47) lectura -> LEER . ID opcionesLectura ;
+    (51) lectura -> LEER . guardarToken ID guardarIDPila checarLectura opcionesLectura ;
+    (49) guardarToken -> .
 
-    ID              shift and go to state 62
+    ID              reduce using rule 49 (guardarToken -> .)
 
+    guardarToken                   shift and go to state 60
 
 state 37
 
@@ -781,19 +787,84 @@ state 37
     (35) estatuto -> . condicion estatutoAux
     (36) estatuto -> . lectura estatutoAux
     (37) estatuto -> . whiles estatutoAux
-    (122) empty -> .
-    (40) asignacion -> . ID opcionAsignacion valorAsig ;
+    (126) empty -> .
+    (40) asignacion -> . ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual
     (41) asignacion -> . ID ;
-    (51) escritura -> . DIBUJAR ( ID pos color ) ;
-    (52) escritura -> . mueve
-    (57) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (58) condicion -> . IF ( expresion ) bloque checarElse
-    (47) lectura -> . LEER ID opcionesLectura ;
-    (94) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
-    (117) mueve -> . MUEVE opcionMue
+    (55) escritura -> . DIBUJAR guardarToken ( ID pos color ) ;
+    (56) escritura -> . mueve
+    (61) condicion -> . IF ( expresion ) checarIF finPilaSaltos
+    (62) condicion -> . IF ( expresion ) bloque checarElse
+    (51) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
+    (98) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
+    (121) mueve -> . MUEVE opcionMue
 
-    }               reduce using rule 122 (empty -> .)
-    RETURN          reduce using rule 122 (empty -> .)
+    }               reduce using rule 126 (empty -> .)
+    RETURN          reduce using rule 126 (empty -> .)
+    ID              shift and go to state 34
+    DIBUJAR         shift and go to state 38
+    IF              shift and go to state 35
+    LEER            shift and go to state 36
+    WHILE           shift and go to state 27
+    MUEVE           shift and go to state 28
+
+    estatuto                       shift and go to state 52
+    mueve                          shift and go to state 30
+    condicion                      shift and go to state 31
+    lectura                        shift and go to state 32
+    empty                          shift and go to state 53
+    whiles                         shift and go to state 33
+    estatutoAux                    shift and go to state 61
+    asignacion                     shift and go to state 37
+    escritura                      shift and go to state 40
+
+state 38
+
+    (55) escritura -> DIBUJAR . guardarToken ( ID pos color ) ;
+    (49) guardarToken -> .
+
+    (               reduce using rule 49 (guardarToken -> .)
+
+    guardarToken                   shift and go to state 62
+
+state 39
+
+    (6) bloque -> { vars } .
+
+    FIN             reduce using rule 6 (bloque -> { vars } .)
+    ELSE            reduce using rule 6 (bloque -> { vars } .)
+    ID              reduce using rule 6 (bloque -> { vars } .)
+    DIBUJAR         reduce using rule 6 (bloque -> { vars } .)
+    IF              reduce using rule 6 (bloque -> { vars } .)
+    LEER            reduce using rule 6 (bloque -> { vars } .)
+    WHILE           reduce using rule 6 (bloque -> { vars } .)
+    MUEVE           reduce using rule 6 (bloque -> { vars } .)
+    }               reduce using rule 6 (bloque -> { vars } .)
+    RETURN          reduce using rule 6 (bloque -> { vars } .)
+
+
+state 40
+
+    (34) estatuto -> escritura . estatutoAux
+    (38) estatutoAux -> . estatuto
+    (39) estatutoAux -> . empty
+    (33) estatuto -> . asignacion estatutoAux
+    (34) estatuto -> . escritura estatutoAux
+    (35) estatuto -> . condicion estatutoAux
+    (36) estatuto -> . lectura estatutoAux
+    (37) estatuto -> . whiles estatutoAux
+    (126) empty -> .
+    (40) asignacion -> . ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual
+    (41) asignacion -> . ID ;
+    (55) escritura -> . DIBUJAR guardarToken ( ID pos color ) ;
+    (56) escritura -> . mueve
+    (61) condicion -> . IF ( expresion ) checarIF finPilaSaltos
+    (62) condicion -> . IF ( expresion ) bloque checarElse
+    (51) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
+    (98) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
+    (121) mueve -> . MUEVE opcionMue
+
+    }               reduce using rule 126 (empty -> .)
+    RETURN          reduce using rule 126 (empty -> .)
     ID              shift and go to state 34
     DIBUJAR         shift and go to state 38
     IF              shift and go to state 35
@@ -811,74 +882,11 @@ state 37
     asignacion                     shift and go to state 37
     escritura                      shift and go to state 40
 
-state 38
-
-    (51) escritura -> DIBUJAR . ( ID pos color ) ;
-
-    (               shift and go to state 64
-
-
-state 39
-
-    (6) bloque -> { vars } .
-
-    ID              reduce using rule 6 (bloque -> { vars } .)
-    DIBUJAR         reduce using rule 6 (bloque -> { vars } .)
-    IF              reduce using rule 6 (bloque -> { vars } .)
-    LEER            reduce using rule 6 (bloque -> { vars } .)
-    WHILE           reduce using rule 6 (bloque -> { vars } .)
-    MUEVE           reduce using rule 6 (bloque -> { vars } .)
-    }               reduce using rule 6 (bloque -> { vars } .)
-    RETURN          reduce using rule 6 (bloque -> { vars } .)
-    FIN             reduce using rule 6 (bloque -> { vars } .)
-    ELSE            reduce using rule 6 (bloque -> { vars } .)
-
-
-state 40
-
-    (34) estatuto -> escritura . estatutoAux
-    (38) estatutoAux -> . estatuto
-    (39) estatutoAux -> . empty
-    (33) estatuto -> . asignacion estatutoAux
-    (34) estatuto -> . escritura estatutoAux
-    (35) estatuto -> . condicion estatutoAux
-    (36) estatuto -> . lectura estatutoAux
-    (37) estatuto -> . whiles estatutoAux
-    (122) empty -> .
-    (40) asignacion -> . ID opcionAsignacion valorAsig ;
-    (41) asignacion -> . ID ;
-    (51) escritura -> . DIBUJAR ( ID pos color ) ;
-    (52) escritura -> . mueve
-    (57) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (58) condicion -> . IF ( expresion ) bloque checarElse
-    (47) lectura -> . LEER ID opcionesLectura ;
-    (94) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
-    (117) mueve -> . MUEVE opcionMue
-
-    }               reduce using rule 122 (empty -> .)
-    RETURN          reduce using rule 122 (empty -> .)
-    ID              shift and go to state 34
-    DIBUJAR         shift and go to state 38
-    IF              shift and go to state 35
-    LEER            shift and go to state 36
-    WHILE           shift and go to state 27
-    MUEVE           shift and go to state 28
-
-    estatuto                       shift and go to state 52
-    mueve                          shift and go to state 30
-    condicion                      shift and go to state 31
-    lectura                        shift and go to state 32
-    empty                          shift and go to state 53
-    whiles                         shift and go to state 33
-    estatutoAux                    shift and go to state 65
-    asignacion                     shift and go to state 37
-    escritura                      shift and go to state 40
-
 state 41
 
     (10) vars -> tipo listaIDS . ; masTipos
 
-    ;               shift and go to state 66
+    ;               shift and go to state 64
 
 
 state 42
@@ -892,77 +900,79 @@ state 42
     [               reduce using rule 23 (guardarIDs -> .)
     ,               reduce using rule 23 (guardarIDs -> .)
 
-    guardarIDs                     shift and go to state 67
+    guardarIDs                     shift and go to state 65
 
 state 43
 
     (21) param -> tipo . listapaID
     (22) listapaID -> . ID guardarIDs maspaID maspaTip
 
-    ID              shift and go to state 69
+    ID              shift and go to state 67
 
-    listapaID                      shift and go to state 68
+    listapaID                      shift and go to state 66
 
 state 44
 
     (19) funcion -> FUNC tipo ID funcAgregar ( param . ) bloquefunc
 
-    )               shift and go to state 70
+    )               shift and go to state 68
 
 
 state 45
 
-    (94) whiles -> WHILE checarWhile . ( expresion ) checarContenido bloque finPilaSaltosWhile
+    (98) whiles -> WHILE checarWhile . ( expresion ) checarContenido bloque finPilaSaltosWhile
 
-    (               shift and go to state 71
+    (               shift and go to state 69
 
 
 state 46
 
-    (121) opcionMue -> ABAJO . ID CTI ;
+    (125) opcionMue -> ABAJO . ID CTI ;
 
-    ID              shift and go to state 72
+    ID              shift and go to state 70
 
 
 state 47
 
-    (118) opcionMue -> IZQUIERDA . ID CTI ;
+    (122) opcionMue -> IZQUIERDA . ID CTI ;
 
-    ID              shift and go to state 73
+    ID              shift and go to state 71
 
 
 state 48
 
-    (120) opcionMue -> ARRIBA . ID CTI ;
+    (124) opcionMue -> ARRIBA . ID CTI ;
 
-    ID              shift and go to state 74
+    ID              shift and go to state 72
 
 
 state 49
 
-    (119) opcionMue -> DERECHA . ID CTI ;
+    (123) opcionMue -> DERECHA . ID CTI ;
 
-    ID              shift and go to state 75
+    ID              shift and go to state 73
 
 
 state 50
 
-    (117) mueve -> MUEVE opcionMue .
+    (121) mueve -> MUEVE opcionMue .
 
-    ID              reduce using rule 117 (mueve -> MUEVE opcionMue .)
-    DIBUJAR         reduce using rule 117 (mueve -> MUEVE opcionMue .)
-    IF              reduce using rule 117 (mueve -> MUEVE opcionMue .)
-    LEER            reduce using rule 117 (mueve -> MUEVE opcionMue .)
-    WHILE           reduce using rule 117 (mueve -> MUEVE opcionMue .)
-    MUEVE           reduce using rule 117 (mueve -> MUEVE opcionMue .)
-    }               reduce using rule 117 (mueve -> MUEVE opcionMue .)
-    RETURN          reduce using rule 117 (mueve -> MUEVE opcionMue .)
+    ID              reduce using rule 121 (mueve -> MUEVE opcionMue .)
+    DIBUJAR         reduce using rule 121 (mueve -> MUEVE opcionMue .)
+    IF              reduce using rule 121 (mueve -> MUEVE opcionMue .)
+    LEER            reduce using rule 121 (mueve -> MUEVE opcionMue .)
+    WHILE           reduce using rule 121 (mueve -> MUEVE opcionMue .)
+    MUEVE           reduce using rule 121 (mueve -> MUEVE opcionMue .)
+    }               reduce using rule 121 (mueve -> MUEVE opcionMue .)
+    RETURN          reduce using rule 121 (mueve -> MUEVE opcionMue .)
 
 
 state 51
 
     (5) bloque -> { vars estatuto } .
 
+    FIN             reduce using rule 5 (bloque -> { vars estatuto } .)
+    ELSE            reduce using rule 5 (bloque -> { vars estatuto } .)
     ID              reduce using rule 5 (bloque -> { vars estatuto } .)
     DIBUJAR         reduce using rule 5 (bloque -> { vars estatuto } .)
     IF              reduce using rule 5 (bloque -> { vars estatuto } .)
@@ -971,8 +981,6 @@ state 51
     MUEVE           reduce using rule 5 (bloque -> { vars estatuto } .)
     }               reduce using rule 5 (bloque -> { vars estatuto } .)
     RETURN          reduce using rule 5 (bloque -> { vars estatuto } .)
-    FIN             reduce using rule 5 (bloque -> { vars estatuto } .)
-    ELSE            reduce using rule 5 (bloque -> { vars estatuto } .)
 
 
 state 52
@@ -1017,26 +1025,20 @@ state 56
 
 state 57
 
-    (40) asignacion -> ID opcionAsignacion . valorAsig ;
-    (45) valorAsig -> . = exp
-    (46) valorAsig -> . empty
-    (122) empty -> .
+    (40) asignacion -> ID guardarIDPila . opcionAsignacion valorAsig ; checarOperadorIgual
+    (44) opcionAsignacion -> . [ CTI ]
+    (45) opcionAsignacion -> . [ CTI ] [ CTI ]
+    (46) opcionAsignacion -> . empty
+    (126) empty -> .
 
-    =               shift and go to state 77
-    ;               reduce using rule 122 (empty -> .)
+    [               shift and go to state 75
+    =               reduce using rule 126 (empty -> .)
+    ;               reduce using rule 126 (empty -> .)
 
-    empty                          shift and go to state 78
-    valorAsig                      shift and go to state 76
+    opcionAsignacion               shift and go to state 74
+    empty                          shift and go to state 76
 
 state 58
-
-    (44) opcionAsignacion -> empty .
-
-    =               reduce using rule 44 (opcionAsignacion -> empty .)
-    ;               reduce using rule 44 (opcionAsignacion -> empty .)
-
-
-state 59
 
     (41) asignacion -> ID ; .
 
@@ -1050,70 +1052,55 @@ state 59
     RETURN          reduce using rule 41 (asignacion -> ID ; .)
 
 
+state 59
+
+    (61) condicion -> IF ( . expresion ) checarIF finPilaSaltos
+    (62) condicion -> IF ( . expresion ) bloque checarElse
+    (66) expresion -> . exp operacionLogica checaoperador6
+    (67) expresion -> . exp
+    (79) exp -> . termino checaroperador4
+    (88) termino -> . factor checaroperador5
+    (95) factor -> . fondoFalso expresion finFondoFalso
+    (96) factor -> . varcte
+    (80) fondoFalso -> . (
+    (102) varcte -> . recibe_ID
+    (103) varcte -> . recibe_CTF
+    (104) varcte -> . recibe_CTI
+    (105) varcte -> . recibe_TRUE
+    (106) varcte -> . recibe_FALSE
+    (107) recibe_ID -> . ID
+    (108) recibe_CTF -> . CTF
+    (109) recibe_CTI -> . CTI
+    (110) recibe_TRUE -> . TRUE
+    (111) recibe_FALSE -> . FALSE
+
+    (               shift and go to state 84
+    ID              shift and go to state 87
+    CTF             shift and go to state 77
+    CTI             shift and go to state 80
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 89
+
+    expresion                      shift and go to state 88
+    recibe_TRUE                    shift and go to state 81
+    recibe_CTF                     shift and go to state 83
+    recibe_CTI                     shift and go to state 90
+    varcte                         shift and go to state 82
+    factor                         shift and go to state 86
+    recibe_ID                      shift and go to state 85
+    termino                        shift and go to state 78
+    exp                            shift and go to state 91
+    recibe_FALSE                   shift and go to state 93
+    fondoFalso                     shift and go to state 92
+
 state 60
 
-    (42) opcionAsignacion -> [ . CTI ]
-    (43) opcionAsignacion -> [ . CTI ] [ CTI ]
+    (51) lectura -> LEER guardarToken . ID guardarIDPila checarLectura opcionesLectura ;
 
-    CTI             shift and go to state 79
+    ID              shift and go to state 94
 
 
 state 61
-
-    (57) condicion -> IF ( . expresion ) checarIF finPilaSaltos
-    (58) condicion -> IF ( . expresion ) bloque checarElse
-    (62) expresion -> . exp operacionLogica checaoperador6
-    (63) expresion -> . exp
-    (75) exp -> . termino checaroperador4
-    (84) termino -> . factor checaroperador5
-    (91) factor -> . fondoFalso expresion finFondoFalso
-    (92) factor -> . varcte
-    (76) fondoFalso -> . (
-    (98) varcte -> . recibe_ID
-    (99) varcte -> . recibe_CTF
-    (100) varcte -> . recibe_CTI
-    (101) varcte -> . recibe_TRUE
-    (102) varcte -> . recibe_FALSE
-    (103) recibe_ID -> . ID
-    (104) recibe_CTF -> . CTF
-    (105) recibe_CTI -> . CTI
-    (106) recibe_TRUE -> . TRUE
-    (107) recibe_FALSE -> . FALSE
-
-    (               shift and go to state 87
-    ID              shift and go to state 90
-    CTF             shift and go to state 80
-    CTI             shift and go to state 83
-    TRUE            shift and go to state 82
-    FALSE           shift and go to state 92
-
-    expresion                      shift and go to state 91
-    recibe_TRUE                    shift and go to state 84
-    recibe_CTF                     shift and go to state 86
-    recibe_CTI                     shift and go to state 93
-    varcte                         shift and go to state 85
-    factor                         shift and go to state 89
-    recibe_ID                      shift and go to state 88
-    termino                        shift and go to state 81
-    exp                            shift and go to state 94
-    recibe_FALSE                   shift and go to state 96
-    fondoFalso                     shift and go to state 95
-
-state 62
-
-    (47) lectura -> LEER ID . opcionesLectura ;
-    (48) opcionesLectura -> . [ CTI ]
-    (49) opcionesLectura -> . [ CTI ] [ CTI ]
-    (50) opcionesLectura -> . empty
-    (122) empty -> .
-
-    [               shift and go to state 97
-    ;               reduce using rule 122 (empty -> .)
-
-    opcionesLectura                shift and go to state 98
-    empty                          shift and go to state 99
-
-state 63
 
     (33) estatuto -> asignacion estatutoAux .
 
@@ -1121,14 +1108,14 @@ state 63
     RETURN          reduce using rule 33 (estatuto -> asignacion estatutoAux .)
 
 
-state 64
+state 62
 
-    (51) escritura -> DIBUJAR ( . ID pos color ) ;
+    (55) escritura -> DIBUJAR guardarToken . ( ID pos color ) ;
 
-    ID              shift and go to state 100
+    (               shift and go to state 95
 
 
-state 65
+state 63
 
     (34) estatuto -> escritura estatutoAux .
 
@@ -1136,7 +1123,7 @@ state 65
     RETURN          reduce using rule 34 (estatuto -> escritura estatutoAux .)
 
 
-state 66
+state 64
 
     (10) vars -> tipo listaIDS ; . masTipos
     (11) masTipos -> . vars
@@ -1144,26 +1131,26 @@ state 66
     (8) vars -> . tipo ID guardarIDs ; masTipos
     (9) vars -> . tipo ID guardarIDs arreglo ; masTipos
     (10) vars -> . tipo listaIDS ; masTipos
-    (122) empty -> .
-    (108) tipo -> . ENTERO
-    (109) tipo -> . DECIMAL
-    (110) tipo -> . BOOL
-    (111) tipo -> . VOID
-    (112) tipo -> . CUADRADO
-    (113) tipo -> . RECTANGULO
-    (114) tipo -> . CIRCULO
-    (115) tipo -> . LINEA
-    (116) tipo -> . ESTRELLA
+    (126) empty -> .
+    (112) tipo -> . ENTERO
+    (113) tipo -> . DECIMAL
+    (114) tipo -> . BOOL
+    (115) tipo -> . VOID
+    (116) tipo -> . CUADRADO
+    (117) tipo -> . RECTANGULO
+    (118) tipo -> . CIRCULO
+    (119) tipo -> . LINEA
+    (120) tipo -> . ESTRELLA
 
-    }               reduce using rule 122 (empty -> .)
-    ID              reduce using rule 122 (empty -> .)
-    DIBUJAR         reduce using rule 122 (empty -> .)
-    IF              reduce using rule 122 (empty -> .)
-    LEER            reduce using rule 122 (empty -> .)
-    WHILE           reduce using rule 122 (empty -> .)
-    MUEVE           reduce using rule 122 (empty -> .)
-    RETURN          reduce using rule 122 (empty -> .)
-    )               reduce using rule 122 (empty -> .)
+    }               reduce using rule 126 (empty -> .)
+    ID              reduce using rule 126 (empty -> .)
+    DIBUJAR         reduce using rule 126 (empty -> .)
+    IF              reduce using rule 126 (empty -> .)
+    LEER            reduce using rule 126 (empty -> .)
+    WHILE           reduce using rule 126 (empty -> .)
+    MUEVE           reduce using rule 126 (empty -> .)
+    RETURN          reduce using rule 126 (empty -> .)
+    )               reduce using rule 126 (empty -> .)
     ENTERO          shift and go to state 14
     DECIMAL         shift and go to state 6
     BOOL            shift and go to state 11
@@ -1174,12 +1161,12 @@ state 66
     LINEA           shift and go to state 12
     ESTRELLA        shift and go to state 7
 
-    masTipos                       shift and go to state 101
+    masTipos                       shift and go to state 96
     tipo                           shift and go to state 24
-    vars                           shift and go to state 102
-    empty                          shift and go to state 103
+    vars                           shift and go to state 97
+    empty                          shift and go to state 98
 
-state 67
+state 65
 
     (8) vars -> tipo ID guardarIDs . ; masTipos
     (9) vars -> tipo ID guardarIDs . arreglo ; masTipos
@@ -1187,27 +1174,27 @@ state 67
     (16) arreglo -> . [ CTI ] matriz
     (14) masIDS -> . , ID guardarIDs
     (15) masIDS -> . empty
-    (122) empty -> .
+    (126) empty -> .
 
   ! shift/reduce conflict for ; resolved as shift
-    ;               shift and go to state 107
-    [               shift and go to state 106
-    ,               shift and go to state 104
+    ;               shift and go to state 102
+    [               shift and go to state 101
+    ,               shift and go to state 99
 
-  ! ;               [ reduce using rule 122 (empty -> .) ]
+  ! ;               [ reduce using rule 126 (empty -> .) ]
 
-    arreglo                        shift and go to state 105
-    masIDS                         shift and go to state 108
-    empty                          shift and go to state 109
+    arreglo                        shift and go to state 100
+    masIDS                         shift and go to state 103
+    empty                          shift and go to state 104
 
-state 68
+state 66
 
     (21) param -> tipo listapaID .
 
     )               reduce using rule 21 (param -> tipo listapaID .)
 
 
-state 69
+state 67
 
     (22) listapaID -> ID . guardarIDs maspaID maspaTip
     (23) guardarIDs -> .
@@ -1224,9 +1211,9 @@ state 69
     ESTRELLA        reduce using rule 23 (guardarIDs -> .)
     )               reduce using rule 23 (guardarIDs -> .)
 
-    guardarIDs                     shift and go to state 110
+    guardarIDs                     shift and go to state 105
 
-state 70
+state 68
 
     (19) funcion -> FUNC tipo ID funcAgregar ( param ) . bloquefunc
     (28) bloquefunc -> . { vars estatuto regresa }
@@ -1234,592 +1221,548 @@ state 70
     (30) bloquefunc -> . { escritura regresa }
     (31) bloquefunc -> . { }
 
-    {               shift and go to state 111
+    {               shift and go to state 106
 
-    bloquefunc                     shift and go to state 112
+    bloquefunc                     shift and go to state 107
+
+state 69
+
+    (98) whiles -> WHILE checarWhile ( . expresion ) checarContenido bloque finPilaSaltosWhile
+    (66) expresion -> . exp operacionLogica checaoperador6
+    (67) expresion -> . exp
+    (79) exp -> . termino checaroperador4
+    (88) termino -> . factor checaroperador5
+    (95) factor -> . fondoFalso expresion finFondoFalso
+    (96) factor -> . varcte
+    (80) fondoFalso -> . (
+    (102) varcte -> . recibe_ID
+    (103) varcte -> . recibe_CTF
+    (104) varcte -> . recibe_CTI
+    (105) varcte -> . recibe_TRUE
+    (106) varcte -> . recibe_FALSE
+    (107) recibe_ID -> . ID
+    (108) recibe_CTF -> . CTF
+    (109) recibe_CTI -> . CTI
+    (110) recibe_TRUE -> . TRUE
+    (111) recibe_FALSE -> . FALSE
+
+    (               shift and go to state 84
+    ID              shift and go to state 87
+    CTF             shift and go to state 77
+    CTI             shift and go to state 80
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 89
+
+    expresion                      shift and go to state 108
+    varcte                         shift and go to state 82
+    recibe_TRUE                    shift and go to state 81
+    recibe_CTF                     shift and go to state 83
+    recibe_CTI                     shift and go to state 90
+    factor                         shift and go to state 86
+    recibe_ID                      shift and go to state 85
+    termino                        shift and go to state 78
+    exp                            shift and go to state 91
+    recibe_FALSE                   shift and go to state 93
+    fondoFalso                     shift and go to state 92
+
+state 70
+
+    (125) opcionMue -> ABAJO ID . CTI ;
+
+    CTI             shift and go to state 109
+
 
 state 71
 
-    (94) whiles -> WHILE checarWhile ( . expresion ) checarContenido bloque finPilaSaltosWhile
-    (62) expresion -> . exp operacionLogica checaoperador6
-    (63) expresion -> . exp
-    (75) exp -> . termino checaroperador4
-    (84) termino -> . factor checaroperador5
-    (91) factor -> . fondoFalso expresion finFondoFalso
-    (92) factor -> . varcte
-    (76) fondoFalso -> . (
-    (98) varcte -> . recibe_ID
-    (99) varcte -> . recibe_CTF
-    (100) varcte -> . recibe_CTI
-    (101) varcte -> . recibe_TRUE
-    (102) varcte -> . recibe_FALSE
-    (103) recibe_ID -> . ID
-    (104) recibe_CTF -> . CTF
-    (105) recibe_CTI -> . CTI
-    (106) recibe_TRUE -> . TRUE
-    (107) recibe_FALSE -> . FALSE
+    (122) opcionMue -> IZQUIERDA ID . CTI ;
 
-    (               shift and go to state 87
-    ID              shift and go to state 90
-    CTF             shift and go to state 80
-    CTI             shift and go to state 83
-    TRUE            shift and go to state 82
-    FALSE           shift and go to state 92
+    CTI             shift and go to state 110
 
-    expresion                      shift and go to state 113
-    varcte                         shift and go to state 85
-    recibe_TRUE                    shift and go to state 84
-    recibe_CTF                     shift and go to state 86
-    recibe_CTI                     shift and go to state 93
-    factor                         shift and go to state 89
-    recibe_ID                      shift and go to state 88
-    termino                        shift and go to state 81
-    exp                            shift and go to state 94
-    recibe_FALSE                   shift and go to state 96
-    fondoFalso                     shift and go to state 95
 
 state 72
 
-    (121) opcionMue -> ABAJO ID . CTI ;
+    (124) opcionMue -> ARRIBA ID . CTI ;
 
-    CTI             shift and go to state 114
+    CTI             shift and go to state 111
 
 
 state 73
 
-    (118) opcionMue -> IZQUIERDA ID . CTI ;
+    (123) opcionMue -> DERECHA ID . CTI ;
 
-    CTI             shift and go to state 115
+    CTI             shift and go to state 112
 
 
 state 74
 
-    (120) opcionMue -> ARRIBA ID . CTI ;
+    (40) asignacion -> ID guardarIDPila opcionAsignacion . valorAsig ; checarOperadorIgual
+    (47) valorAsig -> . = exp
+    (48) valorAsig -> . empty
+    (126) empty -> .
+
+    =               shift and go to state 114
+    ;               reduce using rule 126 (empty -> .)
+
+    valorAsig                      shift and go to state 113
+    empty                          shift and go to state 115
+
+state 75
+
+    (44) opcionAsignacion -> [ . CTI ]
+    (45) opcionAsignacion -> [ . CTI ] [ CTI ]
 
     CTI             shift and go to state 116
 
 
-state 75
-
-    (119) opcionMue -> DERECHA ID . CTI ;
-
-    CTI             shift and go to state 117
-
-
 state 76
 
-    (40) asignacion -> ID opcionAsignacion valorAsig . ;
+    (46) opcionAsignacion -> empty .
 
-    ;               shift and go to state 118
+    =               reduce using rule 46 (opcionAsignacion -> empty .)
+    ;               reduce using rule 46 (opcionAsignacion -> empty .)
 
 
 state 77
 
-    (45) valorAsig -> = . exp
-    (75) exp -> . termino checaroperador4
-    (84) termino -> . factor checaroperador5
-    (91) factor -> . fondoFalso expresion finFondoFalso
-    (92) factor -> . varcte
-    (76) fondoFalso -> . (
-    (98) varcte -> . recibe_ID
-    (99) varcte -> . recibe_CTF
-    (100) varcte -> . recibe_CTI
-    (101) varcte -> . recibe_TRUE
-    (102) varcte -> . recibe_FALSE
-    (103) recibe_ID -> . ID
-    (104) recibe_CTF -> . CTF
-    (105) recibe_CTI -> . CTI
-    (106) recibe_TRUE -> . TRUE
-    (107) recibe_FALSE -> . FALSE
+    (108) recibe_CTF -> CTF .
 
-    (               shift and go to state 87
-    ID              shift and go to state 90
-    CTF             shift and go to state 80
-    CTI             shift and go to state 83
-    TRUE            shift and go to state 82
-    FALSE           shift and go to state 92
+    *               reduce using rule 108 (recibe_CTF -> CTF .)
+    /               reduce using rule 108 (recibe_CTF -> CTF .)
+    +               reduce using rule 108 (recibe_CTF -> CTF .)
+    -               reduce using rule 108 (recibe_CTF -> CTF .)
+    >               reduce using rule 108 (recibe_CTF -> CTF .)
+    <               reduce using rule 108 (recibe_CTF -> CTF .)
+    MENORIGUAL      reduce using rule 108 (recibe_CTF -> CTF .)
+    MAYORIGUAL      reduce using rule 108 (recibe_CTF -> CTF .)
+    IGUALIGUAL      reduce using rule 108 (recibe_CTF -> CTF .)
+    DIFERENTE       reduce using rule 108 (recibe_CTF -> CTF .)
+    COOR            reduce using rule 108 (recibe_CTF -> CTF .)
+    COAND           reduce using rule 108 (recibe_CTF -> CTF .)
+    )               reduce using rule 108 (recibe_CTF -> CTF .)
+    ;               reduce using rule 108 (recibe_CTF -> CTF .)
+    ,               reduce using rule 108 (recibe_CTF -> CTF .)
 
-    varcte                         shift and go to state 85
-    recibe_TRUE                    shift and go to state 84
-    exp                            shift and go to state 119
-    recibe_CTF                     shift and go to state 86
-    recibe_CTI                     shift and go to state 93
-    recibe_ID                      shift and go to state 88
-    termino                        shift and go to state 81
-    factor                         shift and go to state 89
-    recibe_FALSE                   shift and go to state 96
-    fondoFalso                     shift and go to state 95
 
 state 78
 
-    (46) valorAsig -> empty .
+    (79) exp -> termino . checaroperador4
+    (82) checaroperador4 -> . signo
+    (83) checaroperador4 -> .
+    (84) signo -> . push_pm exp
+    (85) signo -> .
+    (86) push_pm -> . +
+    (87) push_pm -> . -
 
-    ;               reduce using rule 46 (valorAsig -> empty .)
+  ! reduce/reduce conflict for > resolved using rule 83 (checaroperador4 -> .)
+  ! reduce/reduce conflict for < resolved using rule 83 (checaroperador4 -> .)
+  ! reduce/reduce conflict for MENORIGUAL resolved using rule 83 (checaroperador4 -> .)
+  ! reduce/reduce conflict for MAYORIGUAL resolved using rule 83 (checaroperador4 -> .)
+  ! reduce/reduce conflict for IGUALIGUAL resolved using rule 83 (checaroperador4 -> .)
+  ! reduce/reduce conflict for DIFERENTE resolved using rule 83 (checaroperador4 -> .)
+  ! reduce/reduce conflict for COOR resolved using rule 83 (checaroperador4 -> .)
+  ! reduce/reduce conflict for COAND resolved using rule 83 (checaroperador4 -> .)
+  ! reduce/reduce conflict for ) resolved using rule 83 (checaroperador4 -> .)
+  ! reduce/reduce conflict for ; resolved using rule 83 (checaroperador4 -> .)
+    >               reduce using rule 83 (checaroperador4 -> .)
+    <               reduce using rule 83 (checaroperador4 -> .)
+    MENORIGUAL      reduce using rule 83 (checaroperador4 -> .)
+    MAYORIGUAL      reduce using rule 83 (checaroperador4 -> .)
+    IGUALIGUAL      reduce using rule 83 (checaroperador4 -> .)
+    DIFERENTE       reduce using rule 83 (checaroperador4 -> .)
+    COOR            reduce using rule 83 (checaroperador4 -> .)
+    COAND           reduce using rule 83 (checaroperador4 -> .)
+    )               reduce using rule 83 (checaroperador4 -> .)
+    ;               reduce using rule 83 (checaroperador4 -> .)
+    +               shift and go to state 117
+    -               shift and go to state 119
 
+  ! >               [ reduce using rule 85 (signo -> .) ]
+  ! <               [ reduce using rule 85 (signo -> .) ]
+  ! MENORIGUAL      [ reduce using rule 85 (signo -> .) ]
+  ! MAYORIGUAL      [ reduce using rule 85 (signo -> .) ]
+  ! IGUALIGUAL      [ reduce using rule 85 (signo -> .) ]
+  ! DIFERENTE       [ reduce using rule 85 (signo -> .) ]
+  ! COOR            [ reduce using rule 85 (signo -> .) ]
+  ! COAND           [ reduce using rule 85 (signo -> .) ]
+  ! )               [ reduce using rule 85 (signo -> .) ]
+  ! ;               [ reduce using rule 85 (signo -> .) ]
+
+    push_pm                        shift and go to state 121
+    signo                          shift and go to state 118
+    checaroperador4                shift and go to state 120
 
 state 79
 
-    (42) opcionAsignacion -> [ CTI . ]
-    (43) opcionAsignacion -> [ CTI . ] [ CTI ]
+    (110) recibe_TRUE -> TRUE .
 
-    ]               shift and go to state 120
+    *               reduce using rule 110 (recibe_TRUE -> TRUE .)
+    /               reduce using rule 110 (recibe_TRUE -> TRUE .)
+    +               reduce using rule 110 (recibe_TRUE -> TRUE .)
+    -               reduce using rule 110 (recibe_TRUE -> TRUE .)
+    >               reduce using rule 110 (recibe_TRUE -> TRUE .)
+    <               reduce using rule 110 (recibe_TRUE -> TRUE .)
+    MENORIGUAL      reduce using rule 110 (recibe_TRUE -> TRUE .)
+    MAYORIGUAL      reduce using rule 110 (recibe_TRUE -> TRUE .)
+    IGUALIGUAL      reduce using rule 110 (recibe_TRUE -> TRUE .)
+    DIFERENTE       reduce using rule 110 (recibe_TRUE -> TRUE .)
+    COOR            reduce using rule 110 (recibe_TRUE -> TRUE .)
+    COAND           reduce using rule 110 (recibe_TRUE -> TRUE .)
+    )               reduce using rule 110 (recibe_TRUE -> TRUE .)
+    ;               reduce using rule 110 (recibe_TRUE -> TRUE .)
+    ,               reduce using rule 110 (recibe_TRUE -> TRUE .)
 
 
 state 80
 
-    (104) recibe_CTF -> CTF .
+    (109) recibe_CTI -> CTI .
 
-    *               reduce using rule 104 (recibe_CTF -> CTF .)
-    /               reduce using rule 104 (recibe_CTF -> CTF .)
-    +               reduce using rule 104 (recibe_CTF -> CTF .)
-    -               reduce using rule 104 (recibe_CTF -> CTF .)
-    >               reduce using rule 104 (recibe_CTF -> CTF .)
-    <               reduce using rule 104 (recibe_CTF -> CTF .)
-    MENORIGUAL      reduce using rule 104 (recibe_CTF -> CTF .)
-    MAYORIGUAL      reduce using rule 104 (recibe_CTF -> CTF .)
-    IGUALIGUAL      reduce using rule 104 (recibe_CTF -> CTF .)
-    DIFERENTE       reduce using rule 104 (recibe_CTF -> CTF .)
-    COOR            reduce using rule 104 (recibe_CTF -> CTF .)
-    COAND           reduce using rule 104 (recibe_CTF -> CTF .)
-    )               reduce using rule 104 (recibe_CTF -> CTF .)
-    ,               reduce using rule 104 (recibe_CTF -> CTF .)
-    ;               reduce using rule 104 (recibe_CTF -> CTF .)
+    )               reduce using rule 109 (recibe_CTI -> CTI .)
+    *               reduce using rule 109 (recibe_CTI -> CTI .)
+    /               reduce using rule 109 (recibe_CTI -> CTI .)
+    +               reduce using rule 109 (recibe_CTI -> CTI .)
+    -               reduce using rule 109 (recibe_CTI -> CTI .)
+    >               reduce using rule 109 (recibe_CTI -> CTI .)
+    <               reduce using rule 109 (recibe_CTI -> CTI .)
+    MENORIGUAL      reduce using rule 109 (recibe_CTI -> CTI .)
+    MAYORIGUAL      reduce using rule 109 (recibe_CTI -> CTI .)
+    IGUALIGUAL      reduce using rule 109 (recibe_CTI -> CTI .)
+    DIFERENTE       reduce using rule 109 (recibe_CTI -> CTI .)
+    COOR            reduce using rule 109 (recibe_CTI -> CTI .)
+    COAND           reduce using rule 109 (recibe_CTI -> CTI .)
+    ,               reduce using rule 109 (recibe_CTI -> CTI .)
+    ;               reduce using rule 109 (recibe_CTI -> CTI .)
 
 
 state 81
 
-    (75) exp -> termino . checaroperador4
-    (78) checaroperador4 -> . signo
-    (79) checaroperador4 -> .
-    (80) signo -> . push_pm exp
-    (81) signo -> .
-    (82) push_pm -> . +
-    (83) push_pm -> . -
+    (105) varcte -> recibe_TRUE .
 
-  ! reduce/reduce conflict for > resolved using rule 79 (checaroperador4 -> .)
-  ! reduce/reduce conflict for < resolved using rule 79 (checaroperador4 -> .)
-  ! reduce/reduce conflict for MENORIGUAL resolved using rule 79 (checaroperador4 -> .)
-  ! reduce/reduce conflict for MAYORIGUAL resolved using rule 79 (checaroperador4 -> .)
-  ! reduce/reduce conflict for IGUALIGUAL resolved using rule 79 (checaroperador4 -> .)
-  ! reduce/reduce conflict for DIFERENTE resolved using rule 79 (checaroperador4 -> .)
-  ! reduce/reduce conflict for COOR resolved using rule 79 (checaroperador4 -> .)
-  ! reduce/reduce conflict for COAND resolved using rule 79 (checaroperador4 -> .)
-  ! reduce/reduce conflict for ) resolved using rule 79 (checaroperador4 -> .)
-  ! reduce/reduce conflict for ; resolved using rule 79 (checaroperador4 -> .)
-    >               reduce using rule 79 (checaroperador4 -> .)
-    <               reduce using rule 79 (checaroperador4 -> .)
-    MENORIGUAL      reduce using rule 79 (checaroperador4 -> .)
-    MAYORIGUAL      reduce using rule 79 (checaroperador4 -> .)
-    IGUALIGUAL      reduce using rule 79 (checaroperador4 -> .)
-    DIFERENTE       reduce using rule 79 (checaroperador4 -> .)
-    COOR            reduce using rule 79 (checaroperador4 -> .)
-    COAND           reduce using rule 79 (checaroperador4 -> .)
-    )               reduce using rule 79 (checaroperador4 -> .)
-    ;               reduce using rule 79 (checaroperador4 -> .)
-    +               shift and go to state 121
-    -               shift and go to state 123
+    *               reduce using rule 105 (varcte -> recibe_TRUE .)
+    /               reduce using rule 105 (varcte -> recibe_TRUE .)
+    +               reduce using rule 105 (varcte -> recibe_TRUE .)
+    -               reduce using rule 105 (varcte -> recibe_TRUE .)
+    >               reduce using rule 105 (varcte -> recibe_TRUE .)
+    <               reduce using rule 105 (varcte -> recibe_TRUE .)
+    MENORIGUAL      reduce using rule 105 (varcte -> recibe_TRUE .)
+    MAYORIGUAL      reduce using rule 105 (varcte -> recibe_TRUE .)
+    IGUALIGUAL      reduce using rule 105 (varcte -> recibe_TRUE .)
+    DIFERENTE       reduce using rule 105 (varcte -> recibe_TRUE .)
+    COOR            reduce using rule 105 (varcte -> recibe_TRUE .)
+    COAND           reduce using rule 105 (varcte -> recibe_TRUE .)
+    )               reduce using rule 105 (varcte -> recibe_TRUE .)
+    ;               reduce using rule 105 (varcte -> recibe_TRUE .)
+    ,               reduce using rule 105 (varcte -> recibe_TRUE .)
 
-  ! >               [ reduce using rule 81 (signo -> .) ]
-  ! <               [ reduce using rule 81 (signo -> .) ]
-  ! MENORIGUAL      [ reduce using rule 81 (signo -> .) ]
-  ! MAYORIGUAL      [ reduce using rule 81 (signo -> .) ]
-  ! IGUALIGUAL      [ reduce using rule 81 (signo -> .) ]
-  ! DIFERENTE       [ reduce using rule 81 (signo -> .) ]
-  ! COOR            [ reduce using rule 81 (signo -> .) ]
-  ! COAND           [ reduce using rule 81 (signo -> .) ]
-  ! )               [ reduce using rule 81 (signo -> .) ]
-  ! ;               [ reduce using rule 81 (signo -> .) ]
-
-    push_pm                        shift and go to state 125
-    signo                          shift and go to state 122
-    checaroperador4                shift and go to state 124
 
 state 82
 
-    (106) recibe_TRUE -> TRUE .
+    (96) factor -> varcte .
 
-    )               reduce using rule 106 (recibe_TRUE -> TRUE .)
-    ,               reduce using rule 106 (recibe_TRUE -> TRUE .)
-    *               reduce using rule 106 (recibe_TRUE -> TRUE .)
-    /               reduce using rule 106 (recibe_TRUE -> TRUE .)
-    +               reduce using rule 106 (recibe_TRUE -> TRUE .)
-    -               reduce using rule 106 (recibe_TRUE -> TRUE .)
-    ;               reduce using rule 106 (recibe_TRUE -> TRUE .)
-    >               reduce using rule 106 (recibe_TRUE -> TRUE .)
-    <               reduce using rule 106 (recibe_TRUE -> TRUE .)
-    MENORIGUAL      reduce using rule 106 (recibe_TRUE -> TRUE .)
-    MAYORIGUAL      reduce using rule 106 (recibe_TRUE -> TRUE .)
-    IGUALIGUAL      reduce using rule 106 (recibe_TRUE -> TRUE .)
-    DIFERENTE       reduce using rule 106 (recibe_TRUE -> TRUE .)
-    COOR            reduce using rule 106 (recibe_TRUE -> TRUE .)
-    COAND           reduce using rule 106 (recibe_TRUE -> TRUE .)
+    *               reduce using rule 96 (factor -> varcte .)
+    /               reduce using rule 96 (factor -> varcte .)
+    +               reduce using rule 96 (factor -> varcte .)
+    -               reduce using rule 96 (factor -> varcte .)
+    >               reduce using rule 96 (factor -> varcte .)
+    <               reduce using rule 96 (factor -> varcte .)
+    MENORIGUAL      reduce using rule 96 (factor -> varcte .)
+    MAYORIGUAL      reduce using rule 96 (factor -> varcte .)
+    IGUALIGUAL      reduce using rule 96 (factor -> varcte .)
+    DIFERENTE       reduce using rule 96 (factor -> varcte .)
+    COOR            reduce using rule 96 (factor -> varcte .)
+    COAND           reduce using rule 96 (factor -> varcte .)
+    )               reduce using rule 96 (factor -> varcte .)
+    ;               reduce using rule 96 (factor -> varcte .)
 
 
 state 83
 
-    (105) recibe_CTI -> CTI .
+    (103) varcte -> recibe_CTF .
 
-    *               reduce using rule 105 (recibe_CTI -> CTI .)
-    /               reduce using rule 105 (recibe_CTI -> CTI .)
-    +               reduce using rule 105 (recibe_CTI -> CTI .)
-    -               reduce using rule 105 (recibe_CTI -> CTI .)
-    >               reduce using rule 105 (recibe_CTI -> CTI .)
-    <               reduce using rule 105 (recibe_CTI -> CTI .)
-    MENORIGUAL      reduce using rule 105 (recibe_CTI -> CTI .)
-    MAYORIGUAL      reduce using rule 105 (recibe_CTI -> CTI .)
-    IGUALIGUAL      reduce using rule 105 (recibe_CTI -> CTI .)
-    DIFERENTE       reduce using rule 105 (recibe_CTI -> CTI .)
-    COOR            reduce using rule 105 (recibe_CTI -> CTI .)
-    COAND           reduce using rule 105 (recibe_CTI -> CTI .)
-    )               reduce using rule 105 (recibe_CTI -> CTI .)
-    ;               reduce using rule 105 (recibe_CTI -> CTI .)
-    ,               reduce using rule 105 (recibe_CTI -> CTI .)
+    *               reduce using rule 103 (varcte -> recibe_CTF .)
+    /               reduce using rule 103 (varcte -> recibe_CTF .)
+    +               reduce using rule 103 (varcte -> recibe_CTF .)
+    -               reduce using rule 103 (varcte -> recibe_CTF .)
+    >               reduce using rule 103 (varcte -> recibe_CTF .)
+    <               reduce using rule 103 (varcte -> recibe_CTF .)
+    MENORIGUAL      reduce using rule 103 (varcte -> recibe_CTF .)
+    MAYORIGUAL      reduce using rule 103 (varcte -> recibe_CTF .)
+    IGUALIGUAL      reduce using rule 103 (varcte -> recibe_CTF .)
+    DIFERENTE       reduce using rule 103 (varcte -> recibe_CTF .)
+    COOR            reduce using rule 103 (varcte -> recibe_CTF .)
+    COAND           reduce using rule 103 (varcte -> recibe_CTF .)
+    )               reduce using rule 103 (varcte -> recibe_CTF .)
+    ;               reduce using rule 103 (varcte -> recibe_CTF .)
+    ,               reduce using rule 103 (varcte -> recibe_CTF .)
 
 
 state 84
 
-    (101) varcte -> recibe_TRUE .
+    (80) fondoFalso -> ( .
 
-    ,               reduce using rule 101 (varcte -> recibe_TRUE .)
-    *               reduce using rule 101 (varcte -> recibe_TRUE .)
-    /               reduce using rule 101 (varcte -> recibe_TRUE .)
-    +               reduce using rule 101 (varcte -> recibe_TRUE .)
-    -               reduce using rule 101 (varcte -> recibe_TRUE .)
-    ;               reduce using rule 101 (varcte -> recibe_TRUE .)
-    )               reduce using rule 101 (varcte -> recibe_TRUE .)
-    >               reduce using rule 101 (varcte -> recibe_TRUE .)
-    <               reduce using rule 101 (varcte -> recibe_TRUE .)
-    MENORIGUAL      reduce using rule 101 (varcte -> recibe_TRUE .)
-    MAYORIGUAL      reduce using rule 101 (varcte -> recibe_TRUE .)
-    IGUALIGUAL      reduce using rule 101 (varcte -> recibe_TRUE .)
-    DIFERENTE       reduce using rule 101 (varcte -> recibe_TRUE .)
-    COOR            reduce using rule 101 (varcte -> recibe_TRUE .)
-    COAND           reduce using rule 101 (varcte -> recibe_TRUE .)
+    (               reduce using rule 80 (fondoFalso -> ( .)
+    ID              reduce using rule 80 (fondoFalso -> ( .)
+    CTF             reduce using rule 80 (fondoFalso -> ( .)
+    CTI             reduce using rule 80 (fondoFalso -> ( .)
+    TRUE            reduce using rule 80 (fondoFalso -> ( .)
+    FALSE           reduce using rule 80 (fondoFalso -> ( .)
 
 
 state 85
 
-    (92) factor -> varcte .
+    (102) varcte -> recibe_ID .
 
-    *               reduce using rule 92 (factor -> varcte .)
-    /               reduce using rule 92 (factor -> varcte .)
-    +               reduce using rule 92 (factor -> varcte .)
-    -               reduce using rule 92 (factor -> varcte .)
-    )               reduce using rule 92 (factor -> varcte .)
-    >               reduce using rule 92 (factor -> varcte .)
-    <               reduce using rule 92 (factor -> varcte .)
-    MENORIGUAL      reduce using rule 92 (factor -> varcte .)
-    MAYORIGUAL      reduce using rule 92 (factor -> varcte .)
-    IGUALIGUAL      reduce using rule 92 (factor -> varcte .)
-    DIFERENTE       reduce using rule 92 (factor -> varcte .)
-    COOR            reduce using rule 92 (factor -> varcte .)
-    COAND           reduce using rule 92 (factor -> varcte .)
-    ;               reduce using rule 92 (factor -> varcte .)
+    *               reduce using rule 102 (varcte -> recibe_ID .)
+    /               reduce using rule 102 (varcte -> recibe_ID .)
+    +               reduce using rule 102 (varcte -> recibe_ID .)
+    -               reduce using rule 102 (varcte -> recibe_ID .)
+    >               reduce using rule 102 (varcte -> recibe_ID .)
+    <               reduce using rule 102 (varcte -> recibe_ID .)
+    MENORIGUAL      reduce using rule 102 (varcte -> recibe_ID .)
+    MAYORIGUAL      reduce using rule 102 (varcte -> recibe_ID .)
+    IGUALIGUAL      reduce using rule 102 (varcte -> recibe_ID .)
+    DIFERENTE       reduce using rule 102 (varcte -> recibe_ID .)
+    COOR            reduce using rule 102 (varcte -> recibe_ID .)
+    COAND           reduce using rule 102 (varcte -> recibe_ID .)
+    )               reduce using rule 102 (varcte -> recibe_ID .)
+    ;               reduce using rule 102 (varcte -> recibe_ID .)
+    ,               reduce using rule 102 (varcte -> recibe_ID .)
 
 
 state 86
 
-    (99) varcte -> recibe_CTF .
+    (88) termino -> factor . checaroperador5
+    (89) checaroperador5 -> . masop
+    (90) checaroperador5 -> .
+    (91) masop -> . push_td termino
+    (92) masop -> .
+    (93) push_td -> . *
+    (94) push_td -> . /
 
-    ,               reduce using rule 99 (varcte -> recibe_CTF .)
-    *               reduce using rule 99 (varcte -> recibe_CTF .)
-    /               reduce using rule 99 (varcte -> recibe_CTF .)
-    +               reduce using rule 99 (varcte -> recibe_CTF .)
-    -               reduce using rule 99 (varcte -> recibe_CTF .)
-    ;               reduce using rule 99 (varcte -> recibe_CTF .)
-    )               reduce using rule 99 (varcte -> recibe_CTF .)
-    >               reduce using rule 99 (varcte -> recibe_CTF .)
-    <               reduce using rule 99 (varcte -> recibe_CTF .)
-    MENORIGUAL      reduce using rule 99 (varcte -> recibe_CTF .)
-    MAYORIGUAL      reduce using rule 99 (varcte -> recibe_CTF .)
-    IGUALIGUAL      reduce using rule 99 (varcte -> recibe_CTF .)
-    DIFERENTE       reduce using rule 99 (varcte -> recibe_CTF .)
-    COOR            reduce using rule 99 (varcte -> recibe_CTF .)
-    COAND           reduce using rule 99 (varcte -> recibe_CTF .)
+  ! reduce/reduce conflict for + resolved using rule 90 (checaroperador5 -> .)
+  ! reduce/reduce conflict for - resolved using rule 90 (checaroperador5 -> .)
+  ! reduce/reduce conflict for > resolved using rule 90 (checaroperador5 -> .)
+  ! reduce/reduce conflict for < resolved using rule 90 (checaroperador5 -> .)
+  ! reduce/reduce conflict for MENORIGUAL resolved using rule 90 (checaroperador5 -> .)
+  ! reduce/reduce conflict for MAYORIGUAL resolved using rule 90 (checaroperador5 -> .)
+  ! reduce/reduce conflict for IGUALIGUAL resolved using rule 90 (checaroperador5 -> .)
+  ! reduce/reduce conflict for DIFERENTE resolved using rule 90 (checaroperador5 -> .)
+  ! reduce/reduce conflict for COOR resolved using rule 90 (checaroperador5 -> .)
+  ! reduce/reduce conflict for COAND resolved using rule 90 (checaroperador5 -> .)
+  ! reduce/reduce conflict for ) resolved using rule 90 (checaroperador5 -> .)
+  ! reduce/reduce conflict for ; resolved using rule 90 (checaroperador5 -> .)
+    +               reduce using rule 90 (checaroperador5 -> .)
+    -               reduce using rule 90 (checaroperador5 -> .)
+    >               reduce using rule 90 (checaroperador5 -> .)
+    <               reduce using rule 90 (checaroperador5 -> .)
+    MENORIGUAL      reduce using rule 90 (checaroperador5 -> .)
+    MAYORIGUAL      reduce using rule 90 (checaroperador5 -> .)
+    IGUALIGUAL      reduce using rule 90 (checaroperador5 -> .)
+    DIFERENTE       reduce using rule 90 (checaroperador5 -> .)
+    COOR            reduce using rule 90 (checaroperador5 -> .)
+    COAND           reduce using rule 90 (checaroperador5 -> .)
+    )               reduce using rule 90 (checaroperador5 -> .)
+    ;               reduce using rule 90 (checaroperador5 -> .)
+    *               shift and go to state 122
+    /               shift and go to state 123
 
+  ! +               [ reduce using rule 92 (masop -> .) ]
+  ! -               [ reduce using rule 92 (masop -> .) ]
+  ! >               [ reduce using rule 92 (masop -> .) ]
+  ! <               [ reduce using rule 92 (masop -> .) ]
+  ! MENORIGUAL      [ reduce using rule 92 (masop -> .) ]
+  ! MAYORIGUAL      [ reduce using rule 92 (masop -> .) ]
+  ! IGUALIGUAL      [ reduce using rule 92 (masop -> .) ]
+  ! DIFERENTE       [ reduce using rule 92 (masop -> .) ]
+  ! COOR            [ reduce using rule 92 (masop -> .) ]
+  ! COAND           [ reduce using rule 92 (masop -> .) ]
+  ! )               [ reduce using rule 92 (masop -> .) ]
+  ! ;               [ reduce using rule 92 (masop -> .) ]
+
+    masop                          shift and go to state 124
+    push_td                        shift and go to state 126
+    checaroperador5                shift and go to state 125
 
 state 87
 
-    (76) fondoFalso -> ( .
+    (107) recibe_ID -> ID .
 
-    (               reduce using rule 76 (fondoFalso -> ( .)
-    ID              reduce using rule 76 (fondoFalso -> ( .)
-    CTF             reduce using rule 76 (fondoFalso -> ( .)
-    CTI             reduce using rule 76 (fondoFalso -> ( .)
-    TRUE            reduce using rule 76 (fondoFalso -> ( .)
-    FALSE           reduce using rule 76 (fondoFalso -> ( .)
+    *               reduce using rule 107 (recibe_ID -> ID .)
+    /               reduce using rule 107 (recibe_ID -> ID .)
+    +               reduce using rule 107 (recibe_ID -> ID .)
+    -               reduce using rule 107 (recibe_ID -> ID .)
+    >               reduce using rule 107 (recibe_ID -> ID .)
+    <               reduce using rule 107 (recibe_ID -> ID .)
+    MENORIGUAL      reduce using rule 107 (recibe_ID -> ID .)
+    MAYORIGUAL      reduce using rule 107 (recibe_ID -> ID .)
+    IGUALIGUAL      reduce using rule 107 (recibe_ID -> ID .)
+    DIFERENTE       reduce using rule 107 (recibe_ID -> ID .)
+    COOR            reduce using rule 107 (recibe_ID -> ID .)
+    COAND           reduce using rule 107 (recibe_ID -> ID .)
+    )               reduce using rule 107 (recibe_ID -> ID .)
+    ;               reduce using rule 107 (recibe_ID -> ID .)
+    ,               reduce using rule 107 (recibe_ID -> ID .)
 
 
 state 88
 
-    (98) varcte -> recibe_ID .
+    (61) condicion -> IF ( expresion . ) checarIF finPilaSaltos
+    (62) condicion -> IF ( expresion . ) bloque checarElse
 
-    ,               reduce using rule 98 (varcte -> recibe_ID .)
-    *               reduce using rule 98 (varcte -> recibe_ID .)
-    /               reduce using rule 98 (varcte -> recibe_ID .)
-    +               reduce using rule 98 (varcte -> recibe_ID .)
-    -               reduce using rule 98 (varcte -> recibe_ID .)
-    ;               reduce using rule 98 (varcte -> recibe_ID .)
-    )               reduce using rule 98 (varcte -> recibe_ID .)
-    >               reduce using rule 98 (varcte -> recibe_ID .)
-    <               reduce using rule 98 (varcte -> recibe_ID .)
-    MENORIGUAL      reduce using rule 98 (varcte -> recibe_ID .)
-    MAYORIGUAL      reduce using rule 98 (varcte -> recibe_ID .)
-    IGUALIGUAL      reduce using rule 98 (varcte -> recibe_ID .)
-    DIFERENTE       reduce using rule 98 (varcte -> recibe_ID .)
-    COOR            reduce using rule 98 (varcte -> recibe_ID .)
-    COAND           reduce using rule 98 (varcte -> recibe_ID .)
+    )               shift and go to state 127
 
 
 state 89
 
-    (84) termino -> factor . checaroperador5
-    (85) checaroperador5 -> . masop
-    (86) checaroperador5 -> .
-    (87) masop -> . push_td termino
-    (88) masop -> .
-    (89) push_td -> . *
-    (90) push_td -> . /
+    (111) recibe_FALSE -> FALSE .
 
-  ! reduce/reduce conflict for + resolved using rule 86 (checaroperador5 -> .)
-  ! reduce/reduce conflict for - resolved using rule 86 (checaroperador5 -> .)
-  ! reduce/reduce conflict for > resolved using rule 86 (checaroperador5 -> .)
-  ! reduce/reduce conflict for < resolved using rule 86 (checaroperador5 -> .)
-  ! reduce/reduce conflict for MENORIGUAL resolved using rule 86 (checaroperador5 -> .)
-  ! reduce/reduce conflict for MAYORIGUAL resolved using rule 86 (checaroperador5 -> .)
-  ! reduce/reduce conflict for IGUALIGUAL resolved using rule 86 (checaroperador5 -> .)
-  ! reduce/reduce conflict for DIFERENTE resolved using rule 86 (checaroperador5 -> .)
-  ! reduce/reduce conflict for COOR resolved using rule 86 (checaroperador5 -> .)
-  ! reduce/reduce conflict for COAND resolved using rule 86 (checaroperador5 -> .)
-  ! reduce/reduce conflict for ) resolved using rule 86 (checaroperador5 -> .)
-  ! reduce/reduce conflict for ; resolved using rule 86 (checaroperador5 -> .)
-    +               reduce using rule 86 (checaroperador5 -> .)
-    -               reduce using rule 86 (checaroperador5 -> .)
-    >               reduce using rule 86 (checaroperador5 -> .)
-    <               reduce using rule 86 (checaroperador5 -> .)
-    MENORIGUAL      reduce using rule 86 (checaroperador5 -> .)
-    MAYORIGUAL      reduce using rule 86 (checaroperador5 -> .)
-    IGUALIGUAL      reduce using rule 86 (checaroperador5 -> .)
-    DIFERENTE       reduce using rule 86 (checaroperador5 -> .)
-    COOR            reduce using rule 86 (checaroperador5 -> .)
-    COAND           reduce using rule 86 (checaroperador5 -> .)
-    )               reduce using rule 86 (checaroperador5 -> .)
-    ;               reduce using rule 86 (checaroperador5 -> .)
-    *               shift and go to state 126
-    /               shift and go to state 127
+    *               reduce using rule 111 (recibe_FALSE -> FALSE .)
+    /               reduce using rule 111 (recibe_FALSE -> FALSE .)
+    +               reduce using rule 111 (recibe_FALSE -> FALSE .)
+    -               reduce using rule 111 (recibe_FALSE -> FALSE .)
+    >               reduce using rule 111 (recibe_FALSE -> FALSE .)
+    <               reduce using rule 111 (recibe_FALSE -> FALSE .)
+    MENORIGUAL      reduce using rule 111 (recibe_FALSE -> FALSE .)
+    MAYORIGUAL      reduce using rule 111 (recibe_FALSE -> FALSE .)
+    IGUALIGUAL      reduce using rule 111 (recibe_FALSE -> FALSE .)
+    DIFERENTE       reduce using rule 111 (recibe_FALSE -> FALSE .)
+    COOR            reduce using rule 111 (recibe_FALSE -> FALSE .)
+    COAND           reduce using rule 111 (recibe_FALSE -> FALSE .)
+    )               reduce using rule 111 (recibe_FALSE -> FALSE .)
+    ,               reduce using rule 111 (recibe_FALSE -> FALSE .)
+    ;               reduce using rule 111 (recibe_FALSE -> FALSE .)
 
-  ! +               [ reduce using rule 88 (masop -> .) ]
-  ! -               [ reduce using rule 88 (masop -> .) ]
-  ! >               [ reduce using rule 88 (masop -> .) ]
-  ! <               [ reduce using rule 88 (masop -> .) ]
-  ! MENORIGUAL      [ reduce using rule 88 (masop -> .) ]
-  ! MAYORIGUAL      [ reduce using rule 88 (masop -> .) ]
-  ! IGUALIGUAL      [ reduce using rule 88 (masop -> .) ]
-  ! DIFERENTE       [ reduce using rule 88 (masop -> .) ]
-  ! COOR            [ reduce using rule 88 (masop -> .) ]
-  ! COAND           [ reduce using rule 88 (masop -> .) ]
-  ! )               [ reduce using rule 88 (masop -> .) ]
-  ! ;               [ reduce using rule 88 (masop -> .) ]
-
-    masop                          shift and go to state 128
-    push_td                        shift and go to state 130
-    checaroperador5                shift and go to state 129
 
 state 90
 
-    (103) recibe_ID -> ID .
+    (104) varcte -> recibe_CTI .
 
-    *               reduce using rule 103 (recibe_ID -> ID .)
-    /               reduce using rule 103 (recibe_ID -> ID .)
-    +               reduce using rule 103 (recibe_ID -> ID .)
-    -               reduce using rule 103 (recibe_ID -> ID .)
-    >               reduce using rule 103 (recibe_ID -> ID .)
-    <               reduce using rule 103 (recibe_ID -> ID .)
-    MENORIGUAL      reduce using rule 103 (recibe_ID -> ID .)
-    MAYORIGUAL      reduce using rule 103 (recibe_ID -> ID .)
-    IGUALIGUAL      reduce using rule 103 (recibe_ID -> ID .)
-    DIFERENTE       reduce using rule 103 (recibe_ID -> ID .)
-    COOR            reduce using rule 103 (recibe_ID -> ID .)
-    COAND           reduce using rule 103 (recibe_ID -> ID .)
-    )               reduce using rule 103 (recibe_ID -> ID .)
-    ;               reduce using rule 103 (recibe_ID -> ID .)
-    ,               reduce using rule 103 (recibe_ID -> ID .)
+    *               reduce using rule 104 (varcte -> recibe_CTI .)
+    /               reduce using rule 104 (varcte -> recibe_CTI .)
+    +               reduce using rule 104 (varcte -> recibe_CTI .)
+    -               reduce using rule 104 (varcte -> recibe_CTI .)
+    >               reduce using rule 104 (varcte -> recibe_CTI .)
+    <               reduce using rule 104 (varcte -> recibe_CTI .)
+    MENORIGUAL      reduce using rule 104 (varcte -> recibe_CTI .)
+    MAYORIGUAL      reduce using rule 104 (varcte -> recibe_CTI .)
+    IGUALIGUAL      reduce using rule 104 (varcte -> recibe_CTI .)
+    DIFERENTE       reduce using rule 104 (varcte -> recibe_CTI .)
+    COOR            reduce using rule 104 (varcte -> recibe_CTI .)
+    COAND           reduce using rule 104 (varcte -> recibe_CTI .)
+    )               reduce using rule 104 (varcte -> recibe_CTI .)
+    ;               reduce using rule 104 (varcte -> recibe_CTI .)
+    ,               reduce using rule 104 (varcte -> recibe_CTI .)
 
 
 state 91
 
-    (57) condicion -> IF ( expresion . ) checarIF finPilaSaltos
-    (58) condicion -> IF ( expresion . ) bloque checarElse
+    (66) expresion -> exp . operacionLogica checaoperador6
+    (67) expresion -> exp .
+    (76) operacionLogica -> . push_logica exp
+    (77) operacionLogica -> .
+    (68) push_logica -> . >
+    (69) push_logica -> . <
+    (70) push_logica -> . MENORIGUAL
+    (71) push_logica -> . MAYORIGUAL
+    (72) push_logica -> . IGUALIGUAL
+    (73) push_logica -> . DIFERENTE
+    (74) push_logica -> . COOR
+    (75) push_logica -> . COAND
 
-    )               shift and go to state 131
+  ! reduce/reduce conflict for ) resolved using rule 67 (expresion -> exp .)
+    )               reduce using rule 67 (expresion -> exp .)
+    >               shift and go to state 137
+    <               shift and go to state 136
+    MENORIGUAL      shift and go to state 135
+    MAYORIGUAL      shift and go to state 134
+    IGUALIGUAL      shift and go to state 131
+    DIFERENTE       shift and go to state 130
+    COOR            shift and go to state 128
+    COAND           shift and go to state 129
 
+  ! )               [ reduce using rule 77 (operacionLogica -> .) ]
+
+    operacionLogica                shift and go to state 132
+    push_logica                    shift and go to state 133
 
 state 92
 
-    (107) recibe_FALSE -> FALSE .
+    (95) factor -> fondoFalso . expresion finFondoFalso
+    (66) expresion -> . exp operacionLogica checaoperador6
+    (67) expresion -> . exp
+    (79) exp -> . termino checaroperador4
+    (88) termino -> . factor checaroperador5
+    (95) factor -> . fondoFalso expresion finFondoFalso
+    (96) factor -> . varcte
+    (80) fondoFalso -> . (
+    (102) varcte -> . recibe_ID
+    (103) varcte -> . recibe_CTF
+    (104) varcte -> . recibe_CTI
+    (105) varcte -> . recibe_TRUE
+    (106) varcte -> . recibe_FALSE
+    (107) recibe_ID -> . ID
+    (108) recibe_CTF -> . CTF
+    (109) recibe_CTI -> . CTI
+    (110) recibe_TRUE -> . TRUE
+    (111) recibe_FALSE -> . FALSE
 
-    *               reduce using rule 107 (recibe_FALSE -> FALSE .)
-    /               reduce using rule 107 (recibe_FALSE -> FALSE .)
-    +               reduce using rule 107 (recibe_FALSE -> FALSE .)
-    -               reduce using rule 107 (recibe_FALSE -> FALSE .)
-    >               reduce using rule 107 (recibe_FALSE -> FALSE .)
-    <               reduce using rule 107 (recibe_FALSE -> FALSE .)
-    MENORIGUAL      reduce using rule 107 (recibe_FALSE -> FALSE .)
-    MAYORIGUAL      reduce using rule 107 (recibe_FALSE -> FALSE .)
-    IGUALIGUAL      reduce using rule 107 (recibe_FALSE -> FALSE .)
-    DIFERENTE       reduce using rule 107 (recibe_FALSE -> FALSE .)
-    COOR            reduce using rule 107 (recibe_FALSE -> FALSE .)
-    COAND           reduce using rule 107 (recibe_FALSE -> FALSE .)
-    )               reduce using rule 107 (recibe_FALSE -> FALSE .)
-    ;               reduce using rule 107 (recibe_FALSE -> FALSE .)
-    ,               reduce using rule 107 (recibe_FALSE -> FALSE .)
+    (               shift and go to state 84
+    ID              shift and go to state 87
+    CTF             shift and go to state 77
+    CTI             shift and go to state 80
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 89
 
+    expresion                      shift and go to state 138
+    recibe_TRUE                    shift and go to state 81
+    exp                            shift and go to state 91
+    recibe_CTF                     shift and go to state 83
+    recibe_CTI                     shift and go to state 90
+    varcte                         shift and go to state 82
+    factor                         shift and go to state 86
+    recibe_ID                      shift and go to state 85
+    termino                        shift and go to state 78
+    fondoFalso                     shift and go to state 92
+    recibe_FALSE                   shift and go to state 93
 
 state 93
 
-    (100) varcte -> recibe_CTI .
+    (106) varcte -> recibe_FALSE .
 
-    ,               reduce using rule 100 (varcte -> recibe_CTI .)
-    *               reduce using rule 100 (varcte -> recibe_CTI .)
-    /               reduce using rule 100 (varcte -> recibe_CTI .)
-    +               reduce using rule 100 (varcte -> recibe_CTI .)
-    -               reduce using rule 100 (varcte -> recibe_CTI .)
-    ;               reduce using rule 100 (varcte -> recibe_CTI .)
-    )               reduce using rule 100 (varcte -> recibe_CTI .)
-    >               reduce using rule 100 (varcte -> recibe_CTI .)
-    <               reduce using rule 100 (varcte -> recibe_CTI .)
-    MENORIGUAL      reduce using rule 100 (varcte -> recibe_CTI .)
-    MAYORIGUAL      reduce using rule 100 (varcte -> recibe_CTI .)
-    IGUALIGUAL      reduce using rule 100 (varcte -> recibe_CTI .)
-    DIFERENTE       reduce using rule 100 (varcte -> recibe_CTI .)
-    COOR            reduce using rule 100 (varcte -> recibe_CTI .)
-    COAND           reduce using rule 100 (varcte -> recibe_CTI .)
+    *               reduce using rule 106 (varcte -> recibe_FALSE .)
+    /               reduce using rule 106 (varcte -> recibe_FALSE .)
+    +               reduce using rule 106 (varcte -> recibe_FALSE .)
+    -               reduce using rule 106 (varcte -> recibe_FALSE .)
+    >               reduce using rule 106 (varcte -> recibe_FALSE .)
+    <               reduce using rule 106 (varcte -> recibe_FALSE .)
+    MENORIGUAL      reduce using rule 106 (varcte -> recibe_FALSE .)
+    MAYORIGUAL      reduce using rule 106 (varcte -> recibe_FALSE .)
+    IGUALIGUAL      reduce using rule 106 (varcte -> recibe_FALSE .)
+    DIFERENTE       reduce using rule 106 (varcte -> recibe_FALSE .)
+    COOR            reduce using rule 106 (varcte -> recibe_FALSE .)
+    COAND           reduce using rule 106 (varcte -> recibe_FALSE .)
+    )               reduce using rule 106 (varcte -> recibe_FALSE .)
+    ;               reduce using rule 106 (varcte -> recibe_FALSE .)
+    ,               reduce using rule 106 (varcte -> recibe_FALSE .)
 
 
 state 94
 
-    (62) expresion -> exp . operacionLogica checaoperador6
-    (63) expresion -> exp .
-    (72) operacionLogica -> . push_logica exp
-    (73) operacionLogica -> .
-    (64) push_logica -> . >
-    (65) push_logica -> . <
-    (66) push_logica -> . MENORIGUAL
-    (67) push_logica -> . MAYORIGUAL
-    (68) push_logica -> . IGUALIGUAL
-    (69) push_logica -> . DIFERENTE
-    (70) push_logica -> . COOR
-    (71) push_logica -> . COAND
+    (51) lectura -> LEER guardarToken ID . guardarIDPila checarLectura opcionesLectura ;
+    (42) guardarIDPila -> .
 
-  ! reduce/reduce conflict for ) resolved using rule 63 (expresion -> exp .)
-    )               reduce using rule 63 (expresion -> exp .)
-    >               shift and go to state 141
-    <               shift and go to state 140
-    MENORIGUAL      shift and go to state 139
-    MAYORIGUAL      shift and go to state 138
-    IGUALIGUAL      shift and go to state 135
-    DIFERENTE       shift and go to state 134
-    COOR            shift and go to state 132
-    COAND           shift and go to state 133
+    [               reduce using rule 42 (guardarIDPila -> .)
+    ;               reduce using rule 42 (guardarIDPila -> .)
 
-  ! )               [ reduce using rule 73 (operacionLogica -> .) ]
-
-    operacionLogica                shift and go to state 136
-    push_logica                    shift and go to state 137
+    guardarIDPila                  shift and go to state 139
 
 state 95
 
-    (91) factor -> fondoFalso . expresion finFondoFalso
-    (62) expresion -> . exp operacionLogica checaoperador6
-    (63) expresion -> . exp
-    (75) exp -> . termino checaroperador4
-    (84) termino -> . factor checaroperador5
-    (91) factor -> . fondoFalso expresion finFondoFalso
-    (92) factor -> . varcte
-    (76) fondoFalso -> . (
-    (98) varcte -> . recibe_ID
-    (99) varcte -> . recibe_CTF
-    (100) varcte -> . recibe_CTI
-    (101) varcte -> . recibe_TRUE
-    (102) varcte -> . recibe_FALSE
-    (103) recibe_ID -> . ID
-    (104) recibe_CTF -> . CTF
-    (105) recibe_CTI -> . CTI
-    (106) recibe_TRUE -> . TRUE
-    (107) recibe_FALSE -> . FALSE
+    (55) escritura -> DIBUJAR guardarToken ( . ID pos color ) ;
 
-    (               shift and go to state 87
-    ID              shift and go to state 90
-    CTF             shift and go to state 80
-    CTI             shift and go to state 83
-    TRUE            shift and go to state 82
-    FALSE           shift and go to state 92
+    ID              shift and go to state 140
 
-    expresion                      shift and go to state 142
-    recibe_TRUE                    shift and go to state 84
-    exp                            shift and go to state 94
-    recibe_CTF                     shift and go to state 86
-    recibe_CTI                     shift and go to state 93
-    varcte                         shift and go to state 85
-    factor                         shift and go to state 89
-    recibe_ID                      shift and go to state 88
-    termino                        shift and go to state 81
-    fondoFalso                     shift and go to state 95
-    recibe_FALSE                   shift and go to state 96
 
 state 96
-
-    (102) varcte -> recibe_FALSE .
-
-    ,               reduce using rule 102 (varcte -> recibe_FALSE .)
-    *               reduce using rule 102 (varcte -> recibe_FALSE .)
-    /               reduce using rule 102 (varcte -> recibe_FALSE .)
-    +               reduce using rule 102 (varcte -> recibe_FALSE .)
-    -               reduce using rule 102 (varcte -> recibe_FALSE .)
-    ;               reduce using rule 102 (varcte -> recibe_FALSE .)
-    )               reduce using rule 102 (varcte -> recibe_FALSE .)
-    >               reduce using rule 102 (varcte -> recibe_FALSE .)
-    <               reduce using rule 102 (varcte -> recibe_FALSE .)
-    MENORIGUAL      reduce using rule 102 (varcte -> recibe_FALSE .)
-    MAYORIGUAL      reduce using rule 102 (varcte -> recibe_FALSE .)
-    IGUALIGUAL      reduce using rule 102 (varcte -> recibe_FALSE .)
-    DIFERENTE       reduce using rule 102 (varcte -> recibe_FALSE .)
-    COOR            reduce using rule 102 (varcte -> recibe_FALSE .)
-    COAND           reduce using rule 102 (varcte -> recibe_FALSE .)
-
-
-state 97
-
-    (48) opcionesLectura -> [ . CTI ]
-    (49) opcionesLectura -> [ . CTI ] [ CTI ]
-
-    CTI             shift and go to state 143
-
-
-state 98
-
-    (47) lectura -> LEER ID opcionesLectura . ;
-
-    ;               shift and go to state 144
-
-
-state 99
-
-    (50) opcionesLectura -> empty .
-
-    ;               reduce using rule 50 (opcionesLectura -> empty .)
-
-
-state 100
-
-    (51) escritura -> DIBUJAR ( ID . pos color ) ;
-    (93) pos -> . ( varcte , varcte )
-
-    (               shift and go to state 145
-
-    pos                            shift and go to state 146
-
-state 101
 
     (10) vars -> tipo listaIDS ; masTipos .
 
@@ -1834,7 +1777,7 @@ state 101
     RETURN          reduce using rule 10 (vars -> tipo listaIDS ; masTipos .)
 
 
-state 102
+state 97
 
     (11) masTipos -> vars .
 
@@ -1849,7 +1792,7 @@ state 102
     )               reduce using rule 11 (masTipos -> vars .)
 
 
-state 103
+state 98
 
     (12) masTipos -> empty .
 
@@ -1864,28 +1807,28 @@ state 103
     )               reduce using rule 12 (masTipos -> empty .)
 
 
-state 104
+state 99
 
     (14) masIDS -> , . ID guardarIDs
 
-    ID              shift and go to state 147
+    ID              shift and go to state 141
 
 
-state 105
+state 100
 
     (9) vars -> tipo ID guardarIDs arreglo . ; masTipos
 
-    ;               shift and go to state 148
+    ;               shift and go to state 142
 
 
-state 106
+state 101
 
     (16) arreglo -> [ . CTI ] matriz
 
-    CTI             shift and go to state 149
+    CTI             shift and go to state 143
 
 
-state 107
+state 102
 
     (8) vars -> tipo ID guardarIDs ; . masTipos
     (11) masTipos -> . vars
@@ -1893,26 +1836,26 @@ state 107
     (8) vars -> . tipo ID guardarIDs ; masTipos
     (9) vars -> . tipo ID guardarIDs arreglo ; masTipos
     (10) vars -> . tipo listaIDS ; masTipos
-    (122) empty -> .
-    (108) tipo -> . ENTERO
-    (109) tipo -> . DECIMAL
-    (110) tipo -> . BOOL
-    (111) tipo -> . VOID
-    (112) tipo -> . CUADRADO
-    (113) tipo -> . RECTANGULO
-    (114) tipo -> . CIRCULO
-    (115) tipo -> . LINEA
-    (116) tipo -> . ESTRELLA
+    (126) empty -> .
+    (112) tipo -> . ENTERO
+    (113) tipo -> . DECIMAL
+    (114) tipo -> . BOOL
+    (115) tipo -> . VOID
+    (116) tipo -> . CUADRADO
+    (117) tipo -> . RECTANGULO
+    (118) tipo -> . CIRCULO
+    (119) tipo -> . LINEA
+    (120) tipo -> . ESTRELLA
 
-    }               reduce using rule 122 (empty -> .)
-    ID              reduce using rule 122 (empty -> .)
-    DIBUJAR         reduce using rule 122 (empty -> .)
-    IF              reduce using rule 122 (empty -> .)
-    LEER            reduce using rule 122 (empty -> .)
-    WHILE           reduce using rule 122 (empty -> .)
-    MUEVE           reduce using rule 122 (empty -> .)
-    RETURN          reduce using rule 122 (empty -> .)
-    )               reduce using rule 122 (empty -> .)
+    }               reduce using rule 126 (empty -> .)
+    ID              reduce using rule 126 (empty -> .)
+    DIBUJAR         reduce using rule 126 (empty -> .)
+    IF              reduce using rule 126 (empty -> .)
+    LEER            reduce using rule 126 (empty -> .)
+    WHILE           reduce using rule 126 (empty -> .)
+    MUEVE           reduce using rule 126 (empty -> .)
+    RETURN          reduce using rule 126 (empty -> .)
+    )               reduce using rule 126 (empty -> .)
     ENTERO          shift and go to state 14
     DECIMAL         shift and go to state 6
     BOOL            shift and go to state 11
@@ -1923,48 +1866,48 @@ state 107
     LINEA           shift and go to state 12
     ESTRELLA        shift and go to state 7
 
-    masTipos                       shift and go to state 150
+    masTipos                       shift and go to state 144
     tipo                           shift and go to state 24
-    vars                           shift and go to state 102
-    empty                          shift and go to state 103
+    vars                           shift and go to state 97
+    empty                          shift and go to state 98
 
-state 108
+state 103
 
     (13) listaIDS -> ID guardarIDs masIDS .
 
     ;               reduce using rule 13 (listaIDS -> ID guardarIDs masIDS .)
 
 
-state 109
+state 104
 
     (15) masIDS -> empty .
 
     ;               reduce using rule 15 (masIDS -> empty .)
 
 
-state 110
+state 105
 
     (22) listapaID -> ID guardarIDs . maspaID maspaTip
     (24) maspaID -> . , ID guardarIDs
     (25) maspaID -> . empty
-    (122) empty -> .
+    (126) empty -> .
 
-    ,               shift and go to state 152
-    ENTERO          reduce using rule 122 (empty -> .)
-    DECIMAL         reduce using rule 122 (empty -> .)
-    BOOL            reduce using rule 122 (empty -> .)
-    VOID            reduce using rule 122 (empty -> .)
-    CUADRADO        reduce using rule 122 (empty -> .)
-    RECTANGULO      reduce using rule 122 (empty -> .)
-    CIRCULO         reduce using rule 122 (empty -> .)
-    LINEA           reduce using rule 122 (empty -> .)
-    ESTRELLA        reduce using rule 122 (empty -> .)
-    )               reduce using rule 122 (empty -> .)
+    ,               shift and go to state 146
+    ENTERO          reduce using rule 126 (empty -> .)
+    DECIMAL         reduce using rule 126 (empty -> .)
+    BOOL            reduce using rule 126 (empty -> .)
+    VOID            reduce using rule 126 (empty -> .)
+    CUADRADO        reduce using rule 126 (empty -> .)
+    RECTANGULO      reduce using rule 126 (empty -> .)
+    CIRCULO         reduce using rule 126 (empty -> .)
+    LINEA           reduce using rule 126 (empty -> .)
+    ESTRELLA        reduce using rule 126 (empty -> .)
+    )               reduce using rule 126 (empty -> .)
 
-    maspaID                        shift and go to state 151
-    empty                          shift and go to state 153
+    maspaID                        shift and go to state 145
+    empty                          shift and go to state 147
 
-state 111
+state 106
 
     (28) bloquefunc -> { . vars estatuto regresa }
     (29) bloquefunc -> { . vars regresa }
@@ -1973,20 +1916,20 @@ state 111
     (8) vars -> . tipo ID guardarIDs ; masTipos
     (9) vars -> . tipo ID guardarIDs arreglo ; masTipos
     (10) vars -> . tipo listaIDS ; masTipos
-    (51) escritura -> . DIBUJAR ( ID pos color ) ;
-    (52) escritura -> . mueve
-    (108) tipo -> . ENTERO
-    (109) tipo -> . DECIMAL
-    (110) tipo -> . BOOL
-    (111) tipo -> . VOID
-    (112) tipo -> . CUADRADO
-    (113) tipo -> . RECTANGULO
-    (114) tipo -> . CIRCULO
-    (115) tipo -> . LINEA
-    (116) tipo -> . ESTRELLA
-    (117) mueve -> . MUEVE opcionMue
+    (55) escritura -> . DIBUJAR guardarToken ( ID pos color ) ;
+    (56) escritura -> . mueve
+    (112) tipo -> . ENTERO
+    (113) tipo -> . DECIMAL
+    (114) tipo -> . BOOL
+    (115) tipo -> . VOID
+    (116) tipo -> . CUADRADO
+    (117) tipo -> . RECTANGULO
+    (118) tipo -> . CIRCULO
+    (119) tipo -> . LINEA
+    (120) tipo -> . ESTRELLA
+    (121) mueve -> . MUEVE opcionMue
 
-    }               shift and go to state 155
+    }               shift and go to state 149
     DIBUJAR         shift and go to state 38
     ENTERO          shift and go to state 14
     DECIMAL         shift and go to state 6
@@ -1999,12 +1942,12 @@ state 111
     ESTRELLA        shift and go to state 7
     MUEVE           shift and go to state 28
 
-    vars                           shift and go to state 154
+    vars                           shift and go to state 148
     tipo                           shift and go to state 24
     mueve                          shift and go to state 30
-    escritura                      shift and go to state 156
+    escritura                      shift and go to state 150
 
-state 112
+state 107
 
     (19) funcion -> FUNC tipo ID funcAgregar ( param ) bloquefunc .
 
@@ -2012,499 +1955,482 @@ state 112
     FUNC            reduce using rule 19 (funcion -> FUNC tipo ID funcAgregar ( param ) bloquefunc .)
 
 
+state 108
+
+    (98) whiles -> WHILE checarWhile ( expresion . ) checarContenido bloque finPilaSaltosWhile
+
+    )               shift and go to state 151
+
+
+state 109
+
+    (125) opcionMue -> ABAJO ID CTI . ;
+
+    ;               shift and go to state 152
+
+
+state 110
+
+    (122) opcionMue -> IZQUIERDA ID CTI . ;
+
+    ;               shift and go to state 153
+
+
+state 111
+
+    (124) opcionMue -> ARRIBA ID CTI . ;
+
+    ;               shift and go to state 154
+
+
+state 112
+
+    (123) opcionMue -> DERECHA ID CTI . ;
+
+    ;               shift and go to state 155
+
+
 state 113
 
-    (94) whiles -> WHILE checarWhile ( expresion . ) checarContenido bloque finPilaSaltosWhile
+    (40) asignacion -> ID guardarIDPila opcionAsignacion valorAsig . ; checarOperadorIgual
 
-    )               shift and go to state 157
+    ;               shift and go to state 156
 
 
 state 114
 
-    (121) opcionMue -> ABAJO ID CTI . ;
+    (47) valorAsig -> = . exp
+    (79) exp -> . termino checaroperador4
+    (88) termino -> . factor checaroperador5
+    (95) factor -> . fondoFalso expresion finFondoFalso
+    (96) factor -> . varcte
+    (80) fondoFalso -> . (
+    (102) varcte -> . recibe_ID
+    (103) varcte -> . recibe_CTF
+    (104) varcte -> . recibe_CTI
+    (105) varcte -> . recibe_TRUE
+    (106) varcte -> . recibe_FALSE
+    (107) recibe_ID -> . ID
+    (108) recibe_CTF -> . CTF
+    (109) recibe_CTI -> . CTI
+    (110) recibe_TRUE -> . TRUE
+    (111) recibe_FALSE -> . FALSE
 
-    ;               shift and go to state 158
+    (               shift and go to state 84
+    ID              shift and go to state 87
+    CTF             shift and go to state 77
+    CTI             shift and go to state 80
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 89
 
+    varcte                         shift and go to state 82
+    recibe_TRUE                    shift and go to state 81
+    exp                            shift and go to state 157
+    recibe_CTF                     shift and go to state 83
+    recibe_CTI                     shift and go to state 90
+    recibe_ID                      shift and go to state 85
+    termino                        shift and go to state 78
+    factor                         shift and go to state 86
+    recibe_FALSE                   shift and go to state 93
+    fondoFalso                     shift and go to state 92
 
 state 115
 
-    (118) opcionMue -> IZQUIERDA ID CTI . ;
+    (48) valorAsig -> empty .
 
-    ;               shift and go to state 159
+    ;               reduce using rule 48 (valorAsig -> empty .)
 
 
 state 116
 
-    (120) opcionMue -> ARRIBA ID CTI . ;
+    (44) opcionAsignacion -> [ CTI . ]
+    (45) opcionAsignacion -> [ CTI . ] [ CTI ]
 
-    ;               shift and go to state 160
+    ]               shift and go to state 158
 
 
 state 117
 
-    (119) opcionMue -> DERECHA ID CTI . ;
+    (86) push_pm -> + .
 
-    ;               shift and go to state 161
+    (               reduce using rule 86 (push_pm -> + .)
+    ID              reduce using rule 86 (push_pm -> + .)
+    CTF             reduce using rule 86 (push_pm -> + .)
+    CTI             reduce using rule 86 (push_pm -> + .)
+    TRUE            reduce using rule 86 (push_pm -> + .)
+    FALSE           reduce using rule 86 (push_pm -> + .)
 
 
 state 118
 
-    (40) asignacion -> ID opcionAsignacion valorAsig ; .
+    (82) checaroperador4 -> signo .
 
-    ID              reduce using rule 40 (asignacion -> ID opcionAsignacion valorAsig ; .)
-    DIBUJAR         reduce using rule 40 (asignacion -> ID opcionAsignacion valorAsig ; .)
-    IF              reduce using rule 40 (asignacion -> ID opcionAsignacion valorAsig ; .)
-    LEER            reduce using rule 40 (asignacion -> ID opcionAsignacion valorAsig ; .)
-    WHILE           reduce using rule 40 (asignacion -> ID opcionAsignacion valorAsig ; .)
-    MUEVE           reduce using rule 40 (asignacion -> ID opcionAsignacion valorAsig ; .)
-    }               reduce using rule 40 (asignacion -> ID opcionAsignacion valorAsig ; .)
-    RETURN          reduce using rule 40 (asignacion -> ID opcionAsignacion valorAsig ; .)
+    >               reduce using rule 82 (checaroperador4 -> signo .)
+    <               reduce using rule 82 (checaroperador4 -> signo .)
+    MENORIGUAL      reduce using rule 82 (checaroperador4 -> signo .)
+    MAYORIGUAL      reduce using rule 82 (checaroperador4 -> signo .)
+    IGUALIGUAL      reduce using rule 82 (checaroperador4 -> signo .)
+    DIFERENTE       reduce using rule 82 (checaroperador4 -> signo .)
+    COOR            reduce using rule 82 (checaroperador4 -> signo .)
+    COAND           reduce using rule 82 (checaroperador4 -> signo .)
+    )               reduce using rule 82 (checaroperador4 -> signo .)
+    ;               reduce using rule 82 (checaroperador4 -> signo .)
 
 
 state 119
 
-    (45) valorAsig -> = exp .
+    (87) push_pm -> - .
 
-    ;               reduce using rule 45 (valorAsig -> = exp .)
+    (               reduce using rule 87 (push_pm -> - .)
+    ID              reduce using rule 87 (push_pm -> - .)
+    CTF             reduce using rule 87 (push_pm -> - .)
+    CTI             reduce using rule 87 (push_pm -> - .)
+    TRUE            reduce using rule 87 (push_pm -> - .)
+    FALSE           reduce using rule 87 (push_pm -> - .)
 
 
 state 120
 
-    (42) opcionAsignacion -> [ CTI ] .
-    (43) opcionAsignacion -> [ CTI ] . [ CTI ]
+    (79) exp -> termino checaroperador4 .
 
-    =               reduce using rule 42 (opcionAsignacion -> [ CTI ] .)
-    ;               reduce using rule 42 (opcionAsignacion -> [ CTI ] .)
-    [               shift and go to state 162
+    )               reduce using rule 79 (exp -> termino checaroperador4 .)
+    >               reduce using rule 79 (exp -> termino checaroperador4 .)
+    <               reduce using rule 79 (exp -> termino checaroperador4 .)
+    MENORIGUAL      reduce using rule 79 (exp -> termino checaroperador4 .)
+    MAYORIGUAL      reduce using rule 79 (exp -> termino checaroperador4 .)
+    IGUALIGUAL      reduce using rule 79 (exp -> termino checaroperador4 .)
+    DIFERENTE       reduce using rule 79 (exp -> termino checaroperador4 .)
+    COOR            reduce using rule 79 (exp -> termino checaroperador4 .)
+    COAND           reduce using rule 79 (exp -> termino checaroperador4 .)
+    ;               reduce using rule 79 (exp -> termino checaroperador4 .)
 
 
 state 121
 
-    (82) push_pm -> + .
+    (84) signo -> push_pm . exp
+    (79) exp -> . termino checaroperador4
+    (88) termino -> . factor checaroperador5
+    (95) factor -> . fondoFalso expresion finFondoFalso
+    (96) factor -> . varcte
+    (80) fondoFalso -> . (
+    (102) varcte -> . recibe_ID
+    (103) varcte -> . recibe_CTF
+    (104) varcte -> . recibe_CTI
+    (105) varcte -> . recibe_TRUE
+    (106) varcte -> . recibe_FALSE
+    (107) recibe_ID -> . ID
+    (108) recibe_CTF -> . CTF
+    (109) recibe_CTI -> . CTI
+    (110) recibe_TRUE -> . TRUE
+    (111) recibe_FALSE -> . FALSE
 
-    (               reduce using rule 82 (push_pm -> + .)
-    ID              reduce using rule 82 (push_pm -> + .)
-    CTF             reduce using rule 82 (push_pm -> + .)
-    CTI             reduce using rule 82 (push_pm -> + .)
-    TRUE            reduce using rule 82 (push_pm -> + .)
-    FALSE           reduce using rule 82 (push_pm -> + .)
+    (               shift and go to state 84
+    ID              shift and go to state 87
+    CTF             shift and go to state 77
+    CTI             shift and go to state 80
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 89
 
+    varcte                         shift and go to state 82
+    recibe_TRUE                    shift and go to state 81
+    exp                            shift and go to state 159
+    recibe_CTF                     shift and go to state 83
+    recibe_CTI                     shift and go to state 90
+    recibe_ID                      shift and go to state 85
+    termino                        shift and go to state 78
+    factor                         shift and go to state 86
+    recibe_FALSE                   shift and go to state 93
+    fondoFalso                     shift and go to state 92
 
 state 122
 
-    (78) checaroperador4 -> signo .
+    (93) push_td -> * .
 
-    >               reduce using rule 78 (checaroperador4 -> signo .)
-    <               reduce using rule 78 (checaroperador4 -> signo .)
-    MENORIGUAL      reduce using rule 78 (checaroperador4 -> signo .)
-    MAYORIGUAL      reduce using rule 78 (checaroperador4 -> signo .)
-    IGUALIGUAL      reduce using rule 78 (checaroperador4 -> signo .)
-    DIFERENTE       reduce using rule 78 (checaroperador4 -> signo .)
-    COOR            reduce using rule 78 (checaroperador4 -> signo .)
-    COAND           reduce using rule 78 (checaroperador4 -> signo .)
-    )               reduce using rule 78 (checaroperador4 -> signo .)
-    ;               reduce using rule 78 (checaroperador4 -> signo .)
+    (               reduce using rule 93 (push_td -> * .)
+    ID              reduce using rule 93 (push_td -> * .)
+    CTF             reduce using rule 93 (push_td -> * .)
+    CTI             reduce using rule 93 (push_td -> * .)
+    TRUE            reduce using rule 93 (push_td -> * .)
+    FALSE           reduce using rule 93 (push_td -> * .)
 
 
 state 123
 
-    (83) push_pm -> - .
+    (94) push_td -> / .
 
-    (               reduce using rule 83 (push_pm -> - .)
-    ID              reduce using rule 83 (push_pm -> - .)
-    CTF             reduce using rule 83 (push_pm -> - .)
-    CTI             reduce using rule 83 (push_pm -> - .)
-    TRUE            reduce using rule 83 (push_pm -> - .)
-    FALSE           reduce using rule 83 (push_pm -> - .)
+    (               reduce using rule 94 (push_td -> / .)
+    ID              reduce using rule 94 (push_td -> / .)
+    CTF             reduce using rule 94 (push_td -> / .)
+    CTI             reduce using rule 94 (push_td -> / .)
+    TRUE            reduce using rule 94 (push_td -> / .)
+    FALSE           reduce using rule 94 (push_td -> / .)
 
 
 state 124
 
-    (75) exp -> termino checaroperador4 .
+    (89) checaroperador5 -> masop .
 
-    >               reduce using rule 75 (exp -> termino checaroperador4 .)
-    <               reduce using rule 75 (exp -> termino checaroperador4 .)
-    MENORIGUAL      reduce using rule 75 (exp -> termino checaroperador4 .)
-    MAYORIGUAL      reduce using rule 75 (exp -> termino checaroperador4 .)
-    IGUALIGUAL      reduce using rule 75 (exp -> termino checaroperador4 .)
-    DIFERENTE       reduce using rule 75 (exp -> termino checaroperador4 .)
-    COOR            reduce using rule 75 (exp -> termino checaroperador4 .)
-    COAND           reduce using rule 75 (exp -> termino checaroperador4 .)
-    )               reduce using rule 75 (exp -> termino checaroperador4 .)
-    ;               reduce using rule 75 (exp -> termino checaroperador4 .)
+    +               reduce using rule 89 (checaroperador5 -> masop .)
+    -               reduce using rule 89 (checaroperador5 -> masop .)
+    >               reduce using rule 89 (checaroperador5 -> masop .)
+    <               reduce using rule 89 (checaroperador5 -> masop .)
+    MENORIGUAL      reduce using rule 89 (checaroperador5 -> masop .)
+    MAYORIGUAL      reduce using rule 89 (checaroperador5 -> masop .)
+    IGUALIGUAL      reduce using rule 89 (checaroperador5 -> masop .)
+    DIFERENTE       reduce using rule 89 (checaroperador5 -> masop .)
+    COOR            reduce using rule 89 (checaroperador5 -> masop .)
+    COAND           reduce using rule 89 (checaroperador5 -> masop .)
+    )               reduce using rule 89 (checaroperador5 -> masop .)
+    ;               reduce using rule 89 (checaroperador5 -> masop .)
 
 
 state 125
 
-    (80) signo -> push_pm . exp
-    (75) exp -> . termino checaroperador4
-    (84) termino -> . factor checaroperador5
-    (91) factor -> . fondoFalso expresion finFondoFalso
-    (92) factor -> . varcte
-    (76) fondoFalso -> . (
-    (98) varcte -> . recibe_ID
-    (99) varcte -> . recibe_CTF
-    (100) varcte -> . recibe_CTI
-    (101) varcte -> . recibe_TRUE
-    (102) varcte -> . recibe_FALSE
-    (103) recibe_ID -> . ID
-    (104) recibe_CTF -> . CTF
-    (105) recibe_CTI -> . CTI
-    (106) recibe_TRUE -> . TRUE
-    (107) recibe_FALSE -> . FALSE
+    (88) termino -> factor checaroperador5 .
 
-    (               shift and go to state 87
-    ID              shift and go to state 90
-    CTF             shift and go to state 80
-    CTI             shift and go to state 83
-    TRUE            shift and go to state 82
-    FALSE           shift and go to state 92
+    +               reduce using rule 88 (termino -> factor checaroperador5 .)
+    -               reduce using rule 88 (termino -> factor checaroperador5 .)
+    >               reduce using rule 88 (termino -> factor checaroperador5 .)
+    <               reduce using rule 88 (termino -> factor checaroperador5 .)
+    MENORIGUAL      reduce using rule 88 (termino -> factor checaroperador5 .)
+    MAYORIGUAL      reduce using rule 88 (termino -> factor checaroperador5 .)
+    IGUALIGUAL      reduce using rule 88 (termino -> factor checaroperador5 .)
+    DIFERENTE       reduce using rule 88 (termino -> factor checaroperador5 .)
+    COOR            reduce using rule 88 (termino -> factor checaroperador5 .)
+    COAND           reduce using rule 88 (termino -> factor checaroperador5 .)
+    )               reduce using rule 88 (termino -> factor checaroperador5 .)
+    ;               reduce using rule 88 (termino -> factor checaroperador5 .)
 
-    varcte                         shift and go to state 85
-    recibe_TRUE                    shift and go to state 84
-    exp                            shift and go to state 163
-    recibe_CTF                     shift and go to state 86
-    recibe_CTI                     shift and go to state 93
-    recibe_ID                      shift and go to state 88
-    termino                        shift and go to state 81
-    factor                         shift and go to state 89
-    recibe_FALSE                   shift and go to state 96
-    fondoFalso                     shift and go to state 95
 
 state 126
 
-    (89) push_td -> * .
+    (91) masop -> push_td . termino
+    (88) termino -> . factor checaroperador5
+    (95) factor -> . fondoFalso expresion finFondoFalso
+    (96) factor -> . varcte
+    (80) fondoFalso -> . (
+    (102) varcte -> . recibe_ID
+    (103) varcte -> . recibe_CTF
+    (104) varcte -> . recibe_CTI
+    (105) varcte -> . recibe_TRUE
+    (106) varcte -> . recibe_FALSE
+    (107) recibe_ID -> . ID
+    (108) recibe_CTF -> . CTF
+    (109) recibe_CTI -> . CTI
+    (110) recibe_TRUE -> . TRUE
+    (111) recibe_FALSE -> . FALSE
 
-    (               reduce using rule 89 (push_td -> * .)
-    ID              reduce using rule 89 (push_td -> * .)
-    CTF             reduce using rule 89 (push_td -> * .)
-    CTI             reduce using rule 89 (push_td -> * .)
-    TRUE            reduce using rule 89 (push_td -> * .)
-    FALSE           reduce using rule 89 (push_td -> * .)
+    (               shift and go to state 84
+    ID              shift and go to state 87
+    CTF             shift and go to state 77
+    CTI             shift and go to state 80
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 89
 
+    recibe_TRUE                    shift and go to state 81
+    varcte                         shift and go to state 82
+    recibe_CTF                     shift and go to state 83
+    recibe_CTI                     shift and go to state 90
+    recibe_ID                      shift and go to state 85
+    termino                        shift and go to state 160
+    factor                         shift and go to state 86
+    recibe_FALSE                   shift and go to state 93
+    fondoFalso                     shift and go to state 92
 
 state 127
 
-    (90) push_td -> / .
-
-    (               reduce using rule 90 (push_td -> / .)
-    ID              reduce using rule 90 (push_td -> / .)
-    CTF             reduce using rule 90 (push_td -> / .)
-    CTI             reduce using rule 90 (push_td -> / .)
-    TRUE            reduce using rule 90 (push_td -> / .)
-    FALSE           reduce using rule 90 (push_td -> / .)
-
-
-state 128
-
-    (85) checaroperador5 -> masop .
-
-    +               reduce using rule 85 (checaroperador5 -> masop .)
-    -               reduce using rule 85 (checaroperador5 -> masop .)
-    >               reduce using rule 85 (checaroperador5 -> masop .)
-    <               reduce using rule 85 (checaroperador5 -> masop .)
-    MENORIGUAL      reduce using rule 85 (checaroperador5 -> masop .)
-    MAYORIGUAL      reduce using rule 85 (checaroperador5 -> masop .)
-    IGUALIGUAL      reduce using rule 85 (checaroperador5 -> masop .)
-    DIFERENTE       reduce using rule 85 (checaroperador5 -> masop .)
-    COOR            reduce using rule 85 (checaroperador5 -> masop .)
-    COAND           reduce using rule 85 (checaroperador5 -> masop .)
-    )               reduce using rule 85 (checaroperador5 -> masop .)
-    ;               reduce using rule 85 (checaroperador5 -> masop .)
-
-
-state 129
-
-    (84) termino -> factor checaroperador5 .
-
-    +               reduce using rule 84 (termino -> factor checaroperador5 .)
-    -               reduce using rule 84 (termino -> factor checaroperador5 .)
-    >               reduce using rule 84 (termino -> factor checaroperador5 .)
-    <               reduce using rule 84 (termino -> factor checaroperador5 .)
-    MENORIGUAL      reduce using rule 84 (termino -> factor checaroperador5 .)
-    MAYORIGUAL      reduce using rule 84 (termino -> factor checaroperador5 .)
-    IGUALIGUAL      reduce using rule 84 (termino -> factor checaroperador5 .)
-    DIFERENTE       reduce using rule 84 (termino -> factor checaroperador5 .)
-    COOR            reduce using rule 84 (termino -> factor checaroperador5 .)
-    COAND           reduce using rule 84 (termino -> factor checaroperador5 .)
-    )               reduce using rule 84 (termino -> factor checaroperador5 .)
-    ;               reduce using rule 84 (termino -> factor checaroperador5 .)
-
-
-state 130
-
-    (87) masop -> push_td . termino
-    (84) termino -> . factor checaroperador5
-    (91) factor -> . fondoFalso expresion finFondoFalso
-    (92) factor -> . varcte
-    (76) fondoFalso -> . (
-    (98) varcte -> . recibe_ID
-    (99) varcte -> . recibe_CTF
-    (100) varcte -> . recibe_CTI
-    (101) varcte -> . recibe_TRUE
-    (102) varcte -> . recibe_FALSE
-    (103) recibe_ID -> . ID
-    (104) recibe_CTF -> . CTF
-    (105) recibe_CTI -> . CTI
-    (106) recibe_TRUE -> . TRUE
-    (107) recibe_FALSE -> . FALSE
-
-    (               shift and go to state 87
-    ID              shift and go to state 90
-    CTF             shift and go to state 80
-    CTI             shift and go to state 83
-    TRUE            shift and go to state 82
-    FALSE           shift and go to state 92
-
-    recibe_TRUE                    shift and go to state 84
-    varcte                         shift and go to state 85
-    recibe_CTF                     shift and go to state 86
-    recibe_CTI                     shift and go to state 93
-    recibe_ID                      shift and go to state 88
-    termino                        shift and go to state 164
-    factor                         shift and go to state 89
-    recibe_FALSE                   shift and go to state 96
-    fondoFalso                     shift and go to state 95
-
-state 131
-
-    (57) condicion -> IF ( expresion ) . checarIF finPilaSaltos
-    (58) condicion -> IF ( expresion ) . bloque checarElse
-    (59) checarIF -> . bloque
+    (61) condicion -> IF ( expresion ) . checarIF finPilaSaltos
+    (62) condicion -> IF ( expresion ) . bloque checarElse
+    (63) checarIF -> . bloque
     (5) bloque -> . { vars estatuto }
     (6) bloque -> . { vars }
     (7) bloque -> . { }
 
     {               shift and go to state 20
 
-    checarIF                       shift and go to state 165
-    bloque                         shift and go to state 166
+    checarIF                       shift and go to state 161
+    bloque                         shift and go to state 162
+
+state 128
+
+    (74) push_logica -> COOR .
+
+    (               reduce using rule 74 (push_logica -> COOR .)
+    ID              reduce using rule 74 (push_logica -> COOR .)
+    CTF             reduce using rule 74 (push_logica -> COOR .)
+    CTI             reduce using rule 74 (push_logica -> COOR .)
+    TRUE            reduce using rule 74 (push_logica -> COOR .)
+    FALSE           reduce using rule 74 (push_logica -> COOR .)
+
+
+state 129
+
+    (75) push_logica -> COAND .
+
+    (               reduce using rule 75 (push_logica -> COAND .)
+    ID              reduce using rule 75 (push_logica -> COAND .)
+    CTF             reduce using rule 75 (push_logica -> COAND .)
+    CTI             reduce using rule 75 (push_logica -> COAND .)
+    TRUE            reduce using rule 75 (push_logica -> COAND .)
+    FALSE           reduce using rule 75 (push_logica -> COAND .)
+
+
+state 130
+
+    (73) push_logica -> DIFERENTE .
+
+    (               reduce using rule 73 (push_logica -> DIFERENTE .)
+    ID              reduce using rule 73 (push_logica -> DIFERENTE .)
+    CTF             reduce using rule 73 (push_logica -> DIFERENTE .)
+    CTI             reduce using rule 73 (push_logica -> DIFERENTE .)
+    TRUE            reduce using rule 73 (push_logica -> DIFERENTE .)
+    FALSE           reduce using rule 73 (push_logica -> DIFERENTE .)
+
+
+state 131
+
+    (72) push_logica -> IGUALIGUAL .
+
+    (               reduce using rule 72 (push_logica -> IGUALIGUAL .)
+    ID              reduce using rule 72 (push_logica -> IGUALIGUAL .)
+    CTF             reduce using rule 72 (push_logica -> IGUALIGUAL .)
+    CTI             reduce using rule 72 (push_logica -> IGUALIGUAL .)
+    TRUE            reduce using rule 72 (push_logica -> IGUALIGUAL .)
+    FALSE           reduce using rule 72 (push_logica -> IGUALIGUAL .)
+
 
 state 132
 
-    (70) push_logica -> COOR .
+    (66) expresion -> exp operacionLogica . checaoperador6
+    (78) checaoperador6 -> .
 
-    (               reduce using rule 70 (push_logica -> COOR .)
-    ID              reduce using rule 70 (push_logica -> COOR .)
-    CTF             reduce using rule 70 (push_logica -> COOR .)
-    CTI             reduce using rule 70 (push_logica -> COOR .)
-    TRUE            reduce using rule 70 (push_logica -> COOR .)
-    FALSE           reduce using rule 70 (push_logica -> COOR .)
+    )               reduce using rule 78 (checaoperador6 -> .)
 
+    checaoperador6                 shift and go to state 163
 
 state 133
 
-    (71) push_logica -> COAND .
+    (76) operacionLogica -> push_logica . exp
+    (79) exp -> . termino checaroperador4
+    (88) termino -> . factor checaroperador5
+    (95) factor -> . fondoFalso expresion finFondoFalso
+    (96) factor -> . varcte
+    (80) fondoFalso -> . (
+    (102) varcte -> . recibe_ID
+    (103) varcte -> . recibe_CTF
+    (104) varcte -> . recibe_CTI
+    (105) varcte -> . recibe_TRUE
+    (106) varcte -> . recibe_FALSE
+    (107) recibe_ID -> . ID
+    (108) recibe_CTF -> . CTF
+    (109) recibe_CTI -> . CTI
+    (110) recibe_TRUE -> . TRUE
+    (111) recibe_FALSE -> . FALSE
 
-    (               reduce using rule 71 (push_logica -> COAND .)
-    ID              reduce using rule 71 (push_logica -> COAND .)
-    CTF             reduce using rule 71 (push_logica -> COAND .)
-    CTI             reduce using rule 71 (push_logica -> COAND .)
-    TRUE            reduce using rule 71 (push_logica -> COAND .)
-    FALSE           reduce using rule 71 (push_logica -> COAND .)
+    (               shift and go to state 84
+    ID              shift and go to state 87
+    CTF             shift and go to state 77
+    CTI             shift and go to state 80
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 89
 
+    varcte                         shift and go to state 82
+    recibe_TRUE                    shift and go to state 81
+    exp                            shift and go to state 164
+    recibe_CTF                     shift and go to state 83
+    recibe_CTI                     shift and go to state 90
+    recibe_ID                      shift and go to state 85
+    termino                        shift and go to state 78
+    factor                         shift and go to state 86
+    recibe_FALSE                   shift and go to state 93
+    fondoFalso                     shift and go to state 92
 
 state 134
 
-    (69) push_logica -> DIFERENTE .
+    (71) push_logica -> MAYORIGUAL .
 
-    (               reduce using rule 69 (push_logica -> DIFERENTE .)
-    ID              reduce using rule 69 (push_logica -> DIFERENTE .)
-    CTF             reduce using rule 69 (push_logica -> DIFERENTE .)
-    CTI             reduce using rule 69 (push_logica -> DIFERENTE .)
-    TRUE            reduce using rule 69 (push_logica -> DIFERENTE .)
-    FALSE           reduce using rule 69 (push_logica -> DIFERENTE .)
+    (               reduce using rule 71 (push_logica -> MAYORIGUAL .)
+    ID              reduce using rule 71 (push_logica -> MAYORIGUAL .)
+    CTF             reduce using rule 71 (push_logica -> MAYORIGUAL .)
+    CTI             reduce using rule 71 (push_logica -> MAYORIGUAL .)
+    TRUE            reduce using rule 71 (push_logica -> MAYORIGUAL .)
+    FALSE           reduce using rule 71 (push_logica -> MAYORIGUAL .)
 
 
 state 135
 
-    (68) push_logica -> IGUALIGUAL .
+    (70) push_logica -> MENORIGUAL .
 
-    (               reduce using rule 68 (push_logica -> IGUALIGUAL .)
-    ID              reduce using rule 68 (push_logica -> IGUALIGUAL .)
-    CTF             reduce using rule 68 (push_logica -> IGUALIGUAL .)
-    CTI             reduce using rule 68 (push_logica -> IGUALIGUAL .)
-    TRUE            reduce using rule 68 (push_logica -> IGUALIGUAL .)
-    FALSE           reduce using rule 68 (push_logica -> IGUALIGUAL .)
+    (               reduce using rule 70 (push_logica -> MENORIGUAL .)
+    ID              reduce using rule 70 (push_logica -> MENORIGUAL .)
+    CTF             reduce using rule 70 (push_logica -> MENORIGUAL .)
+    CTI             reduce using rule 70 (push_logica -> MENORIGUAL .)
+    TRUE            reduce using rule 70 (push_logica -> MENORIGUAL .)
+    FALSE           reduce using rule 70 (push_logica -> MENORIGUAL .)
 
 
 state 136
 
-    (62) expresion -> exp operacionLogica . checaoperador6
-    (74) checaoperador6 -> .
+    (69) push_logica -> < .
 
-    )               reduce using rule 74 (checaoperador6 -> .)
+    (               reduce using rule 69 (push_logica -> < .)
+    ID              reduce using rule 69 (push_logica -> < .)
+    CTF             reduce using rule 69 (push_logica -> < .)
+    CTI             reduce using rule 69 (push_logica -> < .)
+    TRUE            reduce using rule 69 (push_logica -> < .)
+    FALSE           reduce using rule 69 (push_logica -> < .)
 
-    checaoperador6                 shift and go to state 167
 
 state 137
 
-    (72) operacionLogica -> push_logica . exp
-    (75) exp -> . termino checaroperador4
-    (84) termino -> . factor checaroperador5
-    (91) factor -> . fondoFalso expresion finFondoFalso
-    (92) factor -> . varcte
-    (76) fondoFalso -> . (
-    (98) varcte -> . recibe_ID
-    (99) varcte -> . recibe_CTF
-    (100) varcte -> . recibe_CTI
-    (101) varcte -> . recibe_TRUE
-    (102) varcte -> . recibe_FALSE
-    (103) recibe_ID -> . ID
-    (104) recibe_CTF -> . CTF
-    (105) recibe_CTI -> . CTI
-    (106) recibe_TRUE -> . TRUE
-    (107) recibe_FALSE -> . FALSE
+    (68) push_logica -> > .
 
-    (               shift and go to state 87
-    ID              shift and go to state 90
-    CTF             shift and go to state 80
-    CTI             shift and go to state 83
-    TRUE            shift and go to state 82
-    FALSE           shift and go to state 92
+    (               reduce using rule 68 (push_logica -> > .)
+    ID              reduce using rule 68 (push_logica -> > .)
+    CTF             reduce using rule 68 (push_logica -> > .)
+    CTI             reduce using rule 68 (push_logica -> > .)
+    TRUE            reduce using rule 68 (push_logica -> > .)
+    FALSE           reduce using rule 68 (push_logica -> > .)
 
-    varcte                         shift and go to state 85
-    recibe_TRUE                    shift and go to state 84
-    exp                            shift and go to state 168
-    recibe_CTF                     shift and go to state 86
-    recibe_CTI                     shift and go to state 93
-    recibe_ID                      shift and go to state 88
-    termino                        shift and go to state 81
-    factor                         shift and go to state 89
-    recibe_FALSE                   shift and go to state 96
-    fondoFalso                     shift and go to state 95
 
 state 138
 
-    (67) push_logica -> MAYORIGUAL .
+    (95) factor -> fondoFalso expresion . finFondoFalso
+    (81) finFondoFalso -> . )
 
-    (               reduce using rule 67 (push_logica -> MAYORIGUAL .)
-    ID              reduce using rule 67 (push_logica -> MAYORIGUAL .)
-    CTF             reduce using rule 67 (push_logica -> MAYORIGUAL .)
-    CTI             reduce using rule 67 (push_logica -> MAYORIGUAL .)
-    TRUE            reduce using rule 67 (push_logica -> MAYORIGUAL .)
-    FALSE           reduce using rule 67 (push_logica -> MAYORIGUAL .)
+    )               shift and go to state 165
 
+    finFondoFalso                  shift and go to state 166
 
 state 139
 
-    (66) push_logica -> MENORIGUAL .
+    (51) lectura -> LEER guardarToken ID guardarIDPila . checarLectura opcionesLectura ;
+    (50) checarLectura -> .
 
-    (               reduce using rule 66 (push_logica -> MENORIGUAL .)
-    ID              reduce using rule 66 (push_logica -> MENORIGUAL .)
-    CTF             reduce using rule 66 (push_logica -> MENORIGUAL .)
-    CTI             reduce using rule 66 (push_logica -> MENORIGUAL .)
-    TRUE            reduce using rule 66 (push_logica -> MENORIGUAL .)
-    FALSE           reduce using rule 66 (push_logica -> MENORIGUAL .)
+    [               reduce using rule 50 (checarLectura -> .)
+    ;               reduce using rule 50 (checarLectura -> .)
 
+    checarLectura                  shift and go to state 167
 
 state 140
 
-    (65) push_logica -> < .
+    (55) escritura -> DIBUJAR guardarToken ( ID . pos color ) ;
+    (97) pos -> . ( varcte , varcte )
 
-    (               reduce using rule 65 (push_logica -> < .)
-    ID              reduce using rule 65 (push_logica -> < .)
-    CTF             reduce using rule 65 (push_logica -> < .)
-    CTI             reduce using rule 65 (push_logica -> < .)
-    TRUE            reduce using rule 65 (push_logica -> < .)
-    FALSE           reduce using rule 65 (push_logica -> < .)
+    (               shift and go to state 168
 
+    pos                            shift and go to state 169
 
 state 141
-
-    (64) push_logica -> > .
-
-    (               reduce using rule 64 (push_logica -> > .)
-    ID              reduce using rule 64 (push_logica -> > .)
-    CTF             reduce using rule 64 (push_logica -> > .)
-    CTI             reduce using rule 64 (push_logica -> > .)
-    TRUE            reduce using rule 64 (push_logica -> > .)
-    FALSE           reduce using rule 64 (push_logica -> > .)
-
-
-state 142
-
-    (91) factor -> fondoFalso expresion . finFondoFalso
-    (77) finFondoFalso -> . )
-
-    )               shift and go to state 169
-
-    finFondoFalso                  shift and go to state 170
-
-state 143
-
-    (48) opcionesLectura -> [ CTI . ]
-    (49) opcionesLectura -> [ CTI . ] [ CTI ]
-
-    ]               shift and go to state 171
-
-
-state 144
-
-    (47) lectura -> LEER ID opcionesLectura ; .
-
-    ID              reduce using rule 47 (lectura -> LEER ID opcionesLectura ; .)
-    DIBUJAR         reduce using rule 47 (lectura -> LEER ID opcionesLectura ; .)
-    IF              reduce using rule 47 (lectura -> LEER ID opcionesLectura ; .)
-    LEER            reduce using rule 47 (lectura -> LEER ID opcionesLectura ; .)
-    WHILE           reduce using rule 47 (lectura -> LEER ID opcionesLectura ; .)
-    MUEVE           reduce using rule 47 (lectura -> LEER ID opcionesLectura ; .)
-    }               reduce using rule 47 (lectura -> LEER ID opcionesLectura ; .)
-    RETURN          reduce using rule 47 (lectura -> LEER ID opcionesLectura ; .)
-
-
-state 145
-
-    (93) pos -> ( . varcte , varcte )
-    (98) varcte -> . recibe_ID
-    (99) varcte -> . recibe_CTF
-    (100) varcte -> . recibe_CTI
-    (101) varcte -> . recibe_TRUE
-    (102) varcte -> . recibe_FALSE
-    (103) recibe_ID -> . ID
-    (104) recibe_CTF -> . CTF
-    (105) recibe_CTI -> . CTI
-    (106) recibe_TRUE -> . TRUE
-    (107) recibe_FALSE -> . FALSE
-
-    ID              shift and go to state 90
-    CTF             shift and go to state 80
-    CTI             shift and go to state 83
-    TRUE            shift and go to state 82
-    FALSE           shift and go to state 92
-
-    recibe_TRUE                    shift and go to state 84
-    varcte                         shift and go to state 172
-    recibe_CTF                     shift and go to state 86
-    recibe_CTI                     shift and go to state 93
-    recibe_ID                      shift and go to state 88
-    recibe_FALSE                   shift and go to state 96
-
-state 146
-
-    (51) escritura -> DIBUJAR ( ID pos . color ) ;
-    (53) color -> . AMARILLO
-    (54) color -> . VERDE
-    (55) color -> . ROJO
-    (56) color -> . AZUL
-
-    AMARILLO        shift and go to state 175
-    VERDE           shift and go to state 177
-    ROJO            shift and go to state 173
-    AZUL            shift and go to state 176
-
-    color                          shift and go to state 174
-
-state 147
 
     (14) masIDS -> , ID . guardarIDs
     (23) guardarIDs -> .
 
     ;               reduce using rule 23 (guardarIDs -> .)
 
-    guardarIDs                     shift and go to state 178
+    guardarIDs                     shift and go to state 170
 
-state 148
+state 142
 
     (9) vars -> tipo ID guardarIDs arreglo ; . masTipos
     (11) masTipos -> . vars
@@ -2512,26 +2438,26 @@ state 148
     (8) vars -> . tipo ID guardarIDs ; masTipos
     (9) vars -> . tipo ID guardarIDs arreglo ; masTipos
     (10) vars -> . tipo listaIDS ; masTipos
-    (122) empty -> .
-    (108) tipo -> . ENTERO
-    (109) tipo -> . DECIMAL
-    (110) tipo -> . BOOL
-    (111) tipo -> . VOID
-    (112) tipo -> . CUADRADO
-    (113) tipo -> . RECTANGULO
-    (114) tipo -> . CIRCULO
-    (115) tipo -> . LINEA
-    (116) tipo -> . ESTRELLA
+    (126) empty -> .
+    (112) tipo -> . ENTERO
+    (113) tipo -> . DECIMAL
+    (114) tipo -> . BOOL
+    (115) tipo -> . VOID
+    (116) tipo -> . CUADRADO
+    (117) tipo -> . RECTANGULO
+    (118) tipo -> . CIRCULO
+    (119) tipo -> . LINEA
+    (120) tipo -> . ESTRELLA
 
-    }               reduce using rule 122 (empty -> .)
-    ID              reduce using rule 122 (empty -> .)
-    DIBUJAR         reduce using rule 122 (empty -> .)
-    IF              reduce using rule 122 (empty -> .)
-    LEER            reduce using rule 122 (empty -> .)
-    WHILE           reduce using rule 122 (empty -> .)
-    MUEVE           reduce using rule 122 (empty -> .)
-    RETURN          reduce using rule 122 (empty -> .)
-    )               reduce using rule 122 (empty -> .)
+    }               reduce using rule 126 (empty -> .)
+    ID              reduce using rule 126 (empty -> .)
+    DIBUJAR         reduce using rule 126 (empty -> .)
+    IF              reduce using rule 126 (empty -> .)
+    LEER            reduce using rule 126 (empty -> .)
+    WHILE           reduce using rule 126 (empty -> .)
+    MUEVE           reduce using rule 126 (empty -> .)
+    RETURN          reduce using rule 126 (empty -> .)
+    )               reduce using rule 126 (empty -> .)
     ENTERO          shift and go to state 14
     DECIMAL         shift and go to state 6
     BOOL            shift and go to state 11
@@ -2542,19 +2468,19 @@ state 148
     LINEA           shift and go to state 12
     ESTRELLA        shift and go to state 7
 
-    masTipos                       shift and go to state 179
+    masTipos                       shift and go to state 171
     tipo                           shift and go to state 24
-    vars                           shift and go to state 102
-    empty                          shift and go to state 103
+    vars                           shift and go to state 97
+    empty                          shift and go to state 98
 
-state 149
+state 143
 
     (16) arreglo -> [ CTI . ] matriz
 
-    ]               shift and go to state 180
+    ]               shift and go to state 172
 
 
-state 150
+state 144
 
     (8) vars -> tipo ID guardarIDs ; masTipos .
 
@@ -2569,7 +2495,7 @@ state 150
     RETURN          reduce using rule 8 (vars -> tipo ID guardarIDs ; masTipos .)
 
 
-state 151
+state 145
 
     (22) listapaID -> ID guardarIDs maspaID . maspaTip
     (26) maspaTip -> . vars
@@ -2577,18 +2503,18 @@ state 151
     (8) vars -> . tipo ID guardarIDs ; masTipos
     (9) vars -> . tipo ID guardarIDs arreglo ; masTipos
     (10) vars -> . tipo listaIDS ; masTipos
-    (122) empty -> .
-    (108) tipo -> . ENTERO
-    (109) tipo -> . DECIMAL
-    (110) tipo -> . BOOL
-    (111) tipo -> . VOID
-    (112) tipo -> . CUADRADO
-    (113) tipo -> . RECTANGULO
-    (114) tipo -> . CIRCULO
-    (115) tipo -> . LINEA
-    (116) tipo -> . ESTRELLA
+    (126) empty -> .
+    (112) tipo -> . ENTERO
+    (113) tipo -> . DECIMAL
+    (114) tipo -> . BOOL
+    (115) tipo -> . VOID
+    (116) tipo -> . CUADRADO
+    (117) tipo -> . RECTANGULO
+    (118) tipo -> . CIRCULO
+    (119) tipo -> . LINEA
+    (120) tipo -> . ESTRELLA
 
-    )               reduce using rule 122 (empty -> .)
+    )               reduce using rule 126 (empty -> .)
     ENTERO          shift and go to state 14
     DECIMAL         shift and go to state 6
     BOOL            shift and go to state 11
@@ -2599,19 +2525,19 @@ state 151
     LINEA           shift and go to state 12
     ESTRELLA        shift and go to state 7
 
-    vars                           shift and go to state 181
+    vars                           shift and go to state 173
     tipo                           shift and go to state 24
-    maspaTip                       shift and go to state 182
-    empty                          shift and go to state 183
+    maspaTip                       shift and go to state 174
+    empty                          shift and go to state 175
 
-state 152
+state 146
 
     (24) maspaID -> , . ID guardarIDs
 
-    ID              shift and go to state 184
+    ID              shift and go to state 176
 
 
-state 153
+state 147
 
     (25) maspaID -> empty .
 
@@ -2627,7 +2553,7 @@ state 153
     )               reduce using rule 25 (maspaID -> empty .)
 
 
-state 154
+state 148
 
     (28) bloquefunc -> { vars . estatuto regresa }
     (29) bloquefunc -> { vars . regresa }
@@ -2637,17 +2563,17 @@ state 154
     (36) estatuto -> . lectura estatutoAux
     (37) estatuto -> . whiles estatutoAux
     (32) regresa -> . RETURN ID
-    (40) asignacion -> . ID opcionAsignacion valorAsig ;
+    (40) asignacion -> . ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual
     (41) asignacion -> . ID ;
-    (51) escritura -> . DIBUJAR ( ID pos color ) ;
-    (52) escritura -> . mueve
-    (57) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (58) condicion -> . IF ( expresion ) bloque checarElse
-    (47) lectura -> . LEER ID opcionesLectura ;
-    (94) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
-    (117) mueve -> . MUEVE opcionMue
+    (55) escritura -> . DIBUJAR guardarToken ( ID pos color ) ;
+    (56) escritura -> . mueve
+    (61) condicion -> . IF ( expresion ) checarIF finPilaSaltos
+    (62) condicion -> . IF ( expresion ) bloque checarElse
+    (51) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
+    (98) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile
+    (121) mueve -> . MUEVE opcionMue
 
-    RETURN          shift and go to state 185
+    RETURN          shift and go to state 177
     ID              shift and go to state 34
     DIBUJAR         shift and go to state 38
     IF              shift and go to state 35
@@ -2655,16 +2581,16 @@ state 154
     WHILE           shift and go to state 27
     MUEVE           shift and go to state 28
 
-    estatuto                       shift and go to state 186
+    estatuto                       shift and go to state 178
     mueve                          shift and go to state 30
     condicion                      shift and go to state 31
     lectura                        shift and go to state 32
     whiles                         shift and go to state 33
     asignacion                     shift and go to state 37
-    regresa                        shift and go to state 187
+    regresa                        shift and go to state 179
     escritura                      shift and go to state 40
 
-state 155
+state 149
 
     (31) bloquefunc -> { } .
 
@@ -2672,268 +2598,299 @@ state 155
     FUNC            reduce using rule 31 (bloquefunc -> { } .)
 
 
-state 156
+state 150
 
     (30) bloquefunc -> { escritura . regresa }
     (32) regresa -> . RETURN ID
 
-    RETURN          shift and go to state 185
+    RETURN          shift and go to state 177
 
-    regresa                        shift and go to state 188
+    regresa                        shift and go to state 180
+
+state 151
+
+    (98) whiles -> WHILE checarWhile ( expresion ) . checarContenido bloque finPilaSaltosWhile
+    (100) checarContenido -> .
+
+    {               reduce using rule 100 (checarContenido -> .)
+
+    checarContenido                shift and go to state 181
+
+state 152
+
+    (125) opcionMue -> ABAJO ID CTI ; .
+
+    ID              reduce using rule 125 (opcionMue -> ABAJO ID CTI ; .)
+    DIBUJAR         reduce using rule 125 (opcionMue -> ABAJO ID CTI ; .)
+    IF              reduce using rule 125 (opcionMue -> ABAJO ID CTI ; .)
+    LEER            reduce using rule 125 (opcionMue -> ABAJO ID CTI ; .)
+    WHILE           reduce using rule 125 (opcionMue -> ABAJO ID CTI ; .)
+    MUEVE           reduce using rule 125 (opcionMue -> ABAJO ID CTI ; .)
+    }               reduce using rule 125 (opcionMue -> ABAJO ID CTI ; .)
+    RETURN          reduce using rule 125 (opcionMue -> ABAJO ID CTI ; .)
+
+
+state 153
+
+    (122) opcionMue -> IZQUIERDA ID CTI ; .
+
+    ID              reduce using rule 122 (opcionMue -> IZQUIERDA ID CTI ; .)
+    DIBUJAR         reduce using rule 122 (opcionMue -> IZQUIERDA ID CTI ; .)
+    IF              reduce using rule 122 (opcionMue -> IZQUIERDA ID CTI ; .)
+    LEER            reduce using rule 122 (opcionMue -> IZQUIERDA ID CTI ; .)
+    WHILE           reduce using rule 122 (opcionMue -> IZQUIERDA ID CTI ; .)
+    MUEVE           reduce using rule 122 (opcionMue -> IZQUIERDA ID CTI ; .)
+    }               reduce using rule 122 (opcionMue -> IZQUIERDA ID CTI ; .)
+    RETURN          reduce using rule 122 (opcionMue -> IZQUIERDA ID CTI ; .)
+
+
+state 154
+
+    (124) opcionMue -> ARRIBA ID CTI ; .
+
+    ID              reduce using rule 124 (opcionMue -> ARRIBA ID CTI ; .)
+    DIBUJAR         reduce using rule 124 (opcionMue -> ARRIBA ID CTI ; .)
+    IF              reduce using rule 124 (opcionMue -> ARRIBA ID CTI ; .)
+    LEER            reduce using rule 124 (opcionMue -> ARRIBA ID CTI ; .)
+    WHILE           reduce using rule 124 (opcionMue -> ARRIBA ID CTI ; .)
+    MUEVE           reduce using rule 124 (opcionMue -> ARRIBA ID CTI ; .)
+    }               reduce using rule 124 (opcionMue -> ARRIBA ID CTI ; .)
+    RETURN          reduce using rule 124 (opcionMue -> ARRIBA ID CTI ; .)
+
+
+state 155
+
+    (123) opcionMue -> DERECHA ID CTI ; .
+
+    ID              reduce using rule 123 (opcionMue -> DERECHA ID CTI ; .)
+    DIBUJAR         reduce using rule 123 (opcionMue -> DERECHA ID CTI ; .)
+    IF              reduce using rule 123 (opcionMue -> DERECHA ID CTI ; .)
+    LEER            reduce using rule 123 (opcionMue -> DERECHA ID CTI ; .)
+    WHILE           reduce using rule 123 (opcionMue -> DERECHA ID CTI ; .)
+    MUEVE           reduce using rule 123 (opcionMue -> DERECHA ID CTI ; .)
+    }               reduce using rule 123 (opcionMue -> DERECHA ID CTI ; .)
+    RETURN          reduce using rule 123 (opcionMue -> DERECHA ID CTI ; .)
+
+
+state 156
+
+    (40) asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; . checarOperadorIgual
+    (43) checarOperadorIgual -> .
+
+    ID              reduce using rule 43 (checarOperadorIgual -> .)
+    DIBUJAR         reduce using rule 43 (checarOperadorIgual -> .)
+    IF              reduce using rule 43 (checarOperadorIgual -> .)
+    LEER            reduce using rule 43 (checarOperadorIgual -> .)
+    WHILE           reduce using rule 43 (checarOperadorIgual -> .)
+    MUEVE           reduce using rule 43 (checarOperadorIgual -> .)
+    }               reduce using rule 43 (checarOperadorIgual -> .)
+    RETURN          reduce using rule 43 (checarOperadorIgual -> .)
+
+    checarOperadorIgual            shift and go to state 182
 
 state 157
 
-    (94) whiles -> WHILE checarWhile ( expresion ) . checarContenido bloque finPilaSaltosWhile
-    (96) checarContenido -> .
+    (47) valorAsig -> = exp .
 
-    {               reduce using rule 96 (checarContenido -> .)
+    ;               reduce using rule 47 (valorAsig -> = exp .)
 
-    checarContenido                shift and go to state 189
 
 state 158
 
-    (121) opcionMue -> ABAJO ID CTI ; .
+    (44) opcionAsignacion -> [ CTI ] .
+    (45) opcionAsignacion -> [ CTI ] . [ CTI ]
 
-    ID              reduce using rule 121 (opcionMue -> ABAJO ID CTI ; .)
-    DIBUJAR         reduce using rule 121 (opcionMue -> ABAJO ID CTI ; .)
-    IF              reduce using rule 121 (opcionMue -> ABAJO ID CTI ; .)
-    LEER            reduce using rule 121 (opcionMue -> ABAJO ID CTI ; .)
-    WHILE           reduce using rule 121 (opcionMue -> ABAJO ID CTI ; .)
-    MUEVE           reduce using rule 121 (opcionMue -> ABAJO ID CTI ; .)
-    }               reduce using rule 121 (opcionMue -> ABAJO ID CTI ; .)
-    RETURN          reduce using rule 121 (opcionMue -> ABAJO ID CTI ; .)
+    =               reduce using rule 44 (opcionAsignacion -> [ CTI ] .)
+    ;               reduce using rule 44 (opcionAsignacion -> [ CTI ] .)
+    [               shift and go to state 183
 
 
 state 159
 
-    (118) opcionMue -> IZQUIERDA ID CTI ; .
+    (84) signo -> push_pm exp .
 
-    ID              reduce using rule 118 (opcionMue -> IZQUIERDA ID CTI ; .)
-    DIBUJAR         reduce using rule 118 (opcionMue -> IZQUIERDA ID CTI ; .)
-    IF              reduce using rule 118 (opcionMue -> IZQUIERDA ID CTI ; .)
-    LEER            reduce using rule 118 (opcionMue -> IZQUIERDA ID CTI ; .)
-    WHILE           reduce using rule 118 (opcionMue -> IZQUIERDA ID CTI ; .)
-    MUEVE           reduce using rule 118 (opcionMue -> IZQUIERDA ID CTI ; .)
-    }               reduce using rule 118 (opcionMue -> IZQUIERDA ID CTI ; .)
-    RETURN          reduce using rule 118 (opcionMue -> IZQUIERDA ID CTI ; .)
+    >               reduce using rule 84 (signo -> push_pm exp .)
+    <               reduce using rule 84 (signo -> push_pm exp .)
+    MENORIGUAL      reduce using rule 84 (signo -> push_pm exp .)
+    MAYORIGUAL      reduce using rule 84 (signo -> push_pm exp .)
+    IGUALIGUAL      reduce using rule 84 (signo -> push_pm exp .)
+    DIFERENTE       reduce using rule 84 (signo -> push_pm exp .)
+    COOR            reduce using rule 84 (signo -> push_pm exp .)
+    COAND           reduce using rule 84 (signo -> push_pm exp .)
+    )               reduce using rule 84 (signo -> push_pm exp .)
+    ;               reduce using rule 84 (signo -> push_pm exp .)
 
 
 state 160
 
-    (120) opcionMue -> ARRIBA ID CTI ; .
+    (91) masop -> push_td termino .
 
-    ID              reduce using rule 120 (opcionMue -> ARRIBA ID CTI ; .)
-    DIBUJAR         reduce using rule 120 (opcionMue -> ARRIBA ID CTI ; .)
-    IF              reduce using rule 120 (opcionMue -> ARRIBA ID CTI ; .)
-    LEER            reduce using rule 120 (opcionMue -> ARRIBA ID CTI ; .)
-    WHILE           reduce using rule 120 (opcionMue -> ARRIBA ID CTI ; .)
-    MUEVE           reduce using rule 120 (opcionMue -> ARRIBA ID CTI ; .)
-    }               reduce using rule 120 (opcionMue -> ARRIBA ID CTI ; .)
-    RETURN          reduce using rule 120 (opcionMue -> ARRIBA ID CTI ; .)
+    +               reduce using rule 91 (masop -> push_td termino .)
+    -               reduce using rule 91 (masop -> push_td termino .)
+    >               reduce using rule 91 (masop -> push_td termino .)
+    <               reduce using rule 91 (masop -> push_td termino .)
+    MENORIGUAL      reduce using rule 91 (masop -> push_td termino .)
+    MAYORIGUAL      reduce using rule 91 (masop -> push_td termino .)
+    IGUALIGUAL      reduce using rule 91 (masop -> push_td termino .)
+    DIFERENTE       reduce using rule 91 (masop -> push_td termino .)
+    COOR            reduce using rule 91 (masop -> push_td termino .)
+    COAND           reduce using rule 91 (masop -> push_td termino .)
+    )               reduce using rule 91 (masop -> push_td termino .)
+    ;               reduce using rule 91 (masop -> push_td termino .)
 
 
 state 161
 
-    (119) opcionMue -> DERECHA ID CTI ; .
+    (61) condicion -> IF ( expresion ) checarIF . finPilaSaltos
+    (65) finPilaSaltos -> .
 
-    ID              reduce using rule 119 (opcionMue -> DERECHA ID CTI ; .)
-    DIBUJAR         reduce using rule 119 (opcionMue -> DERECHA ID CTI ; .)
-    IF              reduce using rule 119 (opcionMue -> DERECHA ID CTI ; .)
-    LEER            reduce using rule 119 (opcionMue -> DERECHA ID CTI ; .)
-    WHILE           reduce using rule 119 (opcionMue -> DERECHA ID CTI ; .)
-    MUEVE           reduce using rule 119 (opcionMue -> DERECHA ID CTI ; .)
-    }               reduce using rule 119 (opcionMue -> DERECHA ID CTI ; .)
-    RETURN          reduce using rule 119 (opcionMue -> DERECHA ID CTI ; .)
+    ID              reduce using rule 65 (finPilaSaltos -> .)
+    DIBUJAR         reduce using rule 65 (finPilaSaltos -> .)
+    IF              reduce using rule 65 (finPilaSaltos -> .)
+    LEER            reduce using rule 65 (finPilaSaltos -> .)
+    WHILE           reduce using rule 65 (finPilaSaltos -> .)
+    MUEVE           reduce using rule 65 (finPilaSaltos -> .)
+    }               reduce using rule 65 (finPilaSaltos -> .)
+    RETURN          reduce using rule 65 (finPilaSaltos -> .)
 
+    finPilaSaltos                  shift and go to state 184
 
 state 162
 
-    (43) opcionAsignacion -> [ CTI ] [ . CTI ]
+    (62) condicion -> IF ( expresion ) bloque . checarElse
+    (63) checarIF -> bloque .
+    (64) checarElse -> . ELSE bloque finPilaSaltos
 
-    CTI             shift and go to state 190
+    ID              reduce using rule 63 (checarIF -> bloque .)
+    DIBUJAR         reduce using rule 63 (checarIF -> bloque .)
+    IF              reduce using rule 63 (checarIF -> bloque .)
+    LEER            reduce using rule 63 (checarIF -> bloque .)
+    WHILE           reduce using rule 63 (checarIF -> bloque .)
+    MUEVE           reduce using rule 63 (checarIF -> bloque .)
+    }               reduce using rule 63 (checarIF -> bloque .)
+    RETURN          reduce using rule 63 (checarIF -> bloque .)
+    ELSE            shift and go to state 186
 
+    checarElse                     shift and go to state 185
 
 state 163
 
-    (80) signo -> push_pm exp .
+    (66) expresion -> exp operacionLogica checaoperador6 .
 
-    >               reduce using rule 80 (signo -> push_pm exp .)
-    <               reduce using rule 80 (signo -> push_pm exp .)
-    MENORIGUAL      reduce using rule 80 (signo -> push_pm exp .)
-    MAYORIGUAL      reduce using rule 80 (signo -> push_pm exp .)
-    IGUALIGUAL      reduce using rule 80 (signo -> push_pm exp .)
-    DIFERENTE       reduce using rule 80 (signo -> push_pm exp .)
-    COOR            reduce using rule 80 (signo -> push_pm exp .)
-    COAND           reduce using rule 80 (signo -> push_pm exp .)
-    )               reduce using rule 80 (signo -> push_pm exp .)
-    ;               reduce using rule 80 (signo -> push_pm exp .)
+    )               reduce using rule 66 (expresion -> exp operacionLogica checaoperador6 .)
 
 
 state 164
 
-    (87) masop -> push_td termino .
+    (76) operacionLogica -> push_logica exp .
 
-    +               reduce using rule 87 (masop -> push_td termino .)
-    -               reduce using rule 87 (masop -> push_td termino .)
-    >               reduce using rule 87 (masop -> push_td termino .)
-    <               reduce using rule 87 (masop -> push_td termino .)
-    MENORIGUAL      reduce using rule 87 (masop -> push_td termino .)
-    MAYORIGUAL      reduce using rule 87 (masop -> push_td termino .)
-    IGUALIGUAL      reduce using rule 87 (masop -> push_td termino .)
-    DIFERENTE       reduce using rule 87 (masop -> push_td termino .)
-    COOR            reduce using rule 87 (masop -> push_td termino .)
-    COAND           reduce using rule 87 (masop -> push_td termino .)
-    )               reduce using rule 87 (masop -> push_td termino .)
-    ;               reduce using rule 87 (masop -> push_td termino .)
+    )               reduce using rule 76 (operacionLogica -> push_logica exp .)
 
 
 state 165
 
-    (57) condicion -> IF ( expresion ) checarIF . finPilaSaltos
-    (61) finPilaSaltos -> .
+    (81) finFondoFalso -> ) .
 
-    ID              reduce using rule 61 (finPilaSaltos -> .)
-    DIBUJAR         reduce using rule 61 (finPilaSaltos -> .)
-    IF              reduce using rule 61 (finPilaSaltos -> .)
-    LEER            reduce using rule 61 (finPilaSaltos -> .)
-    WHILE           reduce using rule 61 (finPilaSaltos -> .)
-    MUEVE           reduce using rule 61 (finPilaSaltos -> .)
-    }               reduce using rule 61 (finPilaSaltos -> .)
-    RETURN          reduce using rule 61 (finPilaSaltos -> .)
+    *               reduce using rule 81 (finFondoFalso -> ) .)
+    /               reduce using rule 81 (finFondoFalso -> ) .)
+    +               reduce using rule 81 (finFondoFalso -> ) .)
+    -               reduce using rule 81 (finFondoFalso -> ) .)
+    >               reduce using rule 81 (finFondoFalso -> ) .)
+    <               reduce using rule 81 (finFondoFalso -> ) .)
+    MENORIGUAL      reduce using rule 81 (finFondoFalso -> ) .)
+    MAYORIGUAL      reduce using rule 81 (finFondoFalso -> ) .)
+    IGUALIGUAL      reduce using rule 81 (finFondoFalso -> ) .)
+    DIFERENTE       reduce using rule 81 (finFondoFalso -> ) .)
+    COOR            reduce using rule 81 (finFondoFalso -> ) .)
+    COAND           reduce using rule 81 (finFondoFalso -> ) .)
+    )               reduce using rule 81 (finFondoFalso -> ) .)
+    ;               reduce using rule 81 (finFondoFalso -> ) .)
 
-    finPilaSaltos                  shift and go to state 191
 
 state 166
 
-    (58) condicion -> IF ( expresion ) bloque . checarElse
-    (59) checarIF -> bloque .
-    (60) checarElse -> . ELSE bloque finPilaSaltos
+    (95) factor -> fondoFalso expresion finFondoFalso .
 
-    ID              reduce using rule 59 (checarIF -> bloque .)
-    DIBUJAR         reduce using rule 59 (checarIF -> bloque .)
-    IF              reduce using rule 59 (checarIF -> bloque .)
-    LEER            reduce using rule 59 (checarIF -> bloque .)
-    WHILE           reduce using rule 59 (checarIF -> bloque .)
-    MUEVE           reduce using rule 59 (checarIF -> bloque .)
-    }               reduce using rule 59 (checarIF -> bloque .)
-    RETURN          reduce using rule 59 (checarIF -> bloque .)
-    ELSE            shift and go to state 193
+    *               reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    /               reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    +               reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    -               reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    >               reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    <               reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    MENORIGUAL      reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    MAYORIGUAL      reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    IGUALIGUAL      reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    DIFERENTE       reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    COOR            reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    COAND           reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    )               reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
+    ;               reduce using rule 95 (factor -> fondoFalso expresion finFondoFalso .)
 
-    checarElse                     shift and go to state 192
 
 state 167
 
-    (62) expresion -> exp operacionLogica checaoperador6 .
+    (51) lectura -> LEER guardarToken ID guardarIDPila checarLectura . opcionesLectura ;
+    (52) opcionesLectura -> . [ CTI ]
+    (53) opcionesLectura -> . [ CTI ] [ CTI ]
+    (54) opcionesLectura -> . empty
+    (126) empty -> .
 
-    )               reduce using rule 62 (expresion -> exp operacionLogica checaoperador6 .)
+    [               shift and go to state 187
+    ;               reduce using rule 126 (empty -> .)
 
+    empty                          shift and go to state 189
+    opcionesLectura                shift and go to state 188
 
 state 168
 
-    (72) operacionLogica -> push_logica exp .
+    (97) pos -> ( . varcte , varcte )
+    (102) varcte -> . recibe_ID
+    (103) varcte -> . recibe_CTF
+    (104) varcte -> . recibe_CTI
+    (105) varcte -> . recibe_TRUE
+    (106) varcte -> . recibe_FALSE
+    (107) recibe_ID -> . ID
+    (108) recibe_CTF -> . CTF
+    (109) recibe_CTI -> . CTI
+    (110) recibe_TRUE -> . TRUE
+    (111) recibe_FALSE -> . FALSE
 
-    )               reduce using rule 72 (operacionLogica -> push_logica exp .)
+    ID              shift and go to state 87
+    CTF             shift and go to state 77
+    CTI             shift and go to state 80
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 89
 
+    recibe_TRUE                    shift and go to state 81
+    varcte                         shift and go to state 190
+    recibe_CTF                     shift and go to state 83
+    recibe_CTI                     shift and go to state 90
+    recibe_ID                      shift and go to state 85
+    recibe_FALSE                   shift and go to state 93
 
 state 169
 
-    (77) finFondoFalso -> ) .
+    (55) escritura -> DIBUJAR guardarToken ( ID pos . color ) ;
+    (57) color -> . AMARILLO
+    (58) color -> . VERDE
+    (59) color -> . ROJO
+    (60) color -> . AZUL
 
-    *               reduce using rule 77 (finFondoFalso -> ) .)
-    /               reduce using rule 77 (finFondoFalso -> ) .)
-    +               reduce using rule 77 (finFondoFalso -> ) .)
-    -               reduce using rule 77 (finFondoFalso -> ) .)
-    >               reduce using rule 77 (finFondoFalso -> ) .)
-    <               reduce using rule 77 (finFondoFalso -> ) .)
-    MENORIGUAL      reduce using rule 77 (finFondoFalso -> ) .)
-    MAYORIGUAL      reduce using rule 77 (finFondoFalso -> ) .)
-    IGUALIGUAL      reduce using rule 77 (finFondoFalso -> ) .)
-    DIFERENTE       reduce using rule 77 (finFondoFalso -> ) .)
-    COOR            reduce using rule 77 (finFondoFalso -> ) .)
-    COAND           reduce using rule 77 (finFondoFalso -> ) .)
-    )               reduce using rule 77 (finFondoFalso -> ) .)
-    ;               reduce using rule 77 (finFondoFalso -> ) .)
+    AMARILLO        shift and go to state 193
+    VERDE           shift and go to state 195
+    ROJO            shift and go to state 191
+    AZUL            shift and go to state 194
 
+    color                          shift and go to state 192
 
 state 170
-
-    (91) factor -> fondoFalso expresion finFondoFalso .
-
-    *               reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    /               reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    +               reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    -               reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    )               reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    >               reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    <               reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    MENORIGUAL      reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    MAYORIGUAL      reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    IGUALIGUAL      reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    DIFERENTE       reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    COOR            reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    COAND           reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-    ;               reduce using rule 91 (factor -> fondoFalso expresion finFondoFalso .)
-
-
-state 171
-
-    (48) opcionesLectura -> [ CTI ] .
-    (49) opcionesLectura -> [ CTI ] . [ CTI ]
-
-    ;               reduce using rule 48 (opcionesLectura -> [ CTI ] .)
-    [               shift and go to state 194
-
-
-state 172
-
-    (93) pos -> ( varcte . , varcte )
-
-    ,               shift and go to state 195
-
-
-state 173
-
-    (55) color -> ROJO .
-
-    )               reduce using rule 55 (color -> ROJO .)
-
-
-state 174
-
-    (51) escritura -> DIBUJAR ( ID pos color . ) ;
-
-    )               shift and go to state 196
-
-
-state 175
-
-    (53) color -> AMARILLO .
-
-    )               reduce using rule 53 (color -> AMARILLO .)
-
-
-state 176
-
-    (56) color -> AZUL .
-
-    )               reduce using rule 56 (color -> AZUL .)
-
-
-state 177
-
-    (54) color -> VERDE .
-
-    )               reduce using rule 54 (color -> VERDE .)
-
-
-state 178
 
     (14) masIDS -> , ID guardarIDs .
 
     ;               reduce using rule 14 (masIDS -> , ID guardarIDs .)
 
 
-state 179
+state 171
 
     (9) vars -> tipo ID guardarIDs arreglo ; masTipos .
 
@@ -2948,41 +2905,41 @@ state 179
     RETURN          reduce using rule 9 (vars -> tipo ID guardarIDs arreglo ; masTipos .)
 
 
-state 180
+state 172
 
     (16) arreglo -> [ CTI ] . matriz
     (17) matriz -> . [ CTI ]
     (18) matriz -> . empty
-    (122) empty -> .
+    (126) empty -> .
 
-    [               shift and go to state 197
-    ;               reduce using rule 122 (empty -> .)
+    [               shift and go to state 196
+    ;               reduce using rule 126 (empty -> .)
 
-    empty                          shift and go to state 198
-    matriz                         shift and go to state 199
+    empty                          shift and go to state 197
+    matriz                         shift and go to state 198
 
-state 181
+state 173
 
     (26) maspaTip -> vars .
 
     )               reduce using rule 26 (maspaTip -> vars .)
 
 
-state 182
+state 174
 
     (22) listapaID -> ID guardarIDs maspaID maspaTip .
 
     )               reduce using rule 22 (listapaID -> ID guardarIDs maspaID maspaTip .)
 
 
-state 183
+state 175
 
     (27) maspaTip -> empty .
 
     )               reduce using rule 27 (maspaTip -> empty .)
 
 
-state 184
+state 176
 
     (24) maspaID -> , ID . guardarIDs
     (23) guardarIDs -> .
@@ -2998,158 +2955,195 @@ state 184
     ESTRELLA        reduce using rule 23 (guardarIDs -> .)
     )               reduce using rule 23 (guardarIDs -> .)
 
-    guardarIDs                     shift and go to state 200
+    guardarIDs                     shift and go to state 199
 
-state 185
+state 177
 
     (32) regresa -> RETURN . ID
 
-    ID              shift and go to state 201
+    ID              shift and go to state 200
 
 
-state 186
+state 178
 
     (28) bloquefunc -> { vars estatuto . regresa }
     (32) regresa -> . RETURN ID
 
-    RETURN          shift and go to state 185
+    RETURN          shift and go to state 177
 
-    regresa                        shift and go to state 202
+    regresa                        shift and go to state 201
 
-state 187
+state 179
 
     (29) bloquefunc -> { vars regresa . }
+
+    }               shift and go to state 202
+
+
+state 180
+
+    (30) bloquefunc -> { escritura regresa . }
 
     }               shift and go to state 203
 
 
+state 181
+
+    (98) whiles -> WHILE checarWhile ( expresion ) checarContenido . bloque finPilaSaltosWhile
+    (5) bloque -> . { vars estatuto }
+    (6) bloque -> . { vars }
+    (7) bloque -> . { }
+
+    {               shift and go to state 20
+
+    bloque                         shift and go to state 204
+
+state 182
+
+    (40) asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .
+
+    ID              reduce using rule 40 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
+    DIBUJAR         reduce using rule 40 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
+    IF              reduce using rule 40 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
+    LEER            reduce using rule 40 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
+    WHILE           reduce using rule 40 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
+    MUEVE           reduce using rule 40 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
+    }               reduce using rule 40 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
+    RETURN          reduce using rule 40 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
+
+
+state 183
+
+    (45) opcionAsignacion -> [ CTI ] [ . CTI ]
+
+    CTI             shift and go to state 205
+
+
+state 184
+
+    (61) condicion -> IF ( expresion ) checarIF finPilaSaltos .
+
+    ID              reduce using rule 61 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
+    DIBUJAR         reduce using rule 61 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
+    IF              reduce using rule 61 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
+    LEER            reduce using rule 61 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
+    WHILE           reduce using rule 61 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
+    MUEVE           reduce using rule 61 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
+    }               reduce using rule 61 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
+    RETURN          reduce using rule 61 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
+
+
+state 185
+
+    (62) condicion -> IF ( expresion ) bloque checarElse .
+
+    ID              reduce using rule 62 (condicion -> IF ( expresion ) bloque checarElse .)
+    DIBUJAR         reduce using rule 62 (condicion -> IF ( expresion ) bloque checarElse .)
+    IF              reduce using rule 62 (condicion -> IF ( expresion ) bloque checarElse .)
+    LEER            reduce using rule 62 (condicion -> IF ( expresion ) bloque checarElse .)
+    WHILE           reduce using rule 62 (condicion -> IF ( expresion ) bloque checarElse .)
+    MUEVE           reduce using rule 62 (condicion -> IF ( expresion ) bloque checarElse .)
+    }               reduce using rule 62 (condicion -> IF ( expresion ) bloque checarElse .)
+    RETURN          reduce using rule 62 (condicion -> IF ( expresion ) bloque checarElse .)
+
+
+state 186
+
+    (64) checarElse -> ELSE . bloque finPilaSaltos
+    (5) bloque -> . { vars estatuto }
+    (6) bloque -> . { vars }
+    (7) bloque -> . { }
+
+    {               shift and go to state 20
+
+    bloque                         shift and go to state 206
+
+state 187
+
+    (52) opcionesLectura -> [ . CTI ]
+    (53) opcionesLectura -> [ . CTI ] [ CTI ]
+
+    CTI             shift and go to state 207
+
+
 state 188
 
-    (30) bloquefunc -> { escritura regresa . }
+    (51) lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura . ;
 
-    }               shift and go to state 204
+    ;               shift and go to state 208
 
 
 state 189
 
-    (94) whiles -> WHILE checarWhile ( expresion ) checarContenido . bloque finPilaSaltosWhile
-    (5) bloque -> . { vars estatuto }
-    (6) bloque -> . { vars }
-    (7) bloque -> . { }
+    (54) opcionesLectura -> empty .
 
-    {               shift and go to state 20
+    ;               reduce using rule 54 (opcionesLectura -> empty .)
 
-    bloque                         shift and go to state 205
 
 state 190
 
-    (43) opcionAsignacion -> [ CTI ] [ CTI . ]
+    (97) pos -> ( varcte . , varcte )
 
-    ]               shift and go to state 206
+    ,               shift and go to state 209
 
 
 state 191
 
-    (57) condicion -> IF ( expresion ) checarIF finPilaSaltos .
+    (59) color -> ROJO .
 
-    ID              reduce using rule 57 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    DIBUJAR         reduce using rule 57 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    IF              reduce using rule 57 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    LEER            reduce using rule 57 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    WHILE           reduce using rule 57 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    MUEVE           reduce using rule 57 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    }               reduce using rule 57 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    RETURN          reduce using rule 57 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
+    )               reduce using rule 59 (color -> ROJO .)
 
 
 state 192
 
-    (58) condicion -> IF ( expresion ) bloque checarElse .
+    (55) escritura -> DIBUJAR guardarToken ( ID pos color . ) ;
 
-    ID              reduce using rule 58 (condicion -> IF ( expresion ) bloque checarElse .)
-    DIBUJAR         reduce using rule 58 (condicion -> IF ( expresion ) bloque checarElse .)
-    IF              reduce using rule 58 (condicion -> IF ( expresion ) bloque checarElse .)
-    LEER            reduce using rule 58 (condicion -> IF ( expresion ) bloque checarElse .)
-    WHILE           reduce using rule 58 (condicion -> IF ( expresion ) bloque checarElse .)
-    MUEVE           reduce using rule 58 (condicion -> IF ( expresion ) bloque checarElse .)
-    }               reduce using rule 58 (condicion -> IF ( expresion ) bloque checarElse .)
-    RETURN          reduce using rule 58 (condicion -> IF ( expresion ) bloque checarElse .)
+    )               shift and go to state 210
 
 
 state 193
 
-    (60) checarElse -> ELSE . bloque finPilaSaltos
-    (5) bloque -> . { vars estatuto }
-    (6) bloque -> . { vars }
-    (7) bloque -> . { }
+    (57) color -> AMARILLO .
 
-    {               shift and go to state 20
+    )               reduce using rule 57 (color -> AMARILLO .)
 
-    bloque                         shift and go to state 207
 
 state 194
 
-    (49) opcionesLectura -> [ CTI ] [ . CTI ]
+    (60) color -> AZUL .
 
-    CTI             shift and go to state 208
+    )               reduce using rule 60 (color -> AZUL .)
 
 
 state 195
 
-    (93) pos -> ( varcte , . varcte )
-    (98) varcte -> . recibe_ID
-    (99) varcte -> . recibe_CTF
-    (100) varcte -> . recibe_CTI
-    (101) varcte -> . recibe_TRUE
-    (102) varcte -> . recibe_FALSE
-    (103) recibe_ID -> . ID
-    (104) recibe_CTF -> . CTF
-    (105) recibe_CTI -> . CTI
-    (106) recibe_TRUE -> . TRUE
-    (107) recibe_FALSE -> . FALSE
+    (58) color -> VERDE .
 
-    ID              shift and go to state 90
-    CTF             shift and go to state 80
-    CTI             shift and go to state 83
-    TRUE            shift and go to state 82
-    FALSE           shift and go to state 92
+    )               reduce using rule 58 (color -> VERDE .)
 
-    recibe_TRUE                    shift and go to state 84
-    varcte                         shift and go to state 209
-    recibe_CTF                     shift and go to state 86
-    recibe_CTI                     shift and go to state 93
-    recibe_ID                      shift and go to state 88
-    recibe_FALSE                   shift and go to state 96
 
 state 196
-
-    (51) escritura -> DIBUJAR ( ID pos color ) . ;
-
-    ;               shift and go to state 210
-
-
-state 197
 
     (17) matriz -> [ . CTI ]
 
     CTI             shift and go to state 211
 
 
-state 198
+state 197
 
     (18) matriz -> empty .
 
     ;               reduce using rule 18 (matriz -> empty .)
 
 
-state 199
+state 198
 
     (16) arreglo -> [ CTI ] matriz .
 
     ;               reduce using rule 16 (arreglo -> [ CTI ] matriz .)
 
 
-state 200
+state 199
 
     (24) maspaID -> , ID guardarIDs .
 
@@ -3165,21 +3159,21 @@ state 200
     )               reduce using rule 24 (maspaID -> , ID guardarIDs .)
 
 
-state 201
+state 200
 
     (32) regresa -> RETURN ID .
 
     }               reduce using rule 32 (regresa -> RETURN ID .)
 
 
-state 202
+state 201
 
     (28) bloquefunc -> { vars estatuto regresa . }
 
     }               shift and go to state 212
 
 
-state 203
+state 202
 
     (29) bloquefunc -> { vars regresa } .
 
@@ -3187,7 +3181,7 @@ state 203
     FUNC            reduce using rule 29 (bloquefunc -> { vars regresa } .)
 
 
-state 204
+state 203
 
     (30) bloquefunc -> { escritura regresa } .
 
@@ -3195,79 +3189,106 @@ state 204
     FUNC            reduce using rule 30 (bloquefunc -> { escritura regresa } .)
 
 
-state 205
+state 204
 
-    (94) whiles -> WHILE checarWhile ( expresion ) checarContenido bloque . finPilaSaltosWhile
-    (97) finPilaSaltosWhile -> .
+    (98) whiles -> WHILE checarWhile ( expresion ) checarContenido bloque . finPilaSaltosWhile
+    (101) finPilaSaltosWhile -> .
 
-    ID              reduce using rule 97 (finPilaSaltosWhile -> .)
-    DIBUJAR         reduce using rule 97 (finPilaSaltosWhile -> .)
-    IF              reduce using rule 97 (finPilaSaltosWhile -> .)
-    LEER            reduce using rule 97 (finPilaSaltosWhile -> .)
-    WHILE           reduce using rule 97 (finPilaSaltosWhile -> .)
-    MUEVE           reduce using rule 97 (finPilaSaltosWhile -> .)
-    }               reduce using rule 97 (finPilaSaltosWhile -> .)
-    RETURN          reduce using rule 97 (finPilaSaltosWhile -> .)
+    ID              reduce using rule 101 (finPilaSaltosWhile -> .)
+    DIBUJAR         reduce using rule 101 (finPilaSaltosWhile -> .)
+    IF              reduce using rule 101 (finPilaSaltosWhile -> .)
+    LEER            reduce using rule 101 (finPilaSaltosWhile -> .)
+    WHILE           reduce using rule 101 (finPilaSaltosWhile -> .)
+    MUEVE           reduce using rule 101 (finPilaSaltosWhile -> .)
+    }               reduce using rule 101 (finPilaSaltosWhile -> .)
+    RETURN          reduce using rule 101 (finPilaSaltosWhile -> .)
 
     finPilaSaltosWhile             shift and go to state 213
 
+state 205
+
+    (45) opcionAsignacion -> [ CTI ] [ CTI . ]
+
+    ]               shift and go to state 214
+
+
 state 206
 
-    (43) opcionAsignacion -> [ CTI ] [ CTI ] .
+    (64) checarElse -> ELSE bloque . finPilaSaltos
+    (65) finPilaSaltos -> .
 
-    =               reduce using rule 43 (opcionAsignacion -> [ CTI ] [ CTI ] .)
-    ;               reduce using rule 43 (opcionAsignacion -> [ CTI ] [ CTI ] .)
+    ID              reduce using rule 65 (finPilaSaltos -> .)
+    DIBUJAR         reduce using rule 65 (finPilaSaltos -> .)
+    IF              reduce using rule 65 (finPilaSaltos -> .)
+    LEER            reduce using rule 65 (finPilaSaltos -> .)
+    WHILE           reduce using rule 65 (finPilaSaltos -> .)
+    MUEVE           reduce using rule 65 (finPilaSaltos -> .)
+    }               reduce using rule 65 (finPilaSaltos -> .)
+    RETURN          reduce using rule 65 (finPilaSaltos -> .)
 
+    finPilaSaltos                  shift and go to state 215
 
 state 207
 
-    (60) checarElse -> ELSE bloque . finPilaSaltos
-    (61) finPilaSaltos -> .
+    (52) opcionesLectura -> [ CTI . ]
+    (53) opcionesLectura -> [ CTI . ] [ CTI ]
 
-    ID              reduce using rule 61 (finPilaSaltos -> .)
-    DIBUJAR         reduce using rule 61 (finPilaSaltos -> .)
-    IF              reduce using rule 61 (finPilaSaltos -> .)
-    LEER            reduce using rule 61 (finPilaSaltos -> .)
-    WHILE           reduce using rule 61 (finPilaSaltos -> .)
-    MUEVE           reduce using rule 61 (finPilaSaltos -> .)
-    }               reduce using rule 61 (finPilaSaltos -> .)
-    RETURN          reduce using rule 61 (finPilaSaltos -> .)
+    ]               shift and go to state 216
 
-    finPilaSaltos                  shift and go to state 214
 
 state 208
 
-    (49) opcionesLectura -> [ CTI ] [ CTI . ]
+    (51) lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ; .
 
-    ]               shift and go to state 215
+    ID              reduce using rule 51 (lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ; .)
+    DIBUJAR         reduce using rule 51 (lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ; .)
+    IF              reduce using rule 51 (lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ; .)
+    LEER            reduce using rule 51 (lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ; .)
+    WHILE           reduce using rule 51 (lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ; .)
+    MUEVE           reduce using rule 51 (lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ; .)
+    }               reduce using rule 51 (lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ; .)
+    RETURN          reduce using rule 51 (lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ; .)
 
 
 state 209
 
-    (93) pos -> ( varcte , varcte . )
+    (97) pos -> ( varcte , . varcte )
+    (102) varcte -> . recibe_ID
+    (103) varcte -> . recibe_CTF
+    (104) varcte -> . recibe_CTI
+    (105) varcte -> . recibe_TRUE
+    (106) varcte -> . recibe_FALSE
+    (107) recibe_ID -> . ID
+    (108) recibe_CTF -> . CTF
+    (109) recibe_CTI -> . CTI
+    (110) recibe_TRUE -> . TRUE
+    (111) recibe_FALSE -> . FALSE
 
-    )               shift and go to state 216
+    ID              shift and go to state 87
+    CTF             shift and go to state 77
+    CTI             shift and go to state 80
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 89
 
+    recibe_TRUE                    shift and go to state 81
+    varcte                         shift and go to state 217
+    recibe_CTF                     shift and go to state 83
+    recibe_CTI                     shift and go to state 90
+    recibe_ID                      shift and go to state 85
+    recibe_FALSE                   shift and go to state 93
 
 state 210
 
-    (51) escritura -> DIBUJAR ( ID pos color ) ; .
+    (55) escritura -> DIBUJAR guardarToken ( ID pos color ) . ;
 
-    ID              reduce using rule 51 (escritura -> DIBUJAR ( ID pos color ) ; .)
-    DIBUJAR         reduce using rule 51 (escritura -> DIBUJAR ( ID pos color ) ; .)
-    IF              reduce using rule 51 (escritura -> DIBUJAR ( ID pos color ) ; .)
-    LEER            reduce using rule 51 (escritura -> DIBUJAR ( ID pos color ) ; .)
-    WHILE           reduce using rule 51 (escritura -> DIBUJAR ( ID pos color ) ; .)
-    MUEVE           reduce using rule 51 (escritura -> DIBUJAR ( ID pos color ) ; .)
-    }               reduce using rule 51 (escritura -> DIBUJAR ( ID pos color ) ; .)
-    RETURN          reduce using rule 51 (escritura -> DIBUJAR ( ID pos color ) ; .)
+    ;               shift and go to state 218
 
 
 state 211
 
     (17) matriz -> [ CTI . ]
 
-    ]               shift and go to state 217
+    ]               shift and go to state 219
 
 
 state 212
@@ -3280,66 +3301,118 @@ state 212
 
 state 213
 
-    (94) whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .
+    (98) whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .
 
-    ID              reduce using rule 94 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
-    DIBUJAR         reduce using rule 94 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
-    IF              reduce using rule 94 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
-    LEER            reduce using rule 94 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
-    WHILE           reduce using rule 94 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
-    MUEVE           reduce using rule 94 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
-    RETURN          reduce using rule 94 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
-    }               reduce using rule 94 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
+    ID              reduce using rule 98 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
+    DIBUJAR         reduce using rule 98 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
+    IF              reduce using rule 98 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
+    LEER            reduce using rule 98 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
+    WHILE           reduce using rule 98 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
+    MUEVE           reduce using rule 98 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
+    }               reduce using rule 98 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
+    RETURN          reduce using rule 98 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloque finPilaSaltosWhile .)
 
 
 state 214
 
-    (60) checarElse -> ELSE bloque finPilaSaltos .
+    (45) opcionAsignacion -> [ CTI ] [ CTI ] .
 
-    ID              reduce using rule 60 (checarElse -> ELSE bloque finPilaSaltos .)
-    DIBUJAR         reduce using rule 60 (checarElse -> ELSE bloque finPilaSaltos .)
-    IF              reduce using rule 60 (checarElse -> ELSE bloque finPilaSaltos .)
-    LEER            reduce using rule 60 (checarElse -> ELSE bloque finPilaSaltos .)
-    WHILE           reduce using rule 60 (checarElse -> ELSE bloque finPilaSaltos .)
-    MUEVE           reduce using rule 60 (checarElse -> ELSE bloque finPilaSaltos .)
-    }               reduce using rule 60 (checarElse -> ELSE bloque finPilaSaltos .)
-    RETURN          reduce using rule 60 (checarElse -> ELSE bloque finPilaSaltos .)
+    =               reduce using rule 45 (opcionAsignacion -> [ CTI ] [ CTI ] .)
+    ;               reduce using rule 45 (opcionAsignacion -> [ CTI ] [ CTI ] .)
 
 
 state 215
 
-    (49) opcionesLectura -> [ CTI ] [ CTI ] .
+    (64) checarElse -> ELSE bloque finPilaSaltos .
 
-    ;               reduce using rule 49 (opcionesLectura -> [ CTI ] [ CTI ] .)
+    ID              reduce using rule 64 (checarElse -> ELSE bloque finPilaSaltos .)
+    DIBUJAR         reduce using rule 64 (checarElse -> ELSE bloque finPilaSaltos .)
+    IF              reduce using rule 64 (checarElse -> ELSE bloque finPilaSaltos .)
+    LEER            reduce using rule 64 (checarElse -> ELSE bloque finPilaSaltos .)
+    WHILE           reduce using rule 64 (checarElse -> ELSE bloque finPilaSaltos .)
+    MUEVE           reduce using rule 64 (checarElse -> ELSE bloque finPilaSaltos .)
+    }               reduce using rule 64 (checarElse -> ELSE bloque finPilaSaltos .)
+    RETURN          reduce using rule 64 (checarElse -> ELSE bloque finPilaSaltos .)
 
 
 state 216
 
-    (93) pos -> ( varcte , varcte ) .
+    (52) opcionesLectura -> [ CTI ] .
+    (53) opcionesLectura -> [ CTI ] . [ CTI ]
 
-    AMARILLO        reduce using rule 93 (pos -> ( varcte , varcte ) .)
-    VERDE           reduce using rule 93 (pos -> ( varcte , varcte ) .)
-    ROJO            reduce using rule 93 (pos -> ( varcte , varcte ) .)
-    AZUL            reduce using rule 93 (pos -> ( varcte , varcte ) .)
+    ;               reduce using rule 52 (opcionesLectura -> [ CTI ] .)
+    [               shift and go to state 220
 
 
 state 217
+
+    (97) pos -> ( varcte , varcte . )
+
+    )               shift and go to state 221
+
+
+state 218
+
+    (55) escritura -> DIBUJAR guardarToken ( ID pos color ) ; .
+
+    ID              reduce using rule 55 (escritura -> DIBUJAR guardarToken ( ID pos color ) ; .)
+    DIBUJAR         reduce using rule 55 (escritura -> DIBUJAR guardarToken ( ID pos color ) ; .)
+    IF              reduce using rule 55 (escritura -> DIBUJAR guardarToken ( ID pos color ) ; .)
+    LEER            reduce using rule 55 (escritura -> DIBUJAR guardarToken ( ID pos color ) ; .)
+    WHILE           reduce using rule 55 (escritura -> DIBUJAR guardarToken ( ID pos color ) ; .)
+    MUEVE           reduce using rule 55 (escritura -> DIBUJAR guardarToken ( ID pos color ) ; .)
+    }               reduce using rule 55 (escritura -> DIBUJAR guardarToken ( ID pos color ) ; .)
+    RETURN          reduce using rule 55 (escritura -> DIBUJAR guardarToken ( ID pos color ) ; .)
+
+
+state 219
 
     (17) matriz -> [ CTI ] .
 
     ;               reduce using rule 17 (matriz -> [ CTI ] .)
 
+
+state 220
+
+    (53) opcionesLectura -> [ CTI ] [ . CTI ]
+
+    CTI             shift and go to state 222
+
+
+state 221
+
+    (97) pos -> ( varcte , varcte ) .
+
+    AMARILLO        reduce using rule 97 (pos -> ( varcte , varcte ) .)
+    VERDE           reduce using rule 97 (pos -> ( varcte , varcte ) .)
+    ROJO            reduce using rule 97 (pos -> ( varcte , varcte ) .)
+    AZUL            reduce using rule 97 (pos -> ( varcte , varcte ) .)
+
+
+state 222
+
+    (53) opcionesLectura -> [ CTI ] [ CTI . ]
+
+    ]               shift and go to state 223
+
+
+state 223
+
+    (53) opcionesLectura -> [ CTI ] [ CTI ] .
+
+    ;               reduce using rule 53 (opcionesLectura -> [ CTI ] [ CTI ] .)
+
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for ; in state 34 resolved as shift
-WARNING: shift/reduce conflict for ; in state 67 resolved as shift
-WARNING: reduce/reduce conflict in state 81 resolved using rule (checaroperador4 -> <empty>)
-WARNING: rejected rule (signo -> <empty>) in state 81
-WARNING: reduce/reduce conflict in state 89 resolved using rule (checaroperador5 -> <empty>)
-WARNING: rejected rule (masop -> <empty>) in state 89
-WARNING: reduce/reduce conflict in state 94 resolved using rule (expresion -> exp)
-WARNING: rejected rule (operacionLogica -> <empty>) in state 94
+WARNING: shift/reduce conflict for ; in state 65 resolved as shift
+WARNING: reduce/reduce conflict in state 78 resolved using rule (checaroperador4 -> <empty>)
+WARNING: rejected rule (signo -> <empty>) in state 78
+WARNING: reduce/reduce conflict in state 86 resolved using rule (checaroperador5 -> <empty>)
+WARNING: rejected rule (masop -> <empty>) in state 86
+WARNING: reduce/reduce conflict in state 91 resolved using rule (expresion -> exp)
+WARNING: rejected rule (operacionLogica -> <empty>) in state 91
 WARNING: Rule (signo -> <empty>) is never reduced
 WARNING: Rule (masop -> <empty>) is never reduced
 WARNING: Rule (operacionLogica -> <empty>) is never reduced

@@ -191,8 +191,33 @@ def p_estatutoAux(p):
 	pass
 
 def p_asignacion(p):
-	''' asignacion : ID opcionAsignacion valorAsig ";"
+	''' asignacion : ID guardarIDPila opcionAsignacion valorAsig ";" checarOperadorIgual
 				 | ID ";" '''
+	pass
+
+def p_guardarIDPila(p): 
+	''' guardarIDPila : '''
+	global pilaOperandos
+	pilaOperandos.append(p[-1])
+	pass
+
+
+def p_checarOperadorIgual(p):
+	'''checarOperadorIgual :  '''
+	global pilaOperadores
+	signo = pilaOperadores.pop()
+	if(signo == 5):
+		operando2 = pilaOperandos.pop()
+		operando1 = pilaOperandos.pop()
+		resultado = cuboSemantico[operando1][operando2][signo]
+		if(resultado == -1):
+			print "Error con signo = "
+		else: 
+			print("SE CHECO EL CUADRUPLO Y ES CORRECTO ", operand1, operando2, signo)
+			operando2C = pilaOperandosDirMem.pop()
+			operando1C = pilaOperandosDirMem.pop()
+			cuadr = Cuadruplo(signo, operando2C, -1, operando1C)
+			listaCuadruplos.append(cuadr)
 	pass
 
 def p_opcionAsignacion(p):
@@ -201,12 +226,41 @@ def p_opcionAsignacion(p):
 						| empty '''
 	pass
 def p_valorAsig(p):
-	''' valorAsig : "=" exp
+	''' valorAsig : "="  exp
 				  | empty'''
+	
+	global pilaOperadores
+
+	if p[1] == "=":
+		pilaOperadores.append(5)
+
 	pass
 
+def p_guardarToken(p):
+	'''guardarToken :  '''
+	global pilaOperadores
+	if p[-1] == "LEER":
+		pilaOperadores.append(18)
+	elif p[-1] == "DIBUJAR":
+		pilaOperadores.append(19)
+	pass
+
+
+def p_checarLectura(p):
+	''' checarLectura : '''
+	global pilaOperadores
+	global pilaOperandos
+	signo = pilaOperadores.pop()
+	if signo == 18: 
+		 operando1C = pilaOperandos.pop()
+		 memoria = pilaOperandosDirMem.pop()
+		 cuadr = Cuadruplo(signo, memoria,-1,-1)
+		 listaCuadruplos.append(cuadr)
+	pass
+
+
 def p_lectura(p):
-	''' lectura : LEER ID opcionesLectura ";" '''
+	''' lectura : LEER guardarToken ID guardarIDPila  checarLectura opcionesLectura ";" '''
 	pass
 
 def p_opcionesLectura(p):
@@ -214,9 +268,12 @@ def p_opcionesLectura(p):
 						| "[" CTI "]" "[" CTI "]"
 						| empty '''
 	pass
-
+def p_guardarParametros(p):
+	''' guardarParametros : ID pos color'''
+	
+	pass
 def p_escritura(p):
-	''' escritura : DIBUJAR "(" ID pos color ")" ";"
+	''' escritura : DIBUJAR guardarToken "("  guardarParametros ")" ";"
 				  |  mueve '''
 	pass
 

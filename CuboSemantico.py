@@ -15,6 +15,9 @@
 #15 )
 #16 GOTOF
 #17 GOTO 
+#18 LEER
+#19 DIBUJAR
+
 
 #enteros
 cuboSemantico = [[[-1 for k in range(13)] for j in range(9)] for i in range(9)]
