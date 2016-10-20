@@ -29,7 +29,11 @@ def p_programa(p):
 	'''programa : INICIO funcAgregarInicio bloque  FIN 
 	  			| INICIO FIN
 	  			| funcion programa '''	
+	global pilaOperandos
+	global pilaOperadores
+	global pilaOperandosDirMem
 	print("SE TERMINO EL PROGRAMA PATIO CON EXITO!")
+	#print(pilaOperandos, "la ", pilaOperandosDirMem, "de ", pilaOperadores)
 	pass
 
 def p_funcAgregarInicio(p):
@@ -145,6 +149,7 @@ def p_guardarIDs(p):
 	global funcionActual
 	global listaFunciones
 	global tipoActual
+	global diccionarioMemoria
 	#checar si ya existe una variable
 	if (busquedaVar(p[-1]) != -1 ):
 		print "SE DECLARO UNA VARIABLE PREVIAMENTE DECLARADA"
@@ -198,7 +203,17 @@ def p_asignacion(p):
 def p_guardarIDPila(p): 
 	''' guardarIDPila : '''
 	global pilaOperandos
-	pilaOperandos.append(p[-1])
+	global listaCuadruplos
+	global pilaOperandosDirMem
+	posicion = busquedaLista()
+	posicion2 = busquedaVar(p[-1])
+	if posicion2 != -1:
+		memoria = listaFunciones[posicion].arrVar[posicion2]
+		pilaOperandos.append(memoria.tipo)
+		pilaOperandosDirMem.append(memoria.direcmem)
+	else:
+		print "NO SE PUEDE HACER UNA ASIGNACION A UNA VARIABLE QUE NO EXISTA"
+
 	pass
 
 
@@ -213,10 +228,11 @@ def p_checarOperadorIgual(p):
 		if(resultado == -1):
 			print "Error con signo = "
 		else: 
-			print("SE CHECO EL CUADRUPLO Y ES CORRECTO ", operand1, operando2, signo)
+			print("SE CHECO EL CUADRUPLO ASIGNACION Y ES CORRECTO ", operando1, operando2, signo)
 			operando2C = pilaOperandosDirMem.pop()
 			operando1C = pilaOperandosDirMem.pop()
 			cuadr = Cuadruplo(signo, operando2C, -1, operando1C)
+
 			listaCuadruplos.append(cuadr)
 	pass
 
@@ -239,23 +255,28 @@ def p_valorAsig(p):
 def p_guardarToken(p):
 	'''guardarToken :  '''
 	global pilaOperadores
-	if p[-1] == "LEER":
+	if p[-1] == "leer":
 		pilaOperadores.append(18)
-	elif p[-1] == "DIBUJAR":
+	elif p[-1] == "dibujar":
 		pilaOperadores.append(19)
+	elif p[-1] == "mueve":
+		pilaOperadores.append(24)	
 	pass
+
 
 
 def p_checarLectura(p):
 	''' checarLectura : '''
 	global pilaOperadores
 	global pilaOperandos
+	global listaCuadruplos
 	signo = pilaOperadores.pop()
 	if signo == 18: 
 		 operando1C = pilaOperandos.pop()
 		 memoria = pilaOperandosDirMem.pop()
 		 cuadr = Cuadruplo(signo, memoria,-1,-1)
 		 listaCuadruplos.append(cuadr)
+		 print "SE GUARDO EL CUADRUPLO DE LECTURA"
 	pass
 
 
@@ -268,10 +289,30 @@ def p_opcionesLectura(p):
 						| "[" CTI "]" "[" CTI "]"
 						| empty '''
 	pass
+
 def p_guardarParametros(p):
-	''' guardarParametros : ID pos color'''
-	
+	''' guardarParametros : ID guardarIDPila pos color checarDibujar '''	
 	pass
+
+def p_checarDibujar(p):
+	''' checarDibujar : '''
+	global pilaOperadores
+	global pilaOperandos
+	global listaCuadruplos
+	signo = pilaOperadores.pop()
+	if signo == 19:
+		col = pilaOperandos.pop()
+		posy = pilaOperandosDirMem.pop()
+		posx = pilaOperandosDirMem.pop()
+		ids = pilaOperandosDirMem.pop()
+		cuadr = Cuadruplo(signo, ids, [posx,posy], col)
+		listaCuadruplos.append(cuadr)
+		pilaOperandos.pop()
+		pilaOperandos.pop()
+		pilaOperandos.pop()
+		print "SE GUARDO EL CUADRUPLO DE DIBUJAR"
+
+
 def p_escritura(p):
 	''' escritura : DIBUJAR guardarToken "("  guardarParametros ")" ";"
 				  |  mueve '''
@@ -282,6 +323,14 @@ def p_color(p):
 			  | VERDE
 			  | ROJO
 			  | AZUL '''
+	if p[-1] == "amarillo":
+		pilaOperandos.append(20)
+	elif p[-1] == "verde":
+		pilaOperandos.append(21)
+	elif p[-1] == "rojo":
+		pilaOperandos.append(22)
+	elif p[-1] == "azul":
+		pilaOperandos.append(23)
 	pass
 
 def p_condicion(p):
@@ -695,15 +744,43 @@ def p_tipo(p):
 	pass
 
 def p_mueve(p):
-	''' mueve : MUEVE  opcionMue '''
+	''' mueve : MUEVE guardarToken opcionMue '''
 	pass
 
 def p_opcionMue(p):
-	''' opcionMue : IZQUIERDA ID CTI ";" 
-			   | DERECHA ID CTI ";" 
-			   | ARRIBA ID CTI ";"
-			   | ABAJO ID CTI ";"'''
+	''' opcionMue : direccion ID guardarIDPila recibe_CTI checarMover ";" '''
 	pass
+
+def p_direccion(p):
+	''' direccion : IZQUIERDA
+				| DERECHA
+				| ARRIBA
+				| ABAJO '''
+	if p[1] == "izquierda":
+		pilaOperandos.append(25)
+	elif p[1] == "derecha":
+		pilaOperandos.append(26)
+	elif p[1] == "arriba":
+		pilaOperandos.append(27)
+	elif p[1] == "abajo":
+		pilaOperandos.append(28)
+	pass
+
+def p_checarMover(p):
+	''' checarMover : '''
+	global pilaOperadores
+	global pilaOperandos
+	global listaCuadruplos
+	signo = pilaOperadores.pop()
+	if signo == 24:
+		cant = pilaOperandosDirMem.pop()
+		ids = pilaOperandosDirMem.pop()
+		dirc = pilaOperandos.pop()
+		cuadr = Cuadruplo(signo, ids, dirc, cant)
+		listaCuadruplos.append(cuadr)
+		pilaOperandos.pop()
+		pilaOperandos.pop()
+		print "SE GUARDO EL CUADRUPLO DE DIBUJAR"
 
 def p_empty(p):
     'empty : '

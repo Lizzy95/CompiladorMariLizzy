@@ -2,12 +2,10 @@ inicio
 {
 	entero aA, bB;
 
-	
+	leer bB;
+	aA = 1+2;
 
-	while( (4 + 5) < (3 / 2)){
-
-	} 
-
+	mueve izquierda  aA 3;
 
 
 }
