@@ -23,8 +23,6 @@ resultado = -1
 DEBUG = True
 
 # BNF
-
-
 def p_programa(p):
 	'''programa : INICIO funcAgregarInicio bloque  FIN 
 	  			| INICIO FIN
@@ -47,8 +45,6 @@ def p_funcAgregarInicio(p):
 	listaFunciones.append(objetoFuncion)
 	print("Se agrego la funcion a la tabla")
 
-
-
 def p_bloque(p):
 	'''bloque : "{" vars estatuto "}"
 			  | "{" vars "}"
@@ -63,7 +59,6 @@ def p_vars(p):
 	print("VARS: Estructura basica")
 	pass
 
-
 def p_masTipos(p):
 	'''masTipos : vars 
 				| empty '''
@@ -77,6 +72,7 @@ def p_masIDS(p):
 	'''masIDS : "," ID guardarIDs
 			   | empty '''
 	pass
+
 def p_arreglo(p):
 	''' arreglo : "[" CTI "]" matriz '''
 	pass
@@ -143,7 +139,6 @@ def busquedaVar(varActual):
 #	for elemento in listaFunciones:
 #		print elemento.nombre
 
-
 def p_guardarIDs(p):
 	''' guardarIDs : '''
 	global funcionActual
@@ -161,7 +156,6 @@ def p_guardarIDs(p):
 		var[str(tipoActual)] = valormem + 1
 		listaFunciones[posicion].arrVar.append(agregarVar)
 		print "Se guardo la variable en la tabla ", tipoActual
-
 
 def p_maspaID(p):
 	''' maspaID : "," ID guardarIDs
@@ -183,6 +177,7 @@ def p_bloquefunc(p):
 def p_regresa(p):
 	''' regresa : RETURN ID '''
 	pass
+
 def p_estatuto(p):
 	'''estatuto : asignacion estatutoAux
 				| escritura estatutoAux
@@ -190,6 +185,7 @@ def p_estatuto(p):
 				| lectura estatutoAux
 				| whiles estatutoAux '''
 	pass
+
 def p_estatutoAux(p):
 	''' estatutoAux : estatuto
 					| empty'''
@@ -216,7 +212,6 @@ def p_guardarIDPila(p):
 
 	pass
 
-
 def p_checarOperadorIgual(p):
 	'''checarOperadorIgual :  '''
 	global pilaOperadores
@@ -241,6 +236,7 @@ def p_opcionAsignacion(p):
 						| "[" CTI "]" "[" CTI "]"
 						| empty '''
 	pass
+
 def p_valorAsig(p):
 	''' valorAsig : "="  exp
 				  | empty'''
@@ -263,8 +259,6 @@ def p_guardarToken(p):
 		pilaOperadores.append(24)	
 	pass
 
-
-
 def p_checarLectura(p):
 	''' checarLectura : '''
 	global pilaOperadores
@@ -278,7 +272,6 @@ def p_checarLectura(p):
 		 listaCuadruplos.append(cuadr)
 		 print "SE GUARDO EL CUADRUPLO DE LECTURA"
 	pass
-
 
 def p_lectura(p):
 	''' lectura : LEER guardarToken ID guardarIDPila  checarLectura opcionesLectura ";" '''
@@ -312,7 +305,6 @@ def p_checarDibujar(p):
 		pilaOperandos.pop()
 		print "SE GUARDO EL CUADRUPLO DE DIBUJAR"
 
-
 def p_escritura(p):
 	''' escritura : DIBUJAR guardarToken "("  guardarParametros ")" ";"
 				  |  mueve '''
@@ -337,6 +329,7 @@ def p_condicion(p):
 	''' condicion : IF "(" expresion ")" checarIF finPilaSaltos
 				  | IF "(" expresion ")" bloque checarElse  '''
 	pass
+
 def p_checarIF(p):
 	'''checarIF : bloque'''
 	print "Entre a checar IF"
@@ -367,7 +360,6 @@ def p_checarElse(p):
 	pilaSaltos.append(lenCuadruplos - 1)
 	pass
 
-
 def p_finPilaSaltos(p):
 	'''finPilaSaltos : '''
 	print "Entre fin pila saltos"
@@ -376,11 +368,11 @@ def p_finPilaSaltos(p):
 	listaCuadruplos[salto].temporal = lenCuadruplos - 1
 	pass
 
-
 def p_expresion(p):
 	'''expresion :  exp operacionLogica checaoperador6
 				 | exp '''
 	pass
+
 def p_push_logica(p):
 	'''push_logica : 	  ">" 
 						| "<" 
@@ -409,8 +401,6 @@ def p_push_logica(p):
 	elif p[1] == "&&":
 		pilaOperadores.append(13)
 	pass
-
-
 
 def p_operacionLogica(p):
 	'''operacionLogica : push_logica exp
@@ -450,7 +440,6 @@ def p_checaoperador6(p):
 				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)
 	pass
-
 
 def p_exp(p):
 	'''exp : termino  checaroperador4'''
@@ -590,7 +579,6 @@ def p_factor(p):
 	print "Entre a Factor"
 	pass
 
-
 def p_pos(p):
 	''' pos : "(" varcte "," varcte ")" '''
 	pass
@@ -598,6 +586,7 @@ def p_pos(p):
 def p_whiles(p):
 	''' whiles : WHILE checarWhile "(" expresion ")" checarContenido bloque finPilaSaltosWhile '''
 	pass
+
 def p_checarWhile(p):
 	''' checarWhile : '''
 	global pilaSaltos
@@ -684,7 +673,6 @@ def p_recibe_CTI(p):
 	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(1)
 	pass
-
 
 def p_recibe_TRUE(p):
 	''' recibe_TRUE : TRUE '''
