@@ -26,6 +26,8 @@
 #26 DERECHA
 #27 ARRIBA
 #28 ABAJO
+#29 RETORNO
+#30 ERA
 
 
 #enteros

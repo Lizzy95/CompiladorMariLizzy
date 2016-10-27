@@ -18,6 +18,7 @@ pilaOperadores = []
 pilaOperandos = []
 pilaOperandosDirMem = []
 pilaSaltos = []
+pilaSaltosFunc = []
 operadorActual = 0
 resultado = -1
 DEBUG = True
@@ -30,6 +31,10 @@ def p_programa(p):
 	global pilaOperandos
 	global pilaOperadores
 	global pilaOperandosDirMem
+	global pilaSaltosFunc
+	global listaCuadruplos
+	cuadr = Cuadruplo(17, -1, -1, -1)
+	listaCuadruplos.append(cuadr)
 	print("SE TERMINO EL PROGRAMA PATIO CON EXITO!")
 	#print(pilaOperandos, "la ", pilaOperandosDirMem, "de ", pilaOperadores)
 	pass
@@ -41,7 +46,7 @@ def p_funcAgregarInicio(p):
 	global tipofuncMem
 	tipofuncMem = '2'
 	funcionActual = p[-1]
-	objetoFuncion = TFunc(funcionActual, 0, {})
+	objetoFuncion = TFunc(funcionActual, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {}, {})
 	listaFunciones.append(objetoFuncion)
 	print("Se agrego la funcion a la tabla")
 
@@ -94,7 +99,7 @@ def p_funcAgregar(p):
 	global tipofuncMem
 	tipofuncMem = '2'
 	funcionActual = p[-1]
-	objetoFuncion = TFunc(p[-1], tipoActual, {})
+	objetoFuncion = TFunc(p[-1], tipoActual, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {}, {})
 	#checar si ya existe una funcion
 	posicion = busquedaLista()
 	if posicion != -1:
@@ -107,8 +112,27 @@ def p_param(p):
 	pass
 	
 def p_listapaID(p):
-	''' listapaID : ID guardarIDs maspaID maspaTip '''
+	''' listapaID : ID guardarIDParam maspaID maspaTip '''
 	pass
+
+def p_guardarIDParam(p):
+	''' guardarIDParam : '''
+	global funcionActual
+	global listaFunciones
+	global tipoActual
+	global diccionarioMemoria
+	#checar si ya existe una variable
+	if (busquedaVar(p[-1]) != -1 ):
+		print "SE DECLARO UNA VARIABLE PREVIAMENTE DECLARADA"
+	else:
+		posicion = busquedaLista()
+		var = diccionarioMemoria[tipofuncMem]
+
+		valormem = var[str(tipoActual)]
+		agregarVar = TVar(p[-1], tipoActual, valormem)
+		var[str(tipoActual)] = valormem + 1
+		listaFunciones[posicion].arrParam.append(agregarVar)
+		print "Se guardo el parametro en la tabla de parametros ", tipoActual
 
 def busquedaLista():
 	cont = 0
@@ -116,6 +140,15 @@ def busquedaLista():
 	global funcionActual
 	for elemento in listaFunciones:
 		if elemento.nombre == funcionActual : 
+			return cont
+		cont += cont
+	return -1
+
+def busquedaFunc(funcionLlamar):
+	cont = 0
+	global listaFunciones
+	for elemento in listaFunciones:
+		if elemento.nombre == funcionLlamar : 
 			return cont
 		cont += cont
 	return -1
@@ -131,7 +164,7 @@ def busquedaVar(varActual):
 				if(varActual == elemento2.nombre):
 					return cont
 				else:
-					cont += cont
+					cont += 1
 	return -1
 
 #def imprimirLista():
@@ -154,6 +187,8 @@ def p_guardarIDs(p):
 		valormem = var[str(tipoActual)]
 		agregarVar = TVar(p[-1], tipoActual, valormem)
 		var[str(tipoActual)] = valormem + 1
+		aux = listaFunciones[posicion].varLocal
+		listaFunciones[posicion].varLocal = aux + 1 
 		listaFunciones[posicion].arrVar.append(agregarVar)
 		print "Se guardo la variable en la tabla ", tipoActual
 
@@ -168,10 +203,71 @@ def p_maspaTip(p):
 	pass
 
 def p_bloquefunc(p): 
-	''' bloquefunc : "{" vars estatuto regresa "}" 
-				   | "{" vars regresa "}" 
-				   | "{" escritura regresa "}" 
+	''' bloquefunc : "{" vars guardarCuadruplo estatuto regresa "}" liberarVar 
+				   | "{" vars guardarCuadruplo regresa "}" liberarVar
+				   | "{" guardarCuadruplo escritura regresa "}" liberarVar
 				   | "{" "}" '''
+	pass
+
+def p_liberarVar(p):
+	''' liberarVar : '''
+	loc = diccionarioMemoria['2']
+	auxLoc = loc['1'] - 8001
+	auxCua = loc['2'] - 9001
+	auxRect = loc['3'] - 10001
+	auxCir = loc['4'] - 11001
+	auxLin = loc['5'] - 12001
+	auxEstr = loc['6'] - 15001
+	auxDec = loc['7'] - 15001
+	auxBool = loc['8'] - 15001
+
+	loc['1'] = 8001
+	loc['2'] = 9001
+	loc['3'] = 10001
+	loc['4'] = 11001
+	loc['5'] =  12001
+	loc['6'] =  13001
+	loc['7'] =  14001
+	loc['8'] =  15001
+
+	temp = diccionarioMemoria['3'] 
+	auxTemp = (temp['1'] - 16001) + (temp['2'] - 17001) + (temp['3'] - 18001) + (temp['4'] - 19001) + (temp['5'] - 20001) + (temp['6'] - 21001) + (temp['7'] - 22001) + (temp['8'] - 23001)
+	temp['1'] =  16001
+	temp['2'] = 17001
+	temp['3'] = 18001
+	temp['4'] = 19001
+	temp['5'] =  20001
+	temp['6'] =  21001
+	temp['7'] =  22001
+	temp['8'] =  23001
+
+	cte = diccionarioMemoria['4'] 
+	cte['1'] =  24001
+	cte['2'] = 25001
+	cte['3'] = 26001
+	cte['4'] = 27001
+	cte['5'] =  28001
+	cte['6'] =  29001
+	cte['7'] =  30001
+	cte['8'] =  31001
+
+	posicion = busquedaLista()
+	listaFunciones[posicion].varTemporal = auxTemp
+	listaFunciones[posicion].varEnt = auxLoc
+	listaFunciones[posicion].varDec = auxDec
+	listaFunciones[posicion].varCuadrado = auxCua
+	listaFunciones[posicion].varRect = auxRect
+	listaFunciones[posicion].varCirc = auxCir
+	listaFunciones[posicion].varLin = auxLin
+	listaFunciones[posicion].varEstr = auxEstr
+	listaFunciones[posicion].varBool = auxBool
+	pass
+
+def p_guardarCuadruplo(p): 
+	'''guardarCuadruplo :  '''
+	act = len(listaCuadruplos)
+	posicion = busquedaLista()
+	listaFunciones[posicion].cuadruploInicial = posicion
 	pass
 
 def p_regresa(p):
@@ -183,13 +279,45 @@ def p_estatuto(p):
 				| escritura estatutoAux
 				| condicion estatutoAux
 				| lectura estatutoAux
-				| whiles estatutoAux '''
+				| whiles estatutoAux
+				| funcs estatutoAux '''
 	pass
 
 def p_estatutoAux(p):
 	''' estatutoAux : estatuto
 					| empty'''
 	pass
+
+def p_funcs(p):
+	''' funcs : ID verProc generarERA auxExp ")"
+			  | ID '''
+	pass
+
+def p_verProc(p):
+	''' verProc : '''
+	if busquedaFunc(p[-1]) == -1 :
+		print "ESTA FUNCION NO ESTA DECLARADA"
+	pass
+
+def p_generarEra(p):
+	''' generarERA : "(" '''
+	listaCuadruplos.append(30, -1, -1, p[-2])
+	pass
+
+def p_auxExp(p):
+	''' auxExp : listaExp ","
+				| listaExp  '''
+	pass
+
+def p_listaExp(p):
+	'''listaExp : exp masExps'''
+	pass
+
+def p_masExps(p):
+	''' masExps : "," listaExp
+				|'''
+	pass
+
 
 def p_asignacion(p):
 	''' asignacion : ID guardarIDPila opcionAsignacion valorAsig ";" checarOperadorIgual
