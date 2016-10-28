@@ -300,10 +300,10 @@ def p_checaNumParam(p):
 	''' checaNumParam : ")"'''
 	global contParam
 	global listaFunciones
-	pos = busquedaLista()
-	numParam  = len (listaFunciones[pos].arrParam)
-	if contParam != numParam:	
-		print "El numero de parametros es incorecto"
+	pos = busquedaFunc(llamada)
+	numParam  = len(listaFunciones[pos].arrParam)
+	if contParam + 1 != numParam:	
+		print "El numero de parametros es incorrecto"
 	pass
 
 def p_generaGOSUB(p):
@@ -312,6 +312,7 @@ def p_generaGOSUB(p):
 	global llamada
 	cuadr = Cuadruplo(32,-1,-1,llamada)
 	listaCuadruplos.append(cuadr)
+	print "Se guardo GOSUB", llamada
 	pass
 
 def p_funcs(p):
@@ -339,9 +340,9 @@ def p_generarEra(p):
 	pos = busquedaLista()
 	arrParametros = listaFunciones[pos].arrParam
 	longitud = len (arrParametros)
-	print ("Longitud de arreglo de parametros", longitud)
 	cuadr = Cuadruplo(30, -1, -1, llamada)
 	listaCuadruplos.append(cuadr)
+	print "Se guardo ERA ", llamada
 	pass
 
 def p_auxExp(p):
@@ -364,7 +365,6 @@ def p_verificarTiposFunc(p):
 	global listaCuadruplos
 	pos = busquedaFunc(llamada)
 	arrParametros = listaFunciones[pos].arrParam
-	print "CONT PARAM", contParam
 	auxParam = arrParametros[contParam].tipo
 	auxPila = pilaOperandos.pop()
 	mem = pilaOperandosDirMem.pop()
