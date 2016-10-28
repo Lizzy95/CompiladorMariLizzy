@@ -202,7 +202,6 @@ def p_guardarIDs(p):
 		listaFunciones[posicion].varLocal = aux + 1 
 		listaFunciones[posicion].arrVar.append(agregarVar)
 		print "Se guardo la variable en la tabla ", tipoActual
-		print "long--------", len(listaFunciones[posicion].arrVar)
 
 def p_maspaID(p):
 	''' maspaID : "," param
@@ -839,7 +838,7 @@ def p_recibe_ID(p):
 	print("VARCTE: ", p[1])
 	pos = busquedaLista()
 	print("Guardar: ", p[1])
-	pos2 = busquedaVar(p[-1])
+	pos2 = busquedaVar(p[1])
 	if(pos2 != -1 ):
 		var = listaFunciones[pos].arrVar[pos2].tipo
 		direc = listaFunciones[pos].arrVar[pos2].direcmem
