@@ -28,6 +28,8 @@
 #28 ABAJO
 #29 RETORNO
 #30 ERA
+#31 PARAM
+#32 GOSUB
 
 
 #enteros

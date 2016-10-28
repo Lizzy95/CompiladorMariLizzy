@@ -20,6 +20,8 @@ pilaOperandosDirMem = []
 pilaSaltos = []
 pilaSaltosFunc = []
 operadorActual = 0
+contParam = 0
+llamada = ""
 resultado = -1
 DEBUG = True
 
@@ -38,6 +40,7 @@ def p_programa(p):
 	print("SE TERMINO EL PROGRAMA PATIO CON EXITO!")
 	#print(pilaOperandos, "la ", pilaOperandosDirMem, "de ", pilaOperadores)
 	pass
+
 
 def p_funcAgregarInicio(p):
 	'''funcAgregarInicio : '''
@@ -88,11 +91,20 @@ def p_matriz(p):
 	pass
 
 def p_funcion(p): 
-	''' funcion : FUNC tipo ID  funcAgregar "(" param ")" bloquefunc '''
+	''' funcion : FUNC tipo ID  funcAgregar restoFuncion '''
+	print "Entre a funcion"
 	pass
 
+def p_restoFuncion(p):
+	''' restoFuncion : "(" param ")" bloquefunc'''
+	pass
+
+
+
+
 def p_funcAgregar(p):
-	'''funcAgregar : '''
+	'''funcAgregar :  '''
+	print "Entre a funcAgregar"
 	global funcionActual
 	global listaFunciones
 	global tipoActual
@@ -105,15 +117,14 @@ def p_funcAgregar(p):
 	if posicion != -1:
 		print "FUNCION PREVIAMENTE DECLARADA"
 	else:
+		print "Entre al else FuncAgregar"
 		listaFunciones.append(objetoFuncion)
 
 def p_param(p):
-	''' param : tipo listapaID '''
+	''' param : tipo  ID guardarIDParam maspaID 
+		 		| empty'''
 	pass
 	
-def p_listapaID(p):
-	''' listapaID : ID guardarIDParam maspaID maspaTip '''
-	pass
 
 def p_guardarIDParam(p):
 	''' guardarIDParam : '''
@@ -141,7 +152,7 @@ def busquedaLista():
 	for elemento in listaFunciones:
 		if elemento.nombre == funcionActual : 
 			return cont
-		cont += cont
+		cont += 1
 	return -1
 
 def busquedaFunc(funcionLlamar):
@@ -150,7 +161,7 @@ def busquedaFunc(funcionLlamar):
 	for elemento in listaFunciones:
 		if elemento.nombre == funcionLlamar : 
 			return cont
-		cont += cont
+		cont += 1
 	return -1
 
 def busquedaVar(varActual):
@@ -191,16 +202,14 @@ def p_guardarIDs(p):
 		listaFunciones[posicion].varLocal = aux + 1 
 		listaFunciones[posicion].arrVar.append(agregarVar)
 		print "Se guardo la variable en la tabla ", tipoActual
+		print "long--------", len(listaFunciones[posicion].arrVar)
 
 def p_maspaID(p):
-	''' maspaID : "," ID guardarIDs
+	''' maspaID : "," param
 				| empty '''
 	pass
 
-def p_maspaTip(p):
-	''' maspaTip : vars
-				 | empty '''
-	pass
+
 
 def p_bloquefunc(p): 
 	''' bloquefunc : "{" vars guardarCuadruplo estatuto regresa "}" liberarVar 
@@ -288,33 +297,92 @@ def p_estatutoAux(p):
 					| empty'''
 	pass
 
+def p_checaNumParam(p):
+	''' checaNumParam : ")"'''
+	global contParam
+	global listaFunciones
+	pos = busquedaLista()
+	numParam  = len (listaFunciones[pos].arrParam)
+	if contParam != numParam:	
+		print "El numero de parametros es incorecto"
+	pass
+
+def p_generaGOSUB(p):
+	'''generaGOSUB : '''
+	global listaCuadruplos
+	global llamada
+	cuadr = Cuadruplo(32,-1,-1,llamada)
+	listaCuadruplos.append(cuadr)
+	pass
+
 def p_funcs(p):
-	''' funcs : ID verProc generarERA auxExp ")"
+	''' funcs : ID verProc generarERA auxExp  checaNumParam generaGOSUB
 			  | ID '''
 	pass
 
+
 def p_verProc(p):
 	''' verProc : '''
+	global llamada
 	if busquedaFunc(p[-1]) == -1 :
 		print "ESTA FUNCION NO ESTA DECLARADA"
+	else:
+		llamada = p[-1]
 	pass
 
 def p_generarEra(p):
 	''' generarERA : "(" '''
-	listaCuadruplos.append(30, -1, -1, p[-2])
+	global listaCuadruplos
+	global listaFunciones
+	global contParam
+	global llamada
+	contParam = 0
+	pos = busquedaLista()
+	arrParametros = listaFunciones[pos].arrParam
+	longitud = len (arrParametros)
+	print ("Longitud de arreglo de parametros", longitud)
+	cuadr = Cuadruplo(30, -1, -1, llamada)
+	listaCuadruplos.append(cuadr)
 	pass
 
 def p_auxExp(p):
-	''' auxExp : listaExp ","
+	''' auxExp : listaExp llegaComa
 				| listaExp  '''
 	pass
 
+def p_llegaComa(p):
+	''' llegaComa : "," '''
+	global contParam
+	contParam = contParam + 1
+	pass
+
+def p_verificarTiposFunc(p):
+	''' verificarTiposFunc : '''
+	global pilaOperandos
+	global pilaOperandosDirMem
+	global listaFunciones
+	global contParam
+	global listaCuadruplos
+	pos = busquedaFunc(llamada)
+	arrParametros = listaFunciones[pos].arrParam
+	print "CONT PARAM", contParam
+	auxParam = arrParametros[contParam].tipo
+	auxPila = pilaOperandos.pop()
+	mem = pilaOperandosDirMem.pop()
+	if(auxParam != auxPila):
+		print "TIPO DE PARAMETRO INCORRECTO"
+	else: 
+		cuadr = Cuadruplo(31, -1, mem, contParam)
+		listaCuadruplos.append(cuadr)
+	pass
+
+
 def p_listaExp(p):
-	'''listaExp : exp masExps'''
+	'''listaExp : exp verificarTiposFunc masExps'''
 	pass
 
 def p_masExps(p):
-	''' masExps : "," listaExp
+	''' masExps : llegaComa listaExp
 				|'''
 	pass
 
@@ -330,6 +398,7 @@ def p_guardarIDPila(p):
 	global listaCuadruplos
 	global pilaOperandosDirMem
 	posicion = busquedaLista()
+	print "guardarIDPila", p[-1]
 	posicion2 = busquedaVar(p[-1])
 	if posicion2 != -1:
 		memoria = listaFunciones[posicion].arrVar[posicion2]
@@ -455,14 +524,15 @@ def p_color(p):
 
 def p_condicion(p):
 	''' condicion : IF "(" expresion ")" checarIF finPilaSaltos
-				  | IF "(" expresion ")" bloque checarElse  '''
+				  | IF "(" expresion ")" checarIF checarElse  finPilaSaltos'''
 	pass
 
 def p_checarIF(p):
-	'''checarIF : bloque'''
+	'''checarIF : bloque '''
 	print "Entre a checar IF"
 	global pilaOperandos
 	global pilaSaltos
+	global pilaOperadores
 	aux = pilaOperandos.pop()
 	if aux != 8: 
 		print "Error semantico en condicion IF"
@@ -470,12 +540,15 @@ def p_checarIF(p):
 		lenCuadruplos = len(listaCuadruplos)
 		pilaSaltos.append(lenCuadruplos)
 		cuadr = Cuadruplo(16,-1,-1,0)
+		print "Guarde cuadruplo IF"
 		listaCuadruplos.append(cuadr)
+		print pilaOperandos
+		print pilaOperadores
 
 	pass
 
 def p_checarElse(p):
-	'''checarElse : ELSE bloque finPilaSaltos '''
+	'''checarElse : ELSE bloque  '''
 	print "Entre a checar else"
 	global pilaSaltos
 	#meter cuadruplo de go to a la pila
