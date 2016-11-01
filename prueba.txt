@@ -2,6 +2,10 @@ func entero lizzy (entero aA, decimal bBB){
 	
 	cuadrado mM;
 
+	if(4 < 9){
+		return mM
+	}
+
 	return mM
 
 }
@@ -14,12 +18,12 @@ inicio
 	
 
 	if( 3 > 10 ){
-		entero bBBB; 
+		
 		aAA = 2 + 1 + 3 + (3 /8 *100);
 
 	}
 	else{
-		decimal mAry;
+		
 		aAA = 2 + 1 + 3 + (3 /8 *100);
 		lizzy(bBB, mM)
 

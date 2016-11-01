@@ -16,6 +16,7 @@ operando2 = ""
 tipofuncMem = '1'
 pilaOperadores = []
 pilaOperandos = []
+diccConstantes = {}
 pilaOperandosDirMem = []
 pilaSaltos = []
 pilaSaltosFunc = []
@@ -27,9 +28,8 @@ DEBUG = True
 
 # BNF
 def p_programa(p):
-	'''programa : INICIO funcAgregarInicio bloque  FIN 
-	  			| INICIO FIN
-	  			| funcion programa '''	
+	'''programa : funcion INICIO funcAgregarInicio bloque  FIN liberarVar
+	  			| funcion INICIO FIN '''	
 	global pilaOperandos
 	global pilaOperadores
 	global pilaOperandosDirMem
@@ -38,6 +38,7 @@ def p_programa(p):
 	cuadr = Cuadruplo(17, -1, -1, -1)
 	listaCuadruplos.append(cuadr)
 	print("SE TERMINO EL PROGRAMA PATIO CON EXITO!")
+	escribeArchivo()
 	#print(pilaOperandos, "la ", pilaOperandosDirMem, "de ", pilaOperadores)
 	pass
 
@@ -91,16 +92,14 @@ def p_matriz(p):
 	pass
 
 def p_funcion(p): 
-	''' funcion : FUNC tipo ID  funcAgregar restoFuncion '''
+	''' funcion : FUNC tipo ID  funcAgregar restoFuncion
+				| empty '''
 	print "Entre a funcion"
 	pass
 
 def p_restoFuncion(p):
 	''' restoFuncion : "(" param ")" bloquefunc'''
 	pass
-
-
-
 
 def p_funcAgregar(p):
 	'''funcAgregar :  '''
@@ -125,7 +124,6 @@ def p_param(p):
 		 		| empty'''
 	pass
 	
-
 def p_guardarIDParam(p):
 	''' guardarIDParam : '''
 	global funcionActual
@@ -138,10 +136,9 @@ def p_guardarIDParam(p):
 	else:
 		posicion = busquedaLista()
 		var = diccionarioMemoria[tipofuncMem]
-
 		valormem = var[str(tipoActual)]
 		agregarVar = TVar(p[-1], tipoActual, valormem)
-		var[str(tipoActual)] = valormem + 1
+		diccionarioMemoria[tipofuncMem][str(tipoActual)] = valormem + 1
 		listaFunciones[posicion].arrParam.append(agregarVar)
 		print "Se guardo el parametro en la tabla de parametros ", tipoActual
 
@@ -197,7 +194,7 @@ def p_guardarIDs(p):
 		var = diccionarioMemoria[tipofuncMem]
 		valormem = var[str(tipoActual)]
 		agregarVar = TVar(p[-1], tipoActual, valormem)
-		var[str(tipoActual)] = valormem + 1
+		diccionarioMemoria[tipofuncMem][str(tipoActual)] = valormem + 1
 		aux = listaFunciones[posicion].varLocal
 		listaFunciones[posicion].varLocal = aux + 1 
 		listaFunciones[posicion].arrVar.append(agregarVar)
@@ -208,8 +205,6 @@ def p_maspaID(p):
 				| empty '''
 	pass
 
-
-
 def p_bloquefunc(p): 
 	''' bloquefunc : "{" vars guardarCuadruplo estatuto regresa "}" liberarVar 
 				   | "{" vars guardarCuadruplo regresa "}" liberarVar
@@ -219,14 +214,18 @@ def p_bloquefunc(p):
 
 def p_liberarVar(p):
 	''' liberarVar : '''
+	global diccionarioMemoria
+	global listaFunciones
+	
+
 	loc = diccionarioMemoria['2']
 	auxLoc = loc['1'] - 8001
 	auxCua = loc['2'] - 9001
 	auxRect = loc['3'] - 10001
 	auxCir = loc['4'] - 11001
 	auxLin = loc['5'] - 12001
-	auxEstr = loc['6'] - 15001
-	auxDec = loc['7'] - 15001
+	auxEstr = loc['6'] - 13001
+	auxDec = loc['7'] - 14001
 	auxBool = loc['8'] - 15001
 
 	loc['1'] = 8001
@@ -320,7 +319,6 @@ def p_funcs(p):
 			  | ID '''
 	pass
 
-
 def p_verProc(p):
 	''' verProc : '''
 	global llamada
@@ -375,7 +373,6 @@ def p_verificarTiposFunc(p):
 		listaCuadruplos.append(cuadr)
 	pass
 
-
 def p_listaExp(p):
 	'''listaExp : exp verificarTiposFunc masExps'''
 	pass
@@ -384,7 +381,6 @@ def p_masExps(p):
 	''' masExps : llegaComa listaExp
 				|'''
 	pass
-
 
 def p_asignacion(p):
 	''' asignacion : ID guardarIDPila opcionAsignacion valorAsig ";" checarOperadorIgual
@@ -526,8 +522,20 @@ def p_condicion(p):
 				  | IF "(" expresion ")" checarIF checarElse  finPilaSaltos'''
 	pass
 
+def p_bloqueCond(p):
+	'''bloqueCond : "{" estatuto regresaCond "}" 
+				  |  "{" regresaCond "}" 
+				  | "{"  "}" '''
+	print("BLOQUE CONDICIONALES")
+	pass
+
+def p_regresaCond(p):
+	''' regresaCond :  RETURN ID
+					| empty'''
+	pass
+
 def p_checarIF(p):
-	'''checarIF : bloque '''
+	'''checarIF : bloqueCond '''
 	print "Entre a checar IF"
 	global pilaOperandos
 	global pilaSaltos
@@ -547,9 +555,10 @@ def p_checarIF(p):
 	pass
 
 def p_checarElse(p):
-	'''checarElse : ELSE bloque  '''
+	'''checarElse : ELSE bloqueCond  '''
 	print "Entre a checar else"
 	global pilaSaltos
+	global listaCuadruplos
 	#meter cuadruplo de go to a la pila
 	cuadr = Cuadruplo(17,-1,-1,0)
 	listaCuadruplos.append(cuadr)
@@ -611,6 +620,7 @@ def p_checaoperador6(p):
 	'''checaoperador6 : '''
 	global pilaOperadores
 	global pilaOperandos
+	global diccionarioMemoria
 	opr = len(pilaOperadores)
 	print "Entra checaroperador 6"
 	print ("PilaOperadores: ", pilaOperadores)
@@ -624,7 +634,7 @@ def p_checaoperador6(p):
 			var = diccionarioMemoria['3']
 			valormem = var[str(resultado)]
 			agregarVar = TVar('temp', resultado, valormem)
-			var[str(resultado)] = valormem + 1
+			diccionarioMemoria['3'][str(resultado)] = valormem + 1
 			listaFunciones[posicion].arrVar.append(agregarVar)
 			pilaOperandosDirMem.append(valormem)
 			print("Resultado: ", resultado)
@@ -672,6 +682,7 @@ def p_checaroperador4(p):
 					   | '''
 	global pilaOperadores
 	global pilaOperandos
+	global diccionarioMemoria
 	opr = len(pilaOperadores)
 	print "Entra checaroperador4"
 	print ("PilaOperadores: ", pilaOperadores)
@@ -685,7 +696,7 @@ def p_checaroperador4(p):
 			var = diccionarioMemoria['3']
 			valormem = var[str(resultado)]
 			agregarVar = TVar('temp', resultado, valormem)
-			var[str(resultado)] = valormem + 1
+			diccionarioMemoria['3'][str(resultado)] = valormem + 1
 			listaFunciones[posicion].arrVar.append(agregarVar)
 			pilaOperandosDirMem.append(valormem)
 			print("Resultado: ", resultado)
@@ -727,6 +738,7 @@ def p_checaroperador5(p):
 					   | '''
 	global pilaOperadores
 	global pilaOperandos
+	global diccionarioMemoria
 	opr = len(pilaOperadores)
 	print "Entre a checaroperador5"
 	print ("PilaOperadores: ", pilaOperadores)	
@@ -741,7 +753,7 @@ def p_checaroperador5(p):
 			var = diccionarioMemoria['3']
 			valormem = var[str(resultado)]
 			agregarVar = TVar('temp', resultado, valormem)
-			var[str(resultado)] = valormem + 1
+			diccionarioMemoria['3'][str(resultado)] = valormem + 1
 			listaFunciones[posicion].arrVar.append(agregarVar)
 			pilaOperandosDirMem.append(valormem)
 			print("resultado checaroperador5", resultado)
@@ -784,7 +796,7 @@ def p_pos(p):
 	pass
 
 def p_whiles(p):
-	''' whiles : WHILE checarWhile "(" expresion ")" checarContenido bloque finPilaSaltosWhile '''
+	''' whiles : WHILE checarWhile "(" expresion ")" checarContenido bloqueCond finPilaSaltosWhile '''
 	pass
 
 def p_checarWhile(p):
@@ -851,12 +863,15 @@ def p_recibe_ID(p):
 def p_recibe_CTF(p):
 	''' recibe_CTF : CTF '''
 	print("VARCTE: ", p[1])
+	global diccionarioMemoria
+	global diccConstantes
 	posicion = busquedaLista()
 	var = diccionarioMemoria['4']
 	valormem = var[str(7)]
 	agregarVar = TVar(p[1],7, valormem)
-	var[str(7)] = valormem + 1
+	diccionarioMemoria['4'][str(7)] = valormem + 1
 	listaFunciones[posicion].arrVar.append(agregarVar)
+	diccConstantes[valormem] = p[1]
 	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(7)
 	pass
@@ -864,12 +879,15 @@ def p_recibe_CTF(p):
 def p_recibe_CTI(p):
 	''' recibe_CTI : CTI '''
 	print("VARCTE: ", p[1])
+	global diccionarioMemoria
+	global diccConstantes
 	posicion = busquedaLista()
 	var = diccionarioMemoria['4']
 	valormem = var[str(1)]
 	agregarVar = TVar(p[1],1, valormem)
-	var[str(1)] = valormem + 1
+	diccionarioMemoria['4'][str(1)] = valormem + 1
 	listaFunciones[posicion].arrVar.append(agregarVar)
+	diccConstantes[valormem] = p[1]
 	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(1)
 	pass
@@ -877,11 +895,12 @@ def p_recibe_CTI(p):
 def p_recibe_TRUE(p):
 	''' recibe_TRUE : TRUE '''
 	print("VARCTE: ", p[1])
+ 	global diccionarioMemoria
 	posicion = busquedaLista()
 	var = diccionarioMemoria['4']
 	valormem = var[str(8)]
 	agregarVar = TVar(p[1],8, valormem)
-	var[str(8)] = valormem + 1
+	diccionarioMemoria['4'][str(8)] = valormem + 1
 	listaFunciones[posicion].arrVar.append(agregarVar)
 	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(8)
@@ -890,11 +909,12 @@ def p_recibe_TRUE(p):
 def p_recibe_FALSE(p):
 	''' recibe_FALSE : FALSE '''
 	print("VARCTE: ", p[1])
+	global diccionarioMemoria
 	posicion = busquedaLista()
 	var = diccionarioMemoria['4']
 	valormem = var[str(8)]
 	agregarVar = TVar(p[1],8, valormem)
-	var[str(8)] = valormem + 1
+	diccionarioMemoria['3'][str(8)] = valormem + 1
 	listaFunciones[posicion].arrVar.append(agregarVar)
 	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(8)
@@ -974,6 +994,63 @@ def p_empty(p):
     'empty : '
     print("SALTO DE LINEA")
     pass
+
+# Funcion para guardar los datos necesarios 
+# para la creacion de la maquina virtual
+def escribeArchivo():
+	archivo = open ('maquiVirtual.txt', 'w')
+	global listaFunciones
+	global listaCuadruplos
+	global diccConstantes
+	#Las funciones se guardan de la siguiente forma:
+	#nombre tipo varLoca VarTemporales varEnt varDec varCuadrado varRect varCirc varLinea varEstrella varBool inicioCuadruplo cantidadParametros.
+	for elemento in listaFunciones:
+		archivo.write(elemento.nombre)
+		archivo.write(' ')
+		archivo.write(str(elemento.tipo))
+		archivo.write(' ')
+		archivo.write(str(elemento.varLocal))
+		archivo.write(' ')
+		archivo.write(str(elemento.varTemporal))
+		archivo.write(' ')
+		archivo.write(str(elemento.varEnt))
+		archivo.write(' ')
+		archivo.write(str(elemento.varDec))
+		archivo.write(' ')
+		archivo.write(str(elemento.varCuadrado))
+		archivo.write(' ')
+		archivo.write(str(elemento.varRect))
+		archivo.write(' ')
+		archivo.write(str(elemento.varCirc))
+		archivo.write(' ')
+		archivo.write(str(elemento.varLin))
+		archivo.write(' ')
+		archivo.write(str(elemento.varEstr))
+		archivo.write(' ')
+		archivo.write(str(elemento.varBool))
+		archivo.write(' ')
+		archivo.write(str(elemento.cuadruploInicial))
+		archivo.write(' ')
+		archivo.write(str(len(elemento.arrParam)))
+		archivo.write('\n')
+	archivo.write('$$\n')
+	for elemento in diccConstantes:
+		archivo.write(str(elemento))
+		archivo.write(' ')
+		archivo.write(str(diccConstantes[elemento]))
+		archivo.write('\n')
+	archivo.write('$$\n')
+	for elemento in listaCuadruplos:
+		archivo.write(str(elemento.operador))
+		archivo.write(' ')
+		archivo.write(str(elemento.operando1))
+		archivo.write(' ')
+		archivo.write(str(elemento.operando2))
+		archivo.write(' ')
+		archivo.write(str(elemento.temporal))
+		archivo.write('\n')
+
+	archivo.close()
 
 def p_error(p):
     print("Syntax error")
