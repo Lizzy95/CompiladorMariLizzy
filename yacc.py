@@ -17,6 +17,7 @@ tipofuncMem = '1'
 pilaOperadores = []
 pilaOperandos = []
 diccConstantes = {}
+diccionarioVarGlobal = {}
 pilaOperandosDirMem = []
 pilaSaltos = []
 pilaSaltosFunc = []
@@ -28,8 +29,8 @@ DEBUG = True
 
 # BNF
 def p_programa(p):
-	'''programa : funcion INICIO funcAgregarInicio bloque  FIN liberarVar
-	  			| funcion INICIO FIN '''	
+	'''programa : vars funcion INICIO funcAgregarInicio bloque  FIN liberarVar
+	  			| vars funcion INICIO FIN '''	
 	global pilaOperandos
 	global pilaOperadores
 	global pilaOperandosDirMem
@@ -64,7 +65,8 @@ def p_bloque(p):
 def p_vars(p):
 	'''vars : tipo ID guardarIDs ";" masTipos
 		| tipo ID guardarIDs arreglo  ";" masTipos
-		| tipo listaIDS ";" masTipos'''
+		| tipo listaIDS ";" masTipos
+		| empty'''
 	print("VARS: Estructura basica")
 	pass
 
@@ -173,7 +175,14 @@ def busquedaVar(varActual):
 					return cont
 				else:
 					cont += 1
+
+
 	return -1
+
+def busquedaVarGlobal(var):
+	global diccionarioVarGlobal
+	if diccionarioVarGlobal.has_key(var):
+		return -1
 
 #def imprimirLista():
 #	print"imprime elementos"
@@ -185,20 +194,31 @@ def p_guardarIDs(p):
 	global funcionActual
 	global listaFunciones
 	global tipoActual
+	global tipofuncMem
 	global diccionarioMemoria
+	if(tipofuncMem == '1'):
+		if busquedaVarGlobal(p[-1]) == -1:
+			"SE DECLARO UNA VARIABLE PREVIAMENTE DECLARADA"
+		else:
+			var = diccionarioMemoria[tipofuncMem]
+			valormem = var[str(tipoActual)]
+			diccionarioMemoria[tipofuncMem][str(tipoActual)] = valormem + 1
+			diccionarioVarGlobal[valormem] = p[-1]
+			print "Se guardo la variable global en el diccionario ", tipoActual
 	#checar si ya existe una variable
-	if (busquedaVar(p[-1]) != -1 ):
-		print "SE DECLARO UNA VARIABLE PREVIAMENTE DECLARADA"
 	else:
-		posicion = busquedaLista()
-		var = diccionarioMemoria[tipofuncMem]
-		valormem = var[str(tipoActual)]
-		agregarVar = TVar(p[-1], tipoActual, valormem)
-		diccionarioMemoria[tipofuncMem][str(tipoActual)] = valormem + 1
-		aux = listaFunciones[posicion].varLocal
-		listaFunciones[posicion].varLocal = aux + 1 
-		listaFunciones[posicion].arrVar.append(agregarVar)
-		print "Se guardo la variable en la tabla ", tipoActual
+		if (busquedaVar(p[-1]) != -1 ):
+			print "SE DECLARO UNA VARIABLE PREVIAMENTE DECLARADA"
+		else:
+			posicion = busquedaLista()
+			var = diccionarioMemoria[tipofuncMem]
+			valormem = var[str(tipoActual)]
+			agregarVar = TVar(p[-1], tipoActual, valormem)
+			diccionarioMemoria[tipofuncMem][str(tipoActual)] = valormem + 1
+			aux = listaFunciones[posicion].varLocal
+			listaFunciones[posicion].varLocal = aux + 1 
+			listaFunciones[posicion].arrVar.append(agregarVar)
+			print "Se guardo la variable en la tabla ", tipoActual
 
 def p_maspaID(p):
 	''' maspaID : "," param

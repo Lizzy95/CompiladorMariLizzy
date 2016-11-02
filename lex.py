@@ -31,7 +31,6 @@ reserved = {
     'return' : 'RETURN',
     'bool' : 'BOOL', #9
     'func' : 'FUNC',
-    'for' : 'FOR',
     'amarillo' : 'AMARILLO',
     'verde' : 'VERDE',
     'rojo' : 'ROJO',
@@ -42,7 +41,7 @@ reserved = {
 #reserved = {'IF', 'ELSE', 'VAR', 'PRINT', 'INT', 'FLOAT', 'PROGRAM'}
 
 # Lista de los nombres de tokens   
-tokens = ['IF','ID','WHILE', 'CTI', 'CTF', 'CTS', 'MENORIGUAL', 'MAYORIGUAL', 'IGUALIGUAL', 
+tokens = ['IF','ID','WHILE', 'CTI', 'CTF', 'MENORIGUAL', 'MAYORIGUAL', 'IGUALIGUAL', 
 'DIFERENTE', 'COAND', 'COOR', 'TRUE', 'FALSE',] + list(reserved.values())
 
 #Declaracion de simbolos especiales mediatne literales
@@ -88,11 +87,6 @@ def t_CTF(t):
 def t_CTI(t):
     r'[0-9]+'
     t.value = int(t.value)
-    return t
-
-def t_CTS(t):
-    r'[\"a-zA-Z0-9]+\"'
-    t.type = reserved.get(t.value, 'STRING')
     return t
 
 def t_newline(t):
