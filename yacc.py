@@ -239,8 +239,13 @@ def p_liberarVar(p):
 	''' liberarVar : '''
 	global diccionarioMemoria
 	global listaFunciones
+	global listaCuadruplos
 	
 	posicion = busquedaLista()
+
+	cuadr = Cuadruplo(29, -1, -1, -1)
+	listaCuadruplos.append(cuadr)
+
 
 	loc = diccionarioMemoria['2']
 	auxLoc = loc['1'] - 8001
@@ -733,6 +738,7 @@ def p_checaroperador4(p):
 	print ("PilaOperadores: ", pilaOperadores)
 	if(opr != 0):
 		if((pilaOperadores[opr-1] == 1) | (pilaOperadores[opr-1] == 2)):
+
 			operando2 = pilaOperandos.pop()
 			operando1 = pilaOperandos.pop()
 			operadorActual = pilaOperadores.pop()
@@ -750,9 +756,11 @@ def p_checaroperador4(p):
 				print "ERROR: Operacion invalida, tipos no compatibles"
 			else:
 				print("SE CHECO EL CUADRUPLO Y ES CORRECTO", operando2, operando1, operadorActual)
-				resultadoT = valormem
+				print pilaOperandosDirMem
+				resultadoT = pilaOperandosDirMem.pop()
 				operando2C = pilaOperandosDirMem.pop()
 				operando1C = pilaOperandosDirMem.pop()
+				pilaOperandosDirMem.append(resultadoT)
 				cuadr = Cuadruplo(operadorActual, operando1C,operando2C,resultadoT)
 				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)
