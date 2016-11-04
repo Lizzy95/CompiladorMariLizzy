@@ -3,75 +3,75 @@ from Cuadruplo import Cuadruplo
 from Memoria import Memoria
 listaFunc = []
 listaCuadruplos = []
-tipoActual = "" 
+tipoActual = 0 
 diccionarioConstantes = {}
 listaMemoria = []
 contCuadruplos = 0
 
 def varEntero(variable):
 	global tipoActual
-	tipoActual = "arrEntero"
-	return variable - 8001
+	tipoActual = 0
+	return int(variable) - 8001
 def varCuadrado(variable):
 	global tipoActual
-	tipoActual = "arrCuadrado"
-	return variable - 9001
+	tipoActual = 1
+	return int(variable) - 9001
 def varRectangulo(variable):
 	global tipoActual
-	tipoActual = "arrRectangulo"
-	return variable - 10001
+	tipoActual = 2
+	return int(variable) - 10001
 def varCirculo(variable):
 	global tipoActual
-	tipoActual = "arrCirculo"
-	return variable - 11001
+	tipoActual = 3
+	return int(variable) - 11001
 def varLinea(variable):
 	global tipoActual
-	tipoActual = "arrLinea"
-	return variable - 12001
+	tipoActual = 4
+	return int(variable) - 12001
 def varEstrella(variable):
 	global tipoActual
-	tipoActual = "arrEstrella"
-	return variable - 13001
+	tipoActual = 5
+	return int(variable) - 13001
 def varDecimal(variable):
 	global tipoActual
-	tipoActual = "arrDecimal"
-	return variable - 13001
+	tipoActual = 6
+	return int(variable) - 14001
 def varBool(variable):
 	global tipoActual
-	tipoActual = "arrBool"
-	return variable - 14001
+	tipoActual = 7
+	return int(variable) - 15001
 def varEntTemp(variable):
 	global tipoActual
-	tipoActual = "arrEnteroTemp"
-	return variable - 15001
+	tipoActual = 8
+	return int(variable) - 16001
 def varCuadTemp(variable):
 	global tipoActual
-	tipoActual = "arrCuadradoTemp"
-	return variable - 16001
+	tipoActual = 9
+	return variable - 17001
 def varRectTemp(variable):
 	global tipoActual
-	tipoActual = "arrRectanguloTemp"
-	return variable - 17001
+	tipoActual = 10
+	return int(variable) - 18001
 def varCircTemp(variable):
 	global tipoActual
-	tipoActual = "arrCirculoTemp"
-	return variable - 18001
+	tipoActual = 11
+	return variable - 19001
 def varLineaTemp(variable):
 	global tipoActual
-	tipoActual = "arrLineaTemp"
-	return variable - 19001
+	tipoActual = 12
+	return int(variable) - 20001
 def varEstrTemp(variable):
 	global tipoActual
-	tipoActual = "arrEstrellaTemp"
-	return variable - 20001
+	tipoActual = 13
+	return int(variable) - 21001
 def varDecTemp(variable):
 	global tipoActual
-	tipoActual = "arrDecimalemp"
-	return variable - 21001
+	tipoActual = 14
+	return int(variable) - 22001
 def varBoolTemp(variable):
 	global tipoActual
-	tipoActual = "arrBoolTemp"
-	return variable - 22001
+	tipoActual = 15
+	return int(variable) - 23001
 
 tipodato = {
 	8 : varEntero,
@@ -101,32 +101,21 @@ def suma(operando1, operando2, resultado):
 	valor1 = 0
 	valor2 = 0
 	memoria = listaMemoria.pop()
-	print operando1
 	if diccionarioConstantes.has_key(operando1):
-		print "entra if 1"
 		valor1 = diccionarioConstantes[operando1]
 	else:
-		print "entra else 1"
-		aux1 = tipodato[int(operando1)/1000]
-		valor1  = memoria.tipoActual[aux1] 
-	print operando2
+		aux1 = tipodato[int(operando1)/1000](operando1)
+		valor1  = memoria.listaMem[tipoActual][aux1]  
 	if diccionarioConstantes.has_key(operando2):
-		print "entra if 2"
 		valor2 = diccionarioConstantes[operando2]
 	else:
-		print "entra else 2"
-		aux1 = tipodato[int(operando2)/1000]
-		valor2 = memoria.tipoActual[aux1] 
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		valor2 = memoria.listaMem[tipoActual][aux1] 
 
- 	auxResultado = tipodato[int(resultado)/1000]
- 	print "enta adu", tipoActual
-	memoria.tipoActual[aux1] = valor1 + valor2
+ 	auxResultado = tipodato[int(resultado)/1000](resultado)
+	memoria.listaMem[tipoActual][auxResultado] = int(valor1) + int(valor2)
 	listaMemoria.append(memoria)
-	print memoria.tipoActual[aux1] 
-
-
-
-
+	print "la suma es", memoria.listaMem[tipoActual][auxResultado]
 
 def resta(operando1, operando2, resultado):
 	print "entra resta"
@@ -139,6 +128,23 @@ def division(operando1, operando2, resultado):
 
 def asignacion(operando1, operando2, resultado):
 	print "entra asignacion"
+	global contCuadruplos
+	global pilaMemoria
+	global diccionarioConstantes
+	global tipoActual
+	memoria = listaMemoria.pop()
+	valor1 = 0
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		aux1 = tipodato[int(operando1)/1000](operando1)
+		valor1  = memoria.listaMem[tipoActual][aux1] 
+	contCuadruplos = contCuadruplos + 1
+	auxResultado = tipodato[int(resultado)/1000](resultado)
+	memoria.listaMem[tipoActual][auxResultado] = valor1
+	listaMemoria.append(memoria)
+	print "asignacion ", memoria.listaMem[tipoActual][auxResultado]
+
 
 def goto(operando1, operando2, resultado):
 	print "entra goto"
@@ -181,6 +187,8 @@ def arriba(operando1, operando2, resultado):
 	print "entra arriba"
 def retorno(operando1, operando2, resultado):
 	print "entra retorno"
+	global contCuadruplos
+	contCuadruplos = contCuadruplos + 1
 def abajo(operando1, operando2, resultado):
 	print "entra abajo"
 def generarERA(operando1, operando2, resultado):
@@ -190,6 +198,8 @@ def generaParam(operando1, operando2, resultado):
 
 def generaGOSUB(operando1, operando2, resultado):
 	print "entra generaGOSUB"
+	global contCuadruplos
+	contCuadruplos = contCuadruplos + 1
 
 
 
@@ -247,10 +257,10 @@ while linea != '$$\n':
 	linea = archivo.readline()
 archivo.close()
 
-memoriaMain = Memoria({},{},{},{},{},{},{},{},{},{},{},{},{}, {},{},{}	,0)
+memoriaMain = Memoria({},{},{},{},{},{},{},{},{},{},{},{},{}, {},{},{},0)
 listaMemoria.append(memoriaMain)
 
-while contCuadruplos <= len(listaCuadruplos):
+while contCuadruplos < len(listaCuadruplos):
 	options[listaCuadruplos[contCuadruplos].operador](listaCuadruplos[contCuadruplos].operando1, listaCuadruplos[contCuadruplos].operando2, listaCuadruplos[contCuadruplos].temporal)
 
 

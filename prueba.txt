@@ -2,7 +2,7 @@ inicio
 {
 	entero aAA;
 
-	aAA = 10 + 2; 
+	aAA = 10 + 2 + 4+200; 
 	
 	
 
