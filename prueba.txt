@@ -1,27 +1,10 @@
-func entero maribel (entero bMMM){
-	cuadrado mM;
-	mM = 100;
-	mM = 100 * 40;  
-	return mMM
-}
-
-func entero lizzy (entero aA, decimal bBB){
-	
-	cuadrado mM;
-	mM = 100 * 40; 
-	return mM
-
-}
 inicio
 {
-	entero aAA, bBB;
-	decimal mM; 
-	cuadrado lIzZy; 
-	aAA = 10 * 2; 
-	
-	lizzy(bBB, mM)
+	entero aAA;
 
-	aAA = 10 * 2; 
+	aAA = 10 + 2; 
+	
+	
 
 }
 fin

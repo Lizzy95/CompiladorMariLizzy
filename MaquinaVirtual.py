@@ -1,32 +1,96 @@
 from funcionVM import funcionVM
 from Cuadruplo import Cuadruplo
+
+def suma(operando1, operando2, resultado):
+	print "entra suma"
+
+def resta(operando1, operando2, resultado):
+	print "entra resta"
+
+def multiplicacion(operando1, operando2, resultado):
+	print "entra multiplicacion"
+
+def division(operando1, operando2, resultado):
+	print "entra division"
+
+def asignacion(operando1, operando2, resultado):
+	print "entra asignacion"
+
+
+def goto(operando1, operando2, resultado):
+	print "entra goto"
+
+def comparacionMenor(operando1, operando2, resultado):
+	print "entra comparacionMenor"
+
+
+def comparacionMayor(operando1, operando2, resultado):
+	print "entra comparacionMayor"
+def comparacionMenorIgual(operando1, operando2, resultado):
+	print "entra comparacionMenorIgual"
+def comparacionMayorIgual(operando1, operando2, resultado):
+	print "entra comparacionMayorIgual"
+def comparacionIgual(operando1, operando2, resultado):
+	print "entra comparacionIgual"
+def comparacionDiferente(operando1, operando2, resultado):
+	print "entra comparacionDiferente"
+def gotoFalso(operando1, operando2, resultado):
+	print "entra gotoFalsor"
+def goto(operando1, operando2, resultado):
+	print "entra goto"
+def leer(operando1, operando2, resultado):
+	print "entra leer"
+def dibujar(operando1, operando2, resultado):
+	print "entra dibujar"
+def mover(operando1, operando2, resultado):
+	print "entra mover"
+def izquierda(operando1, operando2, resultado):
+	print "entra izquierda"
+def derecha(operando1, operando2, resultado):
+	print "entra derecha"
+def arriba(operando1, operando2, resultado):
+	print "entra arriba"
+def retorno(operando1, operando2, resultado):
+	print "entra retorno"
+def generarERA(operando1, operando2, resultado):
+	print "entra generarERA"
+def generarParam(operando1, operando2, resultado):
+	print "entra generaParam"
+
+def generaGOSUB(operando1, operando2, resultado):
+	print "entra generaGOSUB"
+
+
+
+
 options = {
-	1 : suma,
-	2 : resta, 
-	3 : multiplicacion,
-	4 : division,
-	5 : asignacion, 
-	6 : comparacionMenor
-	7 : comparacionMayor
-	8 : comparacionMenorIgual
-	9 : comparacionMayorIgual
-	10 : comparacionIgual
-	11 : comparacionDiferente
-	12 : comparacionOR
-	13 : comparacionAND
-	16 : gotoFalso
-	17 : goto 
-	18 : leer
-	19 : dibujar
-	24 : mover
-	25 : izquierda
-	26 : derecha
-	27 : arriba
-	28 : abajo
-	29 : retorno
-	30 : generarERA
-	31 : generaParam
-	32 : generaGOSUB
+	'1' : suma,
+	'2' : resta, 
+	'3' : multiplicacion,
+	'4' : division,
+	'5' : asignacion, 
+	'6' : comparacionMenor,
+	'7' : comparacionMayor,
+	'8': comparacionMenorIgual,
+	'9' : comparacionMayorIgual,
+	'10' : comparacionIgual,
+	'11' : comparacionDiferente,
+	'12' : comparacionOR,
+	'13' : comparacionAND,
+	'16' : gotoFalso,
+	'17' : goto,
+	'18' : leer,
+	'19' : dibujar,
+	'24' : mover,
+	'25' : izquierda,
+	'26' : derecha,
+	'27' : arriba,
+	'28' : abajo,
+	'29' : retorno,
+	'30' : generarERA,
+	'31' : generaParam,
+	'32' : generaGOSUB,
+	
 }
 archivo = open("maquiVirtual.txt")
 listaFunc = []
@@ -57,5 +121,9 @@ while linea != '$$\n':
 archivo.close()
 
 for elemento in listaCuadruplos:
-	elemento[0]	
-print len(listaCuadruplos)
+	print elemento.operador
+	options[elemento.operador](elemento.operando1, elemento.operando2, elemento.temporal)
+
+
+
+
