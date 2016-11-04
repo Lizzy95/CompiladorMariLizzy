@@ -50,7 +50,7 @@ def p_funcAgregarInicio(p):
 	global tipofuncMem
 	tipofuncMem = '2'
 	funcionActual = p[-1]
-	objetoFuncion = TFunc(funcionActual, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {}, {})
+	objetoFuncion = TFunc(funcionActual, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {}, {})
 	listaFunciones.append(objetoFuncion) 
 	print("Se agrego la funcion a la tabla")
 
@@ -117,7 +117,7 @@ def p_funcAgregar(p):
 	global tipofuncMem
 	tipofuncMem = '2'
 	funcionActual = p[-1]
-	objetoFuncion = TFunc(p[-1], tipoActual, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {}, {})
+	objetoFuncion = TFunc(p[-1], tipoActual, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {}, {})
 	#checar si ya existe una funcion
 	posicion = busquedaLista()
 	if posicion != -1:
@@ -219,9 +219,7 @@ def p_guardarIDs(p):
 			var = diccionarioMemoria[tipofuncMem]
 			valormem = var[str(tipoActual)]
 			agregarVar = TVar(p[-1], tipoActual, valormem)
-			diccionarioMemoria[tipofuncMem][str(tipoActual)] = valormem + 1
-			aux = listaFunciones[posicion].varLocal
-			listaFunciones[posicion].varLocal = aux + 1 
+			diccionarioMemoria[tipofuncMem][str(tipoActual)] = valormem + 1 
 			listaFunciones[posicion].arrVar.append(agregarVar)
 			print "Se guardo la variable en la tabla ", tipoActual
 
@@ -242,6 +240,7 @@ def p_liberarVar(p):
 	global diccionarioMemoria
 	global listaFunciones
 	
+	posicion = busquedaLista()
 
 	loc = diccionarioMemoria['2']
 	auxLoc = loc['1'] - 8001
@@ -253,6 +252,15 @@ def p_liberarVar(p):
 	auxDec = loc['7'] - 14001
 	auxBool = loc['8'] - 15001
 
+	listaFunciones[posicion].varEnt = auxLoc
+	listaFunciones[posicion].varDec = auxDec
+	listaFunciones[posicion].varCuadrado = auxCua
+	listaFunciones[posicion].varRect = auxRect
+	listaFunciones[posicion].varCirc = auxCir
+	listaFunciones[posicion].varLin = auxLin
+	listaFunciones[posicion].varEstr = auxEstr
+	listaFunciones[posicion].varBool = auxBool
+
 	loc['1'] = 8001
 	loc['2'] = 9001
 	loc['3'] = 10001
@@ -263,7 +271,24 @@ def p_liberarVar(p):
 	loc['8'] =  15001
 
 	temp = diccionarioMemoria['3'] 
-	auxTemp = (temp['1'] - 16001) + (temp['2'] - 17001) + (temp['3'] - 18001) + (temp['4'] - 19001) + (temp['5'] - 20001) + (temp['6'] - 21001) + (temp['7'] - 22001) + (temp['8'] - 23001)
+	auxLoc = temp['1'] - 16001
+	auxCua = temp['2'] - 17001
+	auxRect = temp['3'] - 18001
+	auxCir = temp['4'] - 19001
+	auxLin = temp['5'] - 20001
+	auxEstr = temp['6'] - 21001
+	auxDec = temp['7'] - 22001
+	auxBool = temp['8'] - 23001
+
+	listaFunciones[posicion].varEntTemp = auxLoc
+	listaFunciones[posicion].varDecTemp = auxDec
+	listaFunciones[posicion].varCuadradoTemp = auxCua
+	listaFunciones[posicion].varRectTemp = auxRect
+	listaFunciones[posicion].varCircTemp = auxCir
+	listaFunciones[posicion].varLinTemp = auxLin
+	listaFunciones[posicion].varEstrTemp = auxEstr
+	listaFunciones[posicion].varBoolTemp = auxBool
+
 	temp['1'] =  16001
 	temp['2'] = 17001
 	temp['3'] = 18001
@@ -282,17 +307,7 @@ def p_liberarVar(p):
 	cte['6'] =  29001
 	cte['7'] =  30001
 	cte['8'] =  31001
-
-	posicion = busquedaLista()
-	listaFunciones[posicion].varTemporal = auxTemp
-	listaFunciones[posicion].varEnt = auxLoc
-	listaFunciones[posicion].varDec = auxDec
-	listaFunciones[posicion].varCuadrado = auxCua
-	listaFunciones[posicion].varRect = auxRect
-	listaFunciones[posicion].varCirc = auxCir
-	listaFunciones[posicion].varLin = auxLin
-	listaFunciones[posicion].varEstr = auxEstr
-	listaFunciones[posicion].varBool = auxBool
+	
 	pass
 
 def p_guardarCuadruplo(p): 
@@ -1039,10 +1054,6 @@ def escribeArchivo():
 		archivo.write(' ')
 		archivo.write(str(elemento.tipo))
 		archivo.write(' ')
-		archivo.write(str(elemento.varLocal))
-		archivo.write(' ')
-		archivo.write(str(elemento.varTemporal))
-		archivo.write(' ')
 		archivo.write(str(elemento.varEnt))
 		archivo.write(' ')
 		archivo.write(str(elemento.varDec))
@@ -1058,6 +1069,22 @@ def escribeArchivo():
 		archivo.write(str(elemento.varEstr))
 		archivo.write(' ')
 		archivo.write(str(elemento.varBool))
+		archivo.write(' ')
+		archivo.write(str(elemento.varEntTemp))
+		archivo.write(' ')
+		archivo.write(str(elemento.varDecTemp))
+		archivo.write(' ')
+		archivo.write(str(elemento.varCuadradoTemp))
+		archivo.write(' ')
+		archivo.write(str(elemento.varRectTemp))
+		archivo.write(' ')
+		archivo.write(str(elemento.varCircTemp))
+		archivo.write(' ')
+		archivo.write(str(elemento.varLinTemp))
+		archivo.write(' ')
+		archivo.write(str(elemento.varEstrTemp))
+		archivo.write(' ')
+		archivo.write(str(elemento.varBoolTemp))
 		archivo.write(' ')
 		archivo.write(str(elemento.cuadruploInicial))
 		archivo.write(' ')

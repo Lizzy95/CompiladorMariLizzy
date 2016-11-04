@@ -1,6 +1,30 @@
 from funcionVM import funcionVM
 from Cuadruplo import Cuadruplo
 
+listaFunc = []
+listaCuadruplos = []
+diccionarioConstantes = {}
+linea = archivo.readline()
+
+tipodato = {
+	0 : varEntero,
+	1 : varCuadrado,
+	2 : varRectangulo,
+	3 : varCirculo,
+	4 : varLinea,
+	5 : varEstrella,
+	6 : varDecimal,
+	7 : varBool,
+	8 : varEntTemp,
+	9 : varCuadTemp,
+	10 : varRectTemp,
+	11 : varCircTemp,
+	12 : varLineaTemp,
+	13 : varEstrTemp,
+	14 : varDecTemp,
+	15 : varBoolTemp,
+}
+
 def suma(operando1, operando2, resultado):
 	print "entra suma"
 
@@ -22,7 +46,6 @@ def goto(operando1, operando2, resultado):
 
 def comparacionMenor(operando1, operando2, resultado):
 	print "entra comparacionMenor"
-
 
 def comparacionMayor(operando1, operando2, resultado):
 	print "entra comparacionMayor"
@@ -93,10 +116,6 @@ options = {
 	
 }
 archivo = open("maquiVirtual.txt")
-listaFunc = []
-listaCuadruplos = []
-diccionarioConstantes = {}
-linea = archivo.readline()
 
 while linea != "$$\n":
 	lineaAux = linea.split(' ')

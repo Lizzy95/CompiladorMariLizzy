@@ -9,3 +9,5 @@ class Memoria:
 		self.arrDecimal = []
 		self.arrBool = []
 		self.cuadrRetorno = 0
+
+	
