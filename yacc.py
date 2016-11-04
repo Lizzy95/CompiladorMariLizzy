@@ -26,7 +26,8 @@ contParam = 0
 llamada = ""
 resultado = -1
 DEBUG = True
-
+cuadr = Cuadruplo(17, -1, -1, -1)
+listaCuadruplos.append(cuadr)
 # BNF
 def p_programa(p):
 	'''programa : vars funcion INICIO funcAgregarInicio bloque  FIN liberarVar
@@ -36,8 +37,6 @@ def p_programa(p):
 	global pilaOperandosDirMem
 	global pilaSaltosFunc
 	global listaCuadruplos
-	cuadr = Cuadruplo(17, -1, -1, -1)
-	listaCuadruplos.append(cuadr)
 	print("SE TERMINO EL PROGRAMA PATIO CON EXITO!")
 	escribeArchivo()
 	#print(pilaOperandos, "la ", pilaOperandosDirMem, "de ", pilaOperadores)
@@ -52,12 +51,12 @@ def p_funcAgregarInicio(p):
 	tipofuncMem = '2'
 	funcionActual = p[-1]
 	objetoFuncion = TFunc(funcionActual, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {}, {})
-	listaFunciones.append(objetoFuncion)
+	listaFunciones.append(objetoFuncion) 
 	print("Se agrego la funcion a la tabla")
 
 def p_bloque(p):
-	'''bloque : "{" vars estatuto "}"
-			  | "{" vars "}"
+	'''bloque : "{" vars guardarCuadruplo estatuto "}"
+			  | "{" vars guardarCuadruplo "}"
 			  | "{" "}"'''
 	print("BLOQUE")
 	pass
@@ -94,9 +93,15 @@ def p_matriz(p):
 	pass
 
 def p_funcion(p): 
-	''' funcion : FUNC tipo ID  funcAgregar restoFuncion
+	''' funcion : FUNC tipo ID  funcAgregar restoFuncion  funcion2
 				| empty '''
 	print "Entre a funcion"
+	pass
+
+def p_funcion2(p): 
+	''' funcion2 : funcion
+				| empty '''
+	print "Entre a funcion2"
 	pass
 
 def p_restoFuncion(p):
@@ -292,9 +297,14 @@ def p_liberarVar(p):
 
 def p_guardarCuadruplo(p): 
 	'''guardarCuadruplo :  '''
+	global listaFunciones
+	global listaCuadruplos
+	global funcionActual
 	act = len(listaCuadruplos)
+	if funcionActual == 'inicio':
+		listaCuadruplos[0].temporal = act
 	posicion = busquedaLista()
-	listaFunciones[posicion].cuadruploInicial = posicion
+	listaFunciones[posicion].cuadruploInicial = act
 	pass
 
 def p_regresa(p):
@@ -1069,6 +1079,7 @@ def escribeArchivo():
 		archivo.write(' ')
 		archivo.write(str(elemento.temporal))
 		archivo.write('\n')
+	archivo.write('$$\n')
 
 	archivo.close()
 
