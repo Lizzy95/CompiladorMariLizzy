@@ -4,26 +4,25 @@ from Cuadruplo import Cuadruplo
 listaFunc = []
 listaCuadruplos = []
 diccionarioConstantes = {}
-linea = archivo.readline()
 
-tipodato = {
-	0 : varEntero,
-	1 : varCuadrado,
-	2 : varRectangulo,
-	3 : varCirculo,
-	4 : varLinea,
-	5 : varEstrella,
-	6 : varDecimal,
-	7 : varBool,
-	8 : varEntTemp,
-	9 : varCuadTemp,
-	10 : varRectTemp,
-	11 : varCircTemp,
-	12 : varLineaTemp,
-	13 : varEstrTemp,
-	14 : varDecTemp,
-	15 : varBoolTemp,
-}
+# tipodato = {
+# 	0 : varEntero,
+# 	1 : varCuadrado,
+# 	2 : varRectangulo,
+# 	3 : varCirculo,
+# 	4 : varLinea,
+# 	5 : varEstrella,
+# 	6 : varDecimal,
+# 	7 : varBool,
+# 	8 : varEntTemp,
+# 	9 : varCuadTemp,
+# 	10 : varRectTemp,
+# 	11 : varCircTemp,
+# 	12 : varLineaTemp,
+# 	13 : varEstrTemp,
+# 	14 : varDecTemp,
+# 	15 : varBoolTemp,
+# }
 
 def suma(operando1, operando2, resultado):
 	print "entra suma"
@@ -57,6 +56,10 @@ def comparacionIgual(operando1, operando2, resultado):
 	print "entra comparacionIgual"
 def comparacionDiferente(operando1, operando2, resultado):
 	print "entra comparacionDiferente"
+def comparacionOR(operando1, operando2, resultado):
+	print "entra comparacionOR"
+def comparacionAND(operando1, operando2, resultado):
+	print "entra comparacionAND"
 def gotoFalso(operando1, operando2, resultado):
 	print "entra gotoFalsor"
 def goto(operando1, operando2, resultado):
@@ -75,9 +78,11 @@ def arriba(operando1, operando2, resultado):
 	print "entra arriba"
 def retorno(operando1, operando2, resultado):
 	print "entra retorno"
+def abajo(operando1, operando2, resultado):
+	print "entra abajo"
 def generarERA(operando1, operando2, resultado):
 	print "entra generarERA"
-def generarParam(operando1, operando2, resultado):
+def generaParam(operando1, operando2, resultado):
 	print "entra generaParam"
 
 def generaGOSUB(operando1, operando2, resultado):
@@ -116,10 +121,10 @@ options = {
 	
 }
 archivo = open("maquiVirtual.txt")
-
+linea = archivo.readline()
 while linea != "$$\n":
 	lineaAux = linea.split(' ')
-	objeto = funcionVM(lineaAux[0], lineaAux[1], lineaAux[2], lineaAux[3], lineaAux[4], lineaAux[5], lineaAux[6],lineaAux[7],lineaAux[8], lineaAux[9],lineaAux[10], lineaAux[11], lineaAux[12], lineaAux[13])
+	objeto = funcionVM(lineaAux[0], lineaAux[1], lineaAux[2], lineaAux[3], lineaAux[4], lineaAux[5], lineaAux[6],lineaAux[7],lineaAux[8], lineaAux[9],lineaAux[10], lineaAux[11], lineaAux[12], lineaAux[13],lineaAux[14], lineaAux[15], lineaAux[16], lineaAux[17], lineaAux[18], lineaAux[19])
 	listaFunc.append(objeto)
 	linea = archivo.readline()
 	
