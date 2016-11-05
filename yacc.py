@@ -7,6 +7,7 @@ from Cuadruplo import Cuadruplo
 # Get the token map from the lexer.  This is required.
 from lex import tokens
 
+#variables globales para el manejo de funciones, cuadruplos y validaciones
 listaFunciones = []
 listaCuadruplos = []
 funcionActual = ""
@@ -29,6 +30,7 @@ DEBUG = True
 cuadr = Cuadruplo(17, -1, -1, -1)
 listaCuadruplos.append(cuadr)
 # BNF
+#Sintaxis que inicia el programa
 def p_programa(p):
 	'''programa : vars funcion INICIO funcAgregarInicio bloque  FIN liberarVar
 	  			| vars funcion INICIO FIN '''	
@@ -42,7 +44,7 @@ def p_programa(p):
 	#print(pilaOperandos, "la ", pilaOperandosDirMem, "de ", pilaOperadores)
 	pass
 
-
+#Regla para guardar en diccionario de funciones la funcion de inicio
 def p_funcAgregarInicio(p):
 	'''funcAgregarInicio : '''
 	global funcionActual
@@ -53,14 +55,14 @@ def p_funcAgregarInicio(p):
 	objetoFuncion = TFunc(funcionActual, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {}, {})
 	listaFunciones.append(objetoFuncion) 
 	print("Se agrego la funcion a la tabla")
-
+#Bloque del main del programa, inicio-fin
 def p_bloque(p):
 	'''bloque : "{" vars guardarCuadruplo estatuto "}"
 			  | "{" vars guardarCuadruplo "}"
 			  | "{" "}"'''
 	print("BLOQUE")
 	pass
-
+#Sintaxis de declaracion de variables
 def p_vars(p):
 	'''vars : tipo ID guardarIDs ";" masTipos
 		| tipo ID guardarIDs arreglo  ";" masTipos
@@ -82,16 +84,16 @@ def p_masIDS(p):
 	'''masIDS : "," ID guardarIDs
 			   | empty '''
 	pass
-
+#Sintaxis para declaracion de arreglos
 def p_arreglo(p):
 	''' arreglo : "[" CTI "]" matriz '''
 	pass
-
+#Sintaxis para la declaracion de matrices
 def p_matriz(p):
 	''' matriz : "[" CTI "]" 
 			   | empty '''
 	pass
-
+#Sintaxis para la creacion de funciones
 def p_funcion(p): 
 	''' funcion : FUNC tipo ID  funcAgregar restoFuncion  funcion2
 				| empty '''
@@ -107,7 +109,7 @@ def p_funcion2(p):
 def p_restoFuncion(p):
 	''' restoFuncion : "(" param ")" bloquefunc'''
 	pass
-
+#Regla para agregar las funciones al diccionario de funciones
 def p_funcAgregar(p):
 	'''funcAgregar :  '''
 	print "Entre a funcAgregar"
@@ -130,7 +132,7 @@ def p_param(p):
 	''' param : tipo  ID guardarIDParam maspaID 
 		 		| empty'''
 	pass
-	
+#Regla para guardar los parametros y verificar que se puedan usar
 def p_guardarIDParam(p):
 	''' guardarIDParam : '''
 	global funcionActual
@@ -148,7 +150,7 @@ def p_guardarIDParam(p):
 		diccionarioMemoria[tipofuncMem][str(tipoActual)] = valormem + 1
 		listaFunciones[posicion].arrParam.append(agregarVar)
 		print "Se guardo el parametro en la tabla de parametros ", tipoActual
-
+#Funcion para buscar la funcion actual en lista de funciones
 def busquedaLista():
 	cont = 0
 	global listaFunciones
@@ -158,7 +160,7 @@ def busquedaLista():
 			return cont
 		cont += 1
 	return -1
-
+#Funcion para buscar una funcion en especifico 
 def busquedaFunc(funcionLlamar):
 	cont = 0
 	global listaFunciones
@@ -167,7 +169,7 @@ def busquedaFunc(funcionLlamar):
 			return cont
 		cont += 1
 	return -1
-
+#Funcion para buscar una variable en la tabla de variables de la funcion 
 def busquedaVar(varActual):
 	global listaFunciones
 	global funcionActual
@@ -183,7 +185,7 @@ def busquedaVar(varActual):
 
 
 	return -1
-
+#Funcion para buscar si hay uan variable global previamente declarada y si no regresa -1 para poder declararla
 def busquedaVarGlobal(var):
 	global diccionarioVarGlobal
 	if diccionarioVarGlobal.has_key(var):
@@ -193,7 +195,7 @@ def busquedaVarGlobal(var):
 #	print"imprime elementos"
 #	for elemento in listaFunciones:
 #		print elemento.nombre
-
+#Regla para guardar los ids en la tabla de variables y asignarle memoria
 def p_guardarIDs(p):
 	''' guardarIDs : '''
 	global funcionActual
@@ -227,14 +229,14 @@ def p_maspaID(p):
 	''' maspaID : "," param
 				| empty '''
 	pass
-
+#Sintaxis de bloque de una funcuion 
 def p_bloquefunc(p): 
 	''' bloquefunc : "{" vars guardarCuadruplo estatuto regresa "}" liberarVar 
 				   | "{" vars guardarCuadruplo regresa "}" liberarVar
 				   | "{" guardarCuadruplo escritura regresa "}" liberarVar
 				   | "{" "}" '''
 	pass
-
+#Regla para liberar la tabla de variables de una funcion 
 def p_liberarVar(p):
 	''' liberarVar : '''
 	global diccionarioMemoria
@@ -314,7 +316,7 @@ def p_liberarVar(p):
 	cte['8'] =  31001
 	
 	pass
-
+#Regla para actualizar los gotos de una funcion
 def p_guardarCuadruplo(p): 
 	'''guardarCuadruplo :  '''
 	global listaFunciones
@@ -326,11 +328,11 @@ def p_guardarCuadruplo(p):
 	posicion = busquedaLista()
 	listaFunciones[posicion].cuadruploInicial = act
 	pass
-
+#Sintaxis para el retorno de una variable
 def p_regresa(p):
 	''' regresa : RETURN ID '''
 	pass
-
+#Sintaxis para estatutos
 def p_estatuto(p):
 	'''estatuto : asignacion estatutoAux
 				| escritura estatutoAux
@@ -344,7 +346,7 @@ def p_estatutoAux(p):
 	''' estatutoAux : estatuto
 					| empty'''
 	pass
-
+#Regla para verificar que el numero de parametros sea el mismo
 def p_checaNumParam(p):
 	''' checaNumParam : ")"'''
 	global contParam
@@ -354,7 +356,7 @@ def p_checaNumParam(p):
 	if contParam + 1 != numParam:	
 		print "El numero de parametros es incorrecto"
 	pass
-
+#Regla para generar los GoSub de las llamadas a una funcion
 def p_generaGOSUB(p):
 	'''generaGOSUB : '''
 	global listaCuadruplos
@@ -363,7 +365,7 @@ def p_generaGOSUB(p):
 	listaCuadruplos.append(cuadr)
 	print "Se guardo GOSUB", llamada
 	pass
-
+#Sintaxis de llamada a una funcion 
 def p_funcs(p):
 	''' funcs : ID verProc generarERA auxExp  checaNumParam generaGOSUB
 			  | ID '''
@@ -377,7 +379,7 @@ def p_verProc(p):
 	else:
 		llamada = p[-1]
 	pass
-
+#Regla para generar Era
 def p_generarEra(p):
 	''' generarERA : "(" '''
 	global listaCuadruplos
@@ -403,7 +405,7 @@ def p_llegaComa(p):
 	global contParam
 	contParam = contParam + 1
 	pass
-
+#Regla para verificar funciones
 def p_verificarTiposFunc(p):
 	''' verificarTiposFunc : '''
 	global pilaOperandos
