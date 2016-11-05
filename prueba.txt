@@ -1,11 +1,13 @@
+func entero lizzy(entero aAA){
+	decimal mMM;
+
+	return mMM
+}
 inicio
 {
 	entero aAA,  bBbB;
-	aAA = 10+23.2;
-	bBbB = 10+12+24+45;
-	aAA = aAA+bBbB + 10;
-	
-	
+	bBbB = (10 * 5 )/ 2 + 1;
 
+	aAA = lizzy(bBbB);
 }
 fin

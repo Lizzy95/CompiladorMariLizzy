@@ -119,7 +119,7 @@ def p_funcAgregar(p):
 	global tipofuncMem
 	tipofuncMem = '2'
 	funcionActual = p[-1]
-	objetoFuncion = TFunc(p[-1], tipoActual, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {}, {})
+	objetoFuncion = TFunc(p[-1], tipoActual, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {}, {})
 	#checar si ya existe una funcion
 	posicion = busquedaLista()
 	if posicion != -1:
@@ -806,20 +806,21 @@ def p_checaroperador5(p):
 			resultado = cuboSemantico[operando1][operando2][operadorActual]
 			posicion = busquedaLista()
 			var = diccionarioMemoria['3']
-			valormem = var[str(resultado)]
-			agregarVar = TVar('temp', resultado, valormem)
-			diccionarioMemoria['3'][str(resultado)] = valormem + 1
-			listaFunciones[posicion].arrVar.append(agregarVar)
-			pilaOperandosDirMem.append(valormem)
 			print("resultado checaroperador5", resultado)
 			#meter a pila el temporal 
 			if resultado == -1:
 				print "ERROR: Operacion invalida, tipos no compatibles"
 			else:
 				print("SE CHECO EL CUADRUPLO Y ES CORRECTO", operando2, operando1, operadorActual)
-				resultadoT = valormem
+				valormem = var[str(resultado)]
+				agregarVar = TVar('temp', resultado, valormem)
+				diccionarioMemoria['3'][str(resultado)] = valormem + 1
+				listaFunciones[posicion].arrVar.append(agregarVar)
+				pilaOperandosDirMem.append(valormem)
+				resultadoT = pilaOperandosDirMem.pop()
 				operando2C = pilaOperandosDirMem.pop()
 				operando1C = pilaOperandosDirMem.pop()
+				pilaOperandosDirMem.append(resultadoT)
 				cuadr = Cuadruplo(operadorActual, operando1C,operando2C,resultadoT)
 				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)

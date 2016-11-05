@@ -1,6 +1,7 @@
 from funcionVM import funcionVM
 from Cuadruplo import Cuadruplo
 from Memoria import Memoria
+import sys
 listaFunc = []
 listaCuadruplos = []
 tipoActual = 0 
@@ -101,11 +102,16 @@ def suma(operando1, operando2, resultado):
 	valor1 = 0
 	valor2 = 0
 	memoria = listaMemoria.pop()
+
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
-		aux1 = tipodato[int(operando1)/1000](operando1)
-		valor1  = memoria.listaMem[tipoActual][aux1]  
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			valor1  = memoria.listaMem[tipoActual][aux1] 
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
@@ -120,13 +126,114 @@ def suma(operando1, operando2, resultado):
 	print "la suma es", memoria.listaMem[tipoActual][auxResultado]
 
 def resta(operando1, operando2, resultado):
+	global pilaMemoria
+	global diccionarioConstantes
 	print "entra resta"
+	global contCuadruplos
+	global tipoActual
+	contCuadruplos = contCuadruplos + 1
+	valor1 = 0
+	valor2 = 0
+	memoria = listaMemoria.pop()
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		aux1 = tipodato[int(operando1)/1000](operando1)
+		valor1  = memoria.listaMem[tipoActual][aux1]  
+	if diccionarioConstantes.has_key(operando2):
+		valor2 = diccionarioConstantes[operando2]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		valor2 = memoria.listaMem[tipoActual][aux1] 
+ 	auxResultado = tipodato[int(resultado)/1000](resultado)
+ 	print valor1, " ", valor2
+ 	if '.' in str(valor1) or '.' in str(valor2):
+ 		memoria.listaMem[tipoActual][auxResultado] = float(valor1) - float(valor2)
+ 	else:
+		memoria.listaMem[tipoActual][auxResultado] = int(valor1) - int(valor2)
+	listaMemoria.append(memoria)
+	print "la resta es", memoria.listaMem[tipoActual][auxResultado]
+	
 
 def multiplicacion(operando1, operando2, resultado):
+	global pilaMemoria
+	global diccionarioConstantes
 	print "entra multiplicacion"
+	global contCuadruplos
+	global tipoActual
+	contCuadruplos = contCuadruplos + 1
+	valor1 = 0
+	valor2 = 0
+	memoria = listaMemoria.pop()
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		aux1 = tipodato[int(operando1)/1000](operando1)
+		valor1  = memoria.listaMem[tipoActual][aux1]  
+	if diccionarioConstantes.has_key(operando2):
+		valor2 = diccionarioConstantes[operando2]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		print "aux1 = ", aux1
+		valor2 = memoria.listaMem[tipoActual][aux1] 
+ 	auxResultado = tipodato[int(resultado)/1000](resultado)
+ 	print valor1, " ", valor2
+ 	if '.' in str(valor1) or '.' in str(valor2):
+ 		memoria.listaMem[tipoActual][auxResultado] = float(valor1) * float(valor2)
+ 	else:
+		memoria.listaMem[tipoActual][auxResultado] = int(valor1) * int(valor2)
+	listaMemoria.append(memoria)
+	print "la mltuplicacion es", memoria.listaMem[tipoActual][auxResultado]
+	
 
 def division(operando1, operando2, resultado):
+	global pilaMemoria
+	global diccionarioConstantes
 	print "entra division"
+	global contCuadruplos
+	global tipoActual
+	contCuadruplos = contCuadruplos + 1
+	valor1 = 0
+	valor2 = 0
+	memoria = listaMemoria.pop()
+	print diccionarioConstantes
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		aux1 = tipodato[int(operando1)/1000](operando1)
+		print "operando1", operando1
+		print "operando2", operando2
+		print "aux1 = ", aux1
+		print tipoActual
+		print memoria.listaMem
+		valor1  = memoria.listaMem[tipoActual][aux1]  
+	if diccionarioConstantes.has_key(operando2):
+		valor2 = diccionarioConstantes[operando2]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		print "aux1 = ", aux1
+		print tipoActual
+		print memoria.listaMem
+		valor2 = memoria.listaMem[tipoActual][aux1] 
+ 	auxResultado = tipodato[int(resultado)/1000](resultado)
+ 	print valor1, " ", valor2
+ 	if '.' in str(valor1) or '.' in str(valor2):
+ 		try:
+ 			memoria.listaMem[tipoActual][auxResultado] = float(valor1) / float(valor2)
+			print "la division es", memoria.listaMem[tipoActual][auxResultado]
+ 		except ZeroDivisionError:
+ 			memoria.listaMem[tipoActual][auxResultado] = 0
+ 			print "Error en la division"
+ 			sys.exit()
+ 	else:
+ 		try:
+			memoria.listaMem[tipoActual][auxResultado] = int(valor1) / int(valor2)
+			print "la division es", memoria.listaMem[tipoActual][auxResultado]
+		except ZeroDivisionError:
+			memoria.listaMem[tipoActual][auxResultado] = 0
+ 			print "Error en la division"
+ 			sys.exit()
+	listaMemoria.append(memoria)
 
 def asignacion(operando1, operando2, resultado):
 	print "entra asignacion"
@@ -134,6 +241,7 @@ def asignacion(operando1, operando2, resultado):
 	global pilaMemoria
 	global diccionarioConstantes
 	global tipoActual
+	global listaMemoria
 	memoria = listaMemoria.pop()
 	valor1 = 0
 	if diccionarioConstantes.has_key(operando1):
