@@ -49,16 +49,16 @@ cuboSemantico[1][1][9]= 8
 cuboSemantico[1][1][10]= 8
 cuboSemantico[1][1][11]= 8
 
-cuboSemantico[1][2][1]= 7
-cuboSemantico[1][2][2]= 7
-cuboSemantico[1][2][3]= 7
-cuboSemantico[1][2][5]= 2
-cuboSemantico[1][2][6]= 8
-cuboSemantico[1][2][7]= 8
-cuboSemantico[1][2][8]= 8
-cuboSemantico[1][2][9]= 8
-cuboSemantico[1][2][10]= 8
-cuboSemantico[1][2][11]= 8
+cuboSemantico[1][7][1]= 7
+cuboSemantico[1][7][2]= 7
+cuboSemantico[1][7][3]= 7
+cuboSemantico[1][7][5]= 2
+cuboSemantico[1][7][6]= 8
+cuboSemantico[1][7][7]= 8
+cuboSemantico[1][7][8]= 8
+cuboSemantico[1][7][9]= 8
+cuboSemantico[1][7][10]= 8
+cuboSemantico[1][7][11]= 8
 
 
 #cuadrado
@@ -126,8 +126,6 @@ cuboSemantico[2][1][8]= 8
 cuboSemantico[2][1][9]= 8
 cuboSemantico[2][1][10]= 8
 cuboSemantico[2][1][11]= 8
-
-
 
 
 #bool

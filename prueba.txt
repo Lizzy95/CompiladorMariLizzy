@@ -1,8 +1,9 @@
 inicio
 {
-	entero aAA;
-
-	aAA = 10 + 2 + 4+200; 
+	entero aAA,  bBbB;
+	aAA = 10+23.2;
+	bBbB = 10+12+24+45;
+	aAA = aAA+bBbB + 10;
 	
 	
 

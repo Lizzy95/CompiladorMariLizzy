@@ -111,9 +111,11 @@ def suma(operando1, operando2, resultado):
 	else:
 		aux1 = tipodato[int(operando2)/1000](operando2)
 		valor2 = memoria.listaMem[tipoActual][aux1] 
-
  	auxResultado = tipodato[int(resultado)/1000](resultado)
-	memoria.listaMem[tipoActual][auxResultado] = int(valor1) + int(valor2)
+ 	if '.' in str(valor1) or '.' in str(valor2):
+ 		memoria.listaMem[tipoActual][auxResultado] = float(valor1) + float(valor2)
+ 	else:
+		memoria.listaMem[tipoActual][auxResultado] = int(valor1) + int(valor2)
 	listaMemoria.append(memoria)
 	print "la suma es", memoria.listaMem[tipoActual][auxResultado]
 
