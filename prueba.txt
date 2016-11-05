@@ -1,13 +1,19 @@
 func entero lizzy(entero aAA){
-	decimal mMM;
+	entero mBm; 
 
-	return mMM
+	return mBm
+}
+func entero marii(entero aAA){
+	entero mBm; 
+
+	return mBm
 }
 inicio
 {
 	entero aAA,  bBbB;
 	bBbB = (10 * 5 )/ 2 + 1;
-
 	aAA = lizzy(bBbB);
+
+	bBbB = marii(aAA);
 }
 fin

@@ -117,6 +117,7 @@ def p_funcAgregar(p):
 	global listaFunciones
 	global tipoActual
 	global tipofuncMem
+	global diccionarioVarGlobal
 	tipofuncMem = '2'
 	funcionActual = p[-1]
 	objetoFuncion = TFunc(p[-1], tipoActual, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {}, {})
@@ -127,6 +128,11 @@ def p_funcAgregar(p):
 	else:
 		print "Entre al else FuncAgregar"
 		listaFunciones.append(objetoFuncion)
+		var = diccionarioMemoria['1']
+		valormem = var[str(tipoActual)]
+		diccionarioMemoria['1'][str(tipoActual)] = valormem + 1
+		diccionarioVarGlobal[p[-1]] = valormem
+
 
 def p_param(p):
 	''' param : tipo  ID guardarIDParam maspaID 
@@ -210,7 +216,7 @@ def p_guardarIDs(p):
 			var = diccionarioMemoria[tipofuncMem]
 			valormem = var[str(tipoActual)]
 			diccionarioMemoria[tipofuncMem][str(tipoActual)] = valormem + 1
-			diccionarioVarGlobal[valormem] = p[-1]
+			diccionarioVarGlobal[p[-1]] = valormem
 			print "Se guardo la variable global en el diccionario ", tipoActual
 	#checar si ya existe una variable
 	else:
@@ -242,9 +248,7 @@ def p_liberarVar(p):
 	global diccionarioMemoria
 	global listaFunciones
 	global listaCuadruplos
-	
 	posicion = busquedaLista()
-
 	cuadr = Cuadruplo(29, -1, -1, -1)
 	listaCuadruplos.append(cuadr)
 
@@ -351,6 +355,7 @@ def p_checaNumParam(p):
 	''' checaNumParam : ")"'''
 	global contParam
 	global listaFunciones
+	global llamada
 	pos = busquedaFunc(llamada)
 	numParam  = len(listaFunciones[pos].arrParam)
 	if contParam + 1 != numParam:	
@@ -367,17 +372,29 @@ def p_generaGOSUB(p):
 	pass
 #Sintaxis de llamada a una funcion 
 def p_funcs(p):
-	''' funcs : ID verProc generarERA auxExp  checaNumParam generaGOSUB
+	''' funcs : ID guardarIDFunc verProc generarERA auxExp  checaNumParam generaGOSUB
 			  | ID '''
 	pass
+def p_guardarIDFunc(p):
+	''' guardarIDFunc : '''
+	global pilaOperandos
+	global listaFunciones
+	global diccionarioMemoria
+	pos = busquedaFunc(p[-1])
+	aux = listaFunciones[pos].tipo
+	pilaOperandos.append(aux)
+	print diccionarioVarGlobal
+	pilaOperandosDirMem.append(diccionarioVarGlobal[p[-1]])
+
+
 
 def p_verProc(p):
 	''' verProc : '''
 	global llamada
-	if busquedaFunc(p[-1]) == -1 :
+	if busquedaFunc(p[-2]) == -1 :
 		print "ESTA FUNCION NO ESTA DECLARADA"
 	else:
-		llamada = p[-1]
+		llamada = p[-2]
 	pass
 #Regla para generar Era
 def p_generarEra(p):
@@ -413,8 +430,11 @@ def p_verificarTiposFunc(p):
 	global listaFunciones
 	global contParam
 	global listaCuadruplos
+	global arrParametros
+	global llamada
 	pos = busquedaFunc(llamada)
 	arrParametros = listaFunciones[pos].arrParam
+	print "-----------------------",pos, " ", llamada
 	auxParam = arrParametros[contParam].tipo
 	auxPila = pilaOperandos.pop()
 	mem = pilaOperandosDirMem.pop()
@@ -483,6 +503,7 @@ def p_opcionAsignacion(p):
 
 def p_valorAsig(p):
 	''' valorAsig : "="  exp
+				  | "=" funcs
 				  | empty'''
 	
 	global pilaOperadores
