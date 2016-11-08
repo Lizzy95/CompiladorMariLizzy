@@ -1,5 +1,9 @@
 Created by PLY version 3.9 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    COOR
+
 Grammar
 
 Rule 0     S' -> programa
@@ -104,7 +108,7 @@ Rule 98    push_logica -> MENORIGUAL
 Rule 99    push_logica -> MAYORIGUAL
 Rule 100   push_logica -> IGUALIGUAL
 Rule 101   push_logica -> DIFERENTE
-Rule 102   push_logica -> COOR
+Rule 102   push_logica -> |
 Rule 103   push_logica -> COAND
 Rule 104   operacionLogica -> push_logica exp
 Rule 105   operacionLogica -> <empty>
@@ -180,7 +184,7 @@ AZUL                 : 83
 BOOL                 : 142
 CIRCULO              : 146
 COAND                : 103
-COOR                 : 102
+COOR                 : 
 CTF                  : 136
 CTI                  : 16 17 64 65 65 73 74 74 137
 CUADRADO             : 144
@@ -215,6 +219,7 @@ WHILE                : 126
 ]                    : 16 17 64 65 65 73 74 74
 error                : 
 {                    : 4 5 6 31 32 33 34 86 87 88
+|                    : 102
 }                    : 4 5 6 31 32 33 34 86 87 88
 
 Nonterminals, with rules where they appear
@@ -2026,7 +2031,7 @@ state 117
     MAYORIGUAL      reduce using rule 136 (recibe_CTF -> CTF .)
     IGUALIGUAL      reduce using rule 136 (recibe_CTF -> CTF .)
     DIFERENTE       reduce using rule 136 (recibe_CTF -> CTF .)
-    COOR            reduce using rule 136 (recibe_CTF -> CTF .)
+    |               reduce using rule 136 (recibe_CTF -> CTF .)
     COAND           reduce using rule 136 (recibe_CTF -> CTF .)
     )               reduce using rule 136 (recibe_CTF -> CTF .)
     ;               reduce using rule 136 (recibe_CTF -> CTF .)
@@ -2049,7 +2054,7 @@ state 118
   ! reduce/reduce conflict for MAYORIGUAL resolved using rule 111 (checaroperador4 -> .)
   ! reduce/reduce conflict for IGUALIGUAL resolved using rule 111 (checaroperador4 -> .)
   ! reduce/reduce conflict for DIFERENTE resolved using rule 111 (checaroperador4 -> .)
-  ! reduce/reduce conflict for COOR resolved using rule 111 (checaroperador4 -> .)
+  ! reduce/reduce conflict for | resolved using rule 111 (checaroperador4 -> .)
   ! reduce/reduce conflict for COAND resolved using rule 111 (checaroperador4 -> .)
   ! reduce/reduce conflict for ) resolved using rule 111 (checaroperador4 -> .)
   ! reduce/reduce conflict for ; resolved using rule 111 (checaroperador4 -> .)
@@ -2060,7 +2065,7 @@ state 118
     MAYORIGUAL      reduce using rule 111 (checaroperador4 -> .)
     IGUALIGUAL      reduce using rule 111 (checaroperador4 -> .)
     DIFERENTE       reduce using rule 111 (checaroperador4 -> .)
-    COOR            reduce using rule 111 (checaroperador4 -> .)
+    |               reduce using rule 111 (checaroperador4 -> .)
     COAND           reduce using rule 111 (checaroperador4 -> .)
     )               reduce using rule 111 (checaroperador4 -> .)
     ;               reduce using rule 111 (checaroperador4 -> .)
@@ -2074,7 +2079,7 @@ state 118
   ! MAYORIGUAL      [ reduce using rule 113 (signo -> .) ]
   ! IGUALIGUAL      [ reduce using rule 113 (signo -> .) ]
   ! DIFERENTE       [ reduce using rule 113 (signo -> .) ]
-  ! COOR            [ reduce using rule 113 (signo -> .) ]
+  ! |               [ reduce using rule 113 (signo -> .) ]
   ! COAND           [ reduce using rule 113 (signo -> .) ]
   ! )               [ reduce using rule 113 (signo -> .) ]
   ! ;               [ reduce using rule 113 (signo -> .) ]
@@ -2098,7 +2103,7 @@ state 119
     MAYORIGUAL      reduce using rule 138 (recibe_TRUE -> TRUE .)
     IGUALIGUAL      reduce using rule 138 (recibe_TRUE -> TRUE .)
     DIFERENTE       reduce using rule 138 (recibe_TRUE -> TRUE .)
-    COOR            reduce using rule 138 (recibe_TRUE -> TRUE .)
+    |               reduce using rule 138 (recibe_TRUE -> TRUE .)
     COAND           reduce using rule 138 (recibe_TRUE -> TRUE .)
     )               reduce using rule 138 (recibe_TRUE -> TRUE .)
     ;               reduce using rule 138 (recibe_TRUE -> TRUE .)
@@ -2121,7 +2126,7 @@ state 120
     MAYORIGUAL      reduce using rule 137 (recibe_CTI -> CTI .)
     IGUALIGUAL      reduce using rule 137 (recibe_CTI -> CTI .)
     DIFERENTE       reduce using rule 137 (recibe_CTI -> CTI .)
-    COOR            reduce using rule 137 (recibe_CTI -> CTI .)
+    |               reduce using rule 137 (recibe_CTI -> CTI .)
     COAND           reduce using rule 137 (recibe_CTI -> CTI .)
     ;               reduce using rule 137 (recibe_CTI -> CTI .)
 
@@ -2142,7 +2147,7 @@ state 121
     MAYORIGUAL      reduce using rule 133 (varcte -> recibe_TRUE .)
     IGUALIGUAL      reduce using rule 133 (varcte -> recibe_TRUE .)
     DIFERENTE       reduce using rule 133 (varcte -> recibe_TRUE .)
-    COOR            reduce using rule 133 (varcte -> recibe_TRUE .)
+    |               reduce using rule 133 (varcte -> recibe_TRUE .)
     COAND           reduce using rule 133 (varcte -> recibe_TRUE .)
     ,               reduce using rule 133 (varcte -> recibe_TRUE .)
 
@@ -2161,7 +2166,7 @@ state 122
     MAYORIGUAL      reduce using rule 124 (factor -> varcte .)
     IGUALIGUAL      reduce using rule 124 (factor -> varcte .)
     DIFERENTE       reduce using rule 124 (factor -> varcte .)
-    COOR            reduce using rule 124 (factor -> varcte .)
+    |               reduce using rule 124 (factor -> varcte .)
     COAND           reduce using rule 124 (factor -> varcte .)
     )               reduce using rule 124 (factor -> varcte .)
     ;               reduce using rule 124 (factor -> varcte .)
@@ -2184,7 +2189,7 @@ state 123
     MAYORIGUAL      reduce using rule 131 (varcte -> recibe_CTF .)
     IGUALIGUAL      reduce using rule 131 (varcte -> recibe_CTF .)
     DIFERENTE       reduce using rule 131 (varcte -> recibe_CTF .)
-    COOR            reduce using rule 131 (varcte -> recibe_CTF .)
+    |               reduce using rule 131 (varcte -> recibe_CTF .)
     COAND           reduce using rule 131 (varcte -> recibe_CTF .)
     ,               reduce using rule 131 (varcte -> recibe_CTF .)
 
@@ -2217,7 +2222,7 @@ state 125
     MAYORIGUAL      reduce using rule 130 (varcte -> recibe_ID .)
     IGUALIGUAL      reduce using rule 130 (varcte -> recibe_ID .)
     DIFERENTE       reduce using rule 130 (varcte -> recibe_ID .)
-    COOR            reduce using rule 130 (varcte -> recibe_ID .)
+    |               reduce using rule 130 (varcte -> recibe_ID .)
     COAND           reduce using rule 130 (varcte -> recibe_ID .)
     ,               reduce using rule 130 (varcte -> recibe_ID .)
 
@@ -2240,7 +2245,7 @@ state 126
   ! reduce/reduce conflict for MAYORIGUAL resolved using rule 118 (checaroperador5 -> .)
   ! reduce/reduce conflict for IGUALIGUAL resolved using rule 118 (checaroperador5 -> .)
   ! reduce/reduce conflict for DIFERENTE resolved using rule 118 (checaroperador5 -> .)
-  ! reduce/reduce conflict for COOR resolved using rule 118 (checaroperador5 -> .)
+  ! reduce/reduce conflict for | resolved using rule 118 (checaroperador5 -> .)
   ! reduce/reduce conflict for COAND resolved using rule 118 (checaroperador5 -> .)
   ! reduce/reduce conflict for ) resolved using rule 118 (checaroperador5 -> .)
   ! reduce/reduce conflict for ; resolved using rule 118 (checaroperador5 -> .)
@@ -2253,7 +2258,7 @@ state 126
     MAYORIGUAL      reduce using rule 118 (checaroperador5 -> .)
     IGUALIGUAL      reduce using rule 118 (checaroperador5 -> .)
     DIFERENTE       reduce using rule 118 (checaroperador5 -> .)
-    COOR            reduce using rule 118 (checaroperador5 -> .)
+    |               reduce using rule 118 (checaroperador5 -> .)
     COAND           reduce using rule 118 (checaroperador5 -> .)
     )               reduce using rule 118 (checaroperador5 -> .)
     ;               reduce using rule 118 (checaroperador5 -> .)
@@ -2269,7 +2274,7 @@ state 126
   ! MAYORIGUAL      [ reduce using rule 120 (masop -> .) ]
   ! IGUALIGUAL      [ reduce using rule 120 (masop -> .) ]
   ! DIFERENTE       [ reduce using rule 120 (masop -> .) ]
-  ! COOR            [ reduce using rule 120 (masop -> .) ]
+  ! |               [ reduce using rule 120 (masop -> .) ]
   ! COAND           [ reduce using rule 120 (masop -> .) ]
   ! )               [ reduce using rule 120 (masop -> .) ]
   ! ;               [ reduce using rule 120 (masop -> .) ]
@@ -2295,7 +2300,7 @@ state 127
     MAYORIGUAL      reduce using rule 135 (recibe_ID -> ID .)
     IGUALIGUAL      reduce using rule 135 (recibe_ID -> ID .)
     DIFERENTE       reduce using rule 135 (recibe_ID -> ID .)
-    COOR            reduce using rule 135 (recibe_ID -> ID .)
+    |               reduce using rule 135 (recibe_ID -> ID .)
     COAND           reduce using rule 135 (recibe_ID -> ID .)
     ;               reduce using rule 135 (recibe_ID -> ID .)
 
@@ -2322,7 +2327,7 @@ state 129
     MAYORIGUAL      reduce using rule 139 (recibe_FALSE -> FALSE .)
     IGUALIGUAL      reduce using rule 139 (recibe_FALSE -> FALSE .)
     DIFERENTE       reduce using rule 139 (recibe_FALSE -> FALSE .)
-    COOR            reduce using rule 139 (recibe_FALSE -> FALSE .)
+    |               reduce using rule 139 (recibe_FALSE -> FALSE .)
     COAND           reduce using rule 139 (recibe_FALSE -> FALSE .)
     )               reduce using rule 139 (recibe_FALSE -> FALSE .)
     ;               reduce using rule 139 (recibe_FALSE -> FALSE .)
@@ -2345,7 +2350,7 @@ state 130
     MAYORIGUAL      reduce using rule 132 (varcte -> recibe_CTI .)
     IGUALIGUAL      reduce using rule 132 (varcte -> recibe_CTI .)
     DIFERENTE       reduce using rule 132 (varcte -> recibe_CTI .)
-    COOR            reduce using rule 132 (varcte -> recibe_CTI .)
+    |               reduce using rule 132 (varcte -> recibe_CTI .)
     COAND           reduce using rule 132 (varcte -> recibe_CTI .)
     ,               reduce using rule 132 (varcte -> recibe_CTI .)
 
@@ -2362,7 +2367,7 @@ state 131
     (99) push_logica -> . MAYORIGUAL
     (100) push_logica -> . IGUALIGUAL
     (101) push_logica -> . DIFERENTE
-    (102) push_logica -> . COOR
+    (102) push_logica -> . |
     (103) push_logica -> . COAND
 
   ! reduce/reduce conflict for ) resolved using rule 95 (expresion -> exp .)
@@ -2373,8 +2378,8 @@ state 131
     MAYORIGUAL      shift and go to state 164
     IGUALIGUAL      shift and go to state 161
     DIFERENTE       shift and go to state 160
-    COOR            shift and go to state 158
-    COAND           shift and go to state 159
+    |               shift and go to state 159
+    COAND           shift and go to state 158
 
   ! )               [ reduce using rule 105 (operacionLogica -> .) ]
 
@@ -2437,7 +2442,7 @@ state 133
     MAYORIGUAL      reduce using rule 134 (varcte -> recibe_FALSE .)
     IGUALIGUAL      reduce using rule 134 (varcte -> recibe_FALSE .)
     DIFERENTE       reduce using rule 134 (varcte -> recibe_FALSE .)
-    COOR            reduce using rule 134 (varcte -> recibe_FALSE .)
+    |               reduce using rule 134 (varcte -> recibe_FALSE .)
     COAND           reduce using rule 134 (varcte -> recibe_FALSE .)
     ,               reduce using rule 134 (varcte -> recibe_FALSE .)
 
@@ -2673,7 +2678,7 @@ state 148
     MAYORIGUAL      reduce using rule 110 (checaroperador4 -> signo .)
     IGUALIGUAL      reduce using rule 110 (checaroperador4 -> signo .)
     DIFERENTE       reduce using rule 110 (checaroperador4 -> signo .)
-    COOR            reduce using rule 110 (checaroperador4 -> signo .)
+    |               reduce using rule 110 (checaroperador4 -> signo .)
     COAND           reduce using rule 110 (checaroperador4 -> signo .)
     )               reduce using rule 110 (checaroperador4 -> signo .)
     ;               reduce using rule 110 (checaroperador4 -> signo .)
@@ -2702,7 +2707,7 @@ state 150
     MAYORIGUAL      reduce using rule 107 (exp -> termino checaroperador4 .)
     IGUALIGUAL      reduce using rule 107 (exp -> termino checaroperador4 .)
     DIFERENTE       reduce using rule 107 (exp -> termino checaroperador4 .)
-    COOR            reduce using rule 107 (exp -> termino checaroperador4 .)
+    |               reduce using rule 107 (exp -> termino checaroperador4 .)
     COAND           reduce using rule 107 (exp -> termino checaroperador4 .)
     )               reduce using rule 107 (exp -> termino checaroperador4 .)
     ;               reduce using rule 107 (exp -> termino checaroperador4 .)
@@ -2782,7 +2787,7 @@ state 154
     MAYORIGUAL      reduce using rule 117 (checaroperador5 -> masop .)
     IGUALIGUAL      reduce using rule 117 (checaroperador5 -> masop .)
     DIFERENTE       reduce using rule 117 (checaroperador5 -> masop .)
-    COOR            reduce using rule 117 (checaroperador5 -> masop .)
+    |               reduce using rule 117 (checaroperador5 -> masop .)
     COAND           reduce using rule 117 (checaroperador5 -> masop .)
     )               reduce using rule 117 (checaroperador5 -> masop .)
     ;               reduce using rule 117 (checaroperador5 -> masop .)
@@ -2801,7 +2806,7 @@ state 155
     MAYORIGUAL      reduce using rule 116 (termino -> factor checaroperador5 .)
     IGUALIGUAL      reduce using rule 116 (termino -> factor checaroperador5 .)
     DIFERENTE       reduce using rule 116 (termino -> factor checaroperador5 .)
-    COOR            reduce using rule 116 (termino -> factor checaroperador5 .)
+    |               reduce using rule 116 (termino -> factor checaroperador5 .)
     COAND           reduce using rule 116 (termino -> factor checaroperador5 .)
     )               reduce using rule 116 (termino -> factor checaroperador5 .)
     ,               reduce using rule 116 (termino -> factor checaroperador5 .)
@@ -2859,18 +2864,6 @@ state 157
 
 state 158
 
-    (102) push_logica -> COOR .
-
-    (               reduce using rule 102 (push_logica -> COOR .)
-    ID              reduce using rule 102 (push_logica -> COOR .)
-    CTF             reduce using rule 102 (push_logica -> COOR .)
-    CTI             reduce using rule 102 (push_logica -> COOR .)
-    TRUE            reduce using rule 102 (push_logica -> COOR .)
-    FALSE           reduce using rule 102 (push_logica -> COOR .)
-
-
-state 159
-
     (103) push_logica -> COAND .
 
     (               reduce using rule 103 (push_logica -> COAND .)
@@ -2879,6 +2872,18 @@ state 159
     CTI             reduce using rule 103 (push_logica -> COAND .)
     TRUE            reduce using rule 103 (push_logica -> COAND .)
     FALSE           reduce using rule 103 (push_logica -> COAND .)
+
+
+state 159
+
+    (102) push_logica -> | .
+
+    (               reduce using rule 102 (push_logica -> | .)
+    ID              reduce using rule 102 (push_logica -> | .)
+    CTF             reduce using rule 102 (push_logica -> | .)
+    CTI             reduce using rule 102 (push_logica -> | .)
+    TRUE            reduce using rule 102 (push_logica -> | .)
+    FALSE           reduce using rule 102 (push_logica -> | .)
 
 
 state 160
@@ -3181,7 +3186,7 @@ state 186
     MAYORIGUAL      reduce using rule 112 (signo -> push_pm exp .)
     IGUALIGUAL      reduce using rule 112 (signo -> push_pm exp .)
     DIFERENTE       reduce using rule 112 (signo -> push_pm exp .)
-    COOR            reduce using rule 112 (signo -> push_pm exp .)
+    |               reduce using rule 112 (signo -> push_pm exp .)
     COAND           reduce using rule 112 (signo -> push_pm exp .)
     )               reduce using rule 112 (signo -> push_pm exp .)
     ;               reduce using rule 112 (signo -> push_pm exp .)
@@ -3200,7 +3205,7 @@ state 187
     MAYORIGUAL      reduce using rule 119 (masop -> push_td termino .)
     IGUALIGUAL      reduce using rule 119 (masop -> push_td termino .)
     DIFERENTE       reduce using rule 119 (masop -> push_td termino .)
-    COOR            reduce using rule 119 (masop -> push_td termino .)
+    |               reduce using rule 119 (masop -> push_td termino .)
     COAND           reduce using rule 119 (masop -> push_td termino .)
     )               reduce using rule 119 (masop -> push_td termino .)
     ;               reduce using rule 119 (masop -> push_td termino .)
@@ -3319,7 +3324,7 @@ state 193
     MAYORIGUAL      reduce using rule 109 (finFondoFalso -> ) .)
     IGUALIGUAL      reduce using rule 109 (finFondoFalso -> ) .)
     DIFERENTE       reduce using rule 109 (finFondoFalso -> ) .)
-    COOR            reduce using rule 109 (finFondoFalso -> ) .)
+    |               reduce using rule 109 (finFondoFalso -> ) .)
     COAND           reduce using rule 109 (finFondoFalso -> ) .)
     )               reduce using rule 109 (finFondoFalso -> ) .)
     ;               reduce using rule 109 (finFondoFalso -> ) .)
@@ -3340,7 +3345,7 @@ state 194
     MAYORIGUAL      reduce using rule 123 (factor -> fondoFalso expresion finFondoFalso .)
     IGUALIGUAL      reduce using rule 123 (factor -> fondoFalso expresion finFondoFalso .)
     DIFERENTE       reduce using rule 123 (factor -> fondoFalso expresion finFondoFalso .)
-    COOR            reduce using rule 123 (factor -> fondoFalso expresion finFondoFalso .)
+    |               reduce using rule 123 (factor -> fondoFalso expresion finFondoFalso .)
     COAND           reduce using rule 123 (factor -> fondoFalso expresion finFondoFalso .)
     )               reduce using rule 123 (factor -> fondoFalso expresion finFondoFalso .)
     ;               reduce using rule 123 (factor -> fondoFalso expresion finFondoFalso .)

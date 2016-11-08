@@ -33,7 +33,7 @@
 
 
 #enteros
-cuboSemantico = [[[-1 for k in range(13)] for j in range(9)] for i in range(9)]
+cuboSemantico = [[[-1 for k in range(14)] for j in range(9)] for i in range(9)]
 
 
 #entero
@@ -136,6 +136,8 @@ cuboSemantico[8][8][8]= 8
 cuboSemantico[8][8][9]= 8
 cuboSemantico[8][8][10]= 8
 cuboSemantico[8][8][11]= 8
+cuboSemantico[8][8][12]= 8
+cuboSemantico[8][8][13]= 8
 
 
 

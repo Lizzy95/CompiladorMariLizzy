@@ -1,19 +1,8 @@
-func entero lizzy(entero aAA){
-	entero mBm; 
-	mBm = lizzy(aAA);
-	return mBm
-}
-func entero marii(entero aAA){
-	entero mBm; 
-	mBm = lizzy(aAA);
-	return mBm
-}
 inicio
 {
 	entero aAA,  bBbB;
-	bBbB = (10 * 5 )/ 2 + 1;
-	aAA = lizzy(bBbB);
-
-	bBbB = marii(aAA);
+	if (true | false){
+		aAA = 0;
+	}
 }
 fin

@@ -98,6 +98,7 @@ def suma(operando1, operando2, resultado):
 	print "entra suma"
 	global contCuadruplos
 	global tipoActual
+	global listaMemoria
 	contCuadruplos = contCuadruplos + 1
 	valor1 = 0
 	valor2 = 0
@@ -131,6 +132,7 @@ def resta(operando1, operando2, resultado):
 	print "entra resta"
 	global contCuadruplos
 	global tipoActual
+	global listaMemoria
 	contCuadruplos = contCuadruplos + 1
 	valor1 = 0
 	valor2 = 0
@@ -161,6 +163,7 @@ def multiplicacion(operando1, operando2, resultado):
 	print "entra multiplicacion"
 	global contCuadruplos
 	global tipoActual
+	global listaMemoria
 	contCuadruplos = contCuadruplos + 1
 	valor1 = 0
 	valor2 = 0
@@ -192,6 +195,7 @@ def division(operando1, operando2, resultado):
 	print "entra division"
 	global contCuadruplos
 	global tipoActual
+	global listaMemoria
 	contCuadruplos = contCuadruplos + 1
 	valor1 = 0
 	valor2 = 0
@@ -261,20 +265,292 @@ def goto(operando1, operando2, resultado):
 
 def comparacionMenor(operando1, operando2, resultado):
 	print "entra comparacionMenor"
+	global pilaMemoria
+	global diccionarioConstantes
+	global contCuadruplos
+	global tipoActual
+	global listaMemoria
+	contCuadruplos = contCuadruplos + 1
+	valor1 = 0
+	valor2 = 0
+	memoria = listaMemoria.pop()
+
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			valor1  = memoria.listaMem[tipoActual][aux1] 
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
+	if diccionarioConstantes.has_key(operando2):
+		valor2 = diccionarioConstantes[operando2]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		print "entraaa", memoria.listaMem[tipoActual][aux1]
+		valor2 = memoria.listaMem[tipoActual][aux1] 
+ 	
+ 	
+ 	if float(valor1) < float(valor2):
+ 		memoria.listaMem[tipoActual][auxResultado] = 1
+ 	else:
+ 		auxResultado = tipodato[int(resultado)/1000](resultado)
+ 		memoria.listaMem[tipoActual][auxResultado] = 0
+
+	listaMemoria.append(memoria)
+	print "la comparacion menor  es", memoria.listaMem[tipoActual][auxResultado]
+
+
+
+
+
 def comparacionMayor(operando1, operando2, resultado):
 	print "entra comparacionMayor"
+	global pilaMemoria
+	global diccionarioConstantes
+	global contCuadruplos
+	global listaMemoria
+	global tipoActual
+	contCuadruplos = contCuadruplos + 1
+	valor1 = 0
+	valor2 = 0
+	memoria = listaMemoria.pop()
+
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			valor1  = memoria.listaMem[tipoActual][aux1] 
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
+	if diccionarioConstantes.has_key(operando2):
+		valor2 = diccionarioConstantes[operando2]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		valor2 = memoria.listaMem[tipoActual][aux1] 
+ 	auxResultado = tipodato[int(resultado)/1000](resultado)
+ 	
+ 	if valor1 > valor2:
+ 		memoria.listaMem[tipoActual][auxResultado] = 1
+ 	else:
+ 		memoria.listaMem[tipoActual][auxResultado] = 0
+
+	listaMemoria.append(memoria)
+	print "la comparacion mayor  es", memoria.listaMem[tipoActual][auxResultado]
 def comparacionMenorIgual(operando1, operando2, resultado):
 	print "entra comparacionMenorIgual"
+	global pilaMemoria
+	global diccionarioConstantes
+	global contCuadruplos
+	global listaMemoria
+	global tipoActual
+	contCuadruplos = contCuadruplos + 1
+	valor1 = 0
+	valor2 = 0
+	memoria = listaMemoria.pop()
+
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			valor1  = memoria.listaMem[tipoActual][aux1] 
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
+	if diccionarioConstantes.has_key(operando2):
+		valor2 = diccionarioConstantes[operando2]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		print" entra" , memoria
+		valor2 = memoria.listaMem[tipoActual][aux1] 
+ 	auxResultado = tipodato[int(resultado)/1000](resultado)
+ 	
+ 	if valor1 <= valor2:
+ 		memoria.listaMem[tipoActual][auxResultado] = 1
+ 	else:
+ 		memoria.listaMem[tipoActual][auxResultado] = 0
+
+	listaMemoria.append(memoria)
+	print "la comparacion menor igual  es", memoria.listaMem[tipoActual][auxResultado]
 def comparacionMayorIgual(operando1, operando2, resultado):
 	print "entra comparacionMayorIgual"
+	global pilaMemoria
+	global diccionarioConstantes
+	global listaMemoria
+	global contCuadruplos
+	global tipoActual
+	contCuadruplos = contCuadruplos + 1
+	valor1 = 0
+	valor2 = 0
+	memoria = listaMemoria.pop()
+
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			valor1  = memoria.listaMem[tipoActual][aux1] 
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
+	if diccionarioConstantes.has_key(operando2):
+		valor2 = diccionarioConstantes[operando2]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		valor2 = memoria.listaMem[tipoActual][aux1] 
+ 	auxResultado = tipodato[int(resultado)/1000](resultado)
+ 	
+ 	if valor1 >= valor2:
+ 		memoria.listaMem[tipoActual][auxResultado] = 1
+ 	else:
+ 		memoria.listaMem[tipoActual][auxResultado] = 0
+
+	listaMemoria.append(memoria)
+	print "la comparacion mayor igual  es", memoria.listaMem[tipoActual][auxResultado]
 def comparacionIgual(operando1, operando2, resultado):
 	print "entra comparacionIgual"
+	global pilaMemoria
+	global diccionarioConstantes
+	global listaMemoria
+	global contCuadruplos
+	global tipoActual
+	contCuadruplos = contCuadruplos + 1
+	valor1 = 0
+	valor2 = 0
+	memoria = listaMemoria.pop()
+
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			valor1  = memoria.listaMem[tipoActual][aux1] 
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
+	if diccionarioConstantes.has_key(operando2):
+		valor2 = diccionarioConstantes[operando2]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		valor2 = memoria.listaMem[tipoActual][aux1] 
+ 	auxResultado = tipodato[int(resultado)/1000](resultado)
+ 	
+ 	if valor1 == valor2:
+ 		memoria.listaMem[tipoActual][auxResultado] = 1
+ 	else:
+ 		memoria.listaMem[tipoActual][auxResultado] = 0
+
+	listaMemoria.append(memoria)
+	print "la comparacion igual igual  es", memoria.listaMem[tipoActual][auxResultado]
 def comparacionDiferente(operando1, operando2, resultado):
 	print "entra comparacionDiferente"
+	global pilaMemoria
+	global diccionarioConstantes
+	global contCuadruplos
+	global listaMemoria
+	global tipoActual
+	contCuadruplos = contCuadruplos + 1
+	valor1 = 0
+	valor2 = 0
+	memoria = listaMemoria.pop()
+
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			valor1  = memoria.listaMem[tipoActual][aux1] 
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
+	if diccionarioConstantes.has_key(operando2):
+		valor2 = diccionarioConstantes[operando2]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		valor2 = memoria.listaMem[tipoActual][aux1] 
+ 	auxResultado = tipodato[int(resultado)/1000](resultado)
+ 	
+ 	if valor1 != valor2:
+ 		memoria.listaMem[tipoActual][auxResultado] = 1
+ 	else:
+ 		memoria.listaMem[tipoActual][auxResultado] = 0
+
+	listaMemoria.append(memoria)
+	print "la comparacion diferente es", memoria.listaMem[tipoActual][auxResultado]
 def comparacionOR(operando1, operando2, resultado):
 	print "entra comparacionOR"
+	global pilaMemoria
+	global diccionarioConstantes
+	global contCuadruplos
+	global tipoActual
+	global listaMemoria
+	contCuadruplos = contCuadruplos + 1
+	valor1 = 0
+	valor2 = 0
+	memoria = listaMemoria.pop()
+
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			valor1  = memoria.listaMem[tipoActual][aux1] 
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
+	if diccionarioConstantes.has_key(operando2):
+		valor2 = diccionarioConstantes[operando2]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		valor2 = memoria.listaMem[tipoActual][aux1] 
+ 	auxResultado = tipodato[int(resultado)/1000](resultado)
+ 	
+ 	if valor1 or valor2:
+ 		memoria.listaMem[tipoActual][auxResultado] = 1
+ 	else:
+ 		memoria.listaMem[tipoActual][auxResultado] = 0
+
+	listaMemoria.append(memoria)
+	print "la comparacion OR es", memoria.listaMem[tipoActual][auxResultado]
 def comparacionAND(operando1, operando2, resultado):
 	print "entra comparacionAND"
+	global pilaMemoria
+	global diccionarioConstantes
+	global contCuadruplos
+	global tipoActual
+	global listaMemoria
+	contCuadruplos = contCuadruplos + 1
+	valor1 = 0
+	valor2 = 0
+	memoria = listaMemoria.pop()
+
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			valor1  = memoria.listaMem[tipoActual][aux1] 
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
+	if diccionarioConstantes.has_key(operando2):
+		valor2 = diccionarioConstantes[operando2]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		valor2 = memoria.listaMem[tipoActual][aux1] 
+ 	auxResultado = tipodato[int(resultado)/1000](resultado)
+ 	
+ 	if valor1 and valor2:
+ 		memoria.listaMem[tipoActual][auxResultado] = 1
+ 	else:
+ 		memoria.listaMem[tipoActual][auxResultado] = 0
+
+	listaMemoria.append(memoria)
+	print "la comparacion AND es", memoria.listaMem[tipoActual][auxResultado]
 def gotoFalso(operando1, operando2, resultado):
 	global contCuadruplos
 	contCuadruplos = contCuadruplos + 1
@@ -325,8 +601,8 @@ options = {
 	'3' : multiplicacion,
 	'4' : division,
 	'5' : asignacion, 
-	'6' : comparacionMenor,
-	'7' : comparacionMayor,
+	'6' : comparacionMayor,
+	'7' : comparacionMenor,
 	'8': comparacionMenorIgual,
 	'9' : comparacionMayorIgual,
 	'10' : comparacionIgual,
@@ -372,7 +648,7 @@ while linea != '$$\n':
 	linea = archivo.readline()
 archivo.close()
 
-memoriaMain = Memoria({},{},{},{},{},{},{},{},{},{},{},{},{}, {},{},{},0)
+memoriaMain = Memoria(0,{},{},{},{},{},{},{},{},{},{},{},{}, {},{},{},{})
 listaMemoria.append(memoriaMain)
 
 while contCuadruplos < len(listaCuadruplos):

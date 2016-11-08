@@ -4,6 +4,7 @@ from TVar import TVar
 from CuboSemantico import cuboSemantico
 from diccionarioMemoria import diccionarioMemoria
 from Cuadruplo import Cuadruplo
+import sys
 # Get the token map from the lexer.  This is required.
 from lex import tokens
 
@@ -497,12 +498,12 @@ def p_checarOperadorIgual(p):
 		resultado = cuboSemantico[operando1][operando2][signo]
 		if(resultado == -1):
 			print "Error con signo = "
+			sys.exit()
 		else: 
 			print("SE CHECO EL CUADRUPLO ASIGNACION Y ES CORRECTO ", operando1, operando2, signo)
 			operando2C = pilaOperandosDirMem.pop()
 			operando1C = pilaOperandosDirMem.pop()
 			cuadr = Cuadruplo(signo, operando2C, -1, operando1C)
-
 			listaCuadruplos.append(cuadr)
 	pass
 
@@ -673,7 +674,7 @@ def p_push_logica(p):
 				 		| MAYORIGUAL 
 				 	   	| IGUALIGUAL  
 				 		| DIFERENTE 
-						| COOR
+						| "|"
 						| COAND  '''
 	global pilaOperadores
 	print ("Operador logico: ", p[1])
@@ -689,7 +690,7 @@ def p_push_logica(p):
 		pilaOperadores.append(10)
 	elif p[1] == "!=":
 		pilaOperadores.append(11)
-	elif p[1] == "OR":
+	elif p[1] == "|":
 		pilaOperadores.append(12)
 	elif p[1] == "&&":
 		pilaOperadores.append(13)
@@ -716,18 +717,19 @@ def p_checaoperador6(p):
 			resultado = cuboSemantico[operando1][operando2][operadorActual]
 			posicion = busquedaLista()
 			var = diccionarioMemoria['3']
-			valormem = var[str(resultado)]
-			agregarVar = TVar('temp', resultado, valormem)
-			diccionarioMemoria['3'][str(resultado)] = valormem + 1
-			listaFunciones[posicion].arrVar.append(agregarVar)
-			pilaOperandosDirMem.append(valormem)
 			print("Resultado: ", resultado)
 			#meter a pila el temporal 
 			if resultado == -1:
 				print "ERROR: Operacion invalida, tipos no compatibles"
+				sys.exit()
 			else:
 				print("SE CHECO EL CUADRUPLO Y ES CORRECTO", operando2, operando1, operadorActual)
-				resultadoT = valormem
+				valormem = var[str(resultado)]
+				agregarVar = TVar('temp', resultado, valormem)
+				diccionarioMemoria['3'][str(resultado)] = valormem + 1
+				listaFunciones[posicion].arrVar.append(agregarVar)
+				pilaOperandosDirMem.append(valormem)
+				resultadoT = pilaOperandosDirMem.pop()
 				operando2C = pilaOperandosDirMem.pop()
 				operando1C = pilaOperandosDirMem.pop()
 				cuadr = Cuadruplo(operadorActual, operando1C,operando2C,resultadoT)
@@ -842,6 +844,7 @@ def p_checaroperador5(p):
 			#meter a pila el temporal 
 			if resultado == -1:
 				print "ERROR: Operacion invalida, tipos no compatibles"
+				sys.exit()
 			else:
 				print("SE CHECO EL CUADRUPLO Y ES CORRECTO", operando2, operando1, operadorActual)
 				valormem = var[str(resultado)]
@@ -982,7 +985,7 @@ def p_recibe_CTI(p):
 
 def p_recibe_TRUE(p):
 	''' recibe_TRUE : TRUE '''
-	print("VARCTE: ", p[1])
+	print("-------------------------------------------------VARCTE: ", p[1])
  	global diccionarioMemoria
 	posicion = busquedaLista()
 	var = diccionarioMemoria['4']
@@ -997,6 +1000,8 @@ def p_recibe_TRUE(p):
 def p_recibe_FALSE(p):
 	''' recibe_FALSE : FALSE '''
 	print("VARCTE: ", p[1])
+	print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++VARCTE: ", p[1])
+ 	global diccionarioMemoria
 	global diccionarioMemoria
 	posicion = busquedaLista()
 	var = diccionarioMemoria['4']

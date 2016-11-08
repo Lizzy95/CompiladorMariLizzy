@@ -41,11 +41,11 @@ reserved = {
 #reserved = {'IF', 'ELSE', 'VAR', 'PRINT', 'INT', 'FLOAT', 'PROGRAM'}
 
 # Lista de los nombres de tokens   
-tokens = ['IF','ID','WHILE', 'CTI', 'CTF', 'MENORIGUAL', 'MAYORIGUAL', 'IGUALIGUAL', 
-'DIFERENTE', 'COAND', 'COOR', 'TRUE', 'FALSE',] + list(reserved.values())
+tokens = ['TRUE','FALSE','IF','ID','WHILE', 'CTI', 'CTF', 'MENORIGUAL', 'MAYORIGUAL', 'IGUALIGUAL', 
+'DIFERENTE', 'COAND', 'COOR',] + list(reserved.values())
 
 #Declaracion de simbolos especiales mediatne literales
-literals = "+-*/.,:;(){}[]<>="
+literals = "+-*/.,:;(){}[]<>=|"
 
 t_MENORIGUAL = "<="
 
@@ -55,19 +55,30 @@ t_IGUALIGUAL = "=="
 
 t_DIFERENTE = "!="
 
-t_COOR = "OR"
+# t_COOR = "||"
 
 t_COAND = "&&"
 
-t_TRUE = "TRUE"
+# t_TRUE = "TRUE"
 
-t_FALSE = "FALSE"
+# t_FALSE = "FALSE"
 
+def t_TRUE(t):
+    r'true'
+    t.type = reserved.get(t.value, 'TRUE')
+    return t
+
+def t_FALSE(t):
+    r'false'
+    t.type = reserved.get(t.value, 'FALSE')
+    return t
 
 def t_IF(t):
     r'if'
     t.type = reserved.get(t.value, 'IF')
     return t
+
+
 
 def t_WHILE(t):
     r'while'
