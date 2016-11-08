@@ -2,9 +2,9 @@ inicio
 {
 	entero aAA,  bBbB;
 	decimal bS; 
-	if (false && true){
-		aAA = 0;
-		bBbB = 0;
+	aAA = 0;
+	while (aAA < 200){
+		aAA = aAA + 1;
 	}
 
 	bS = 100.9 * 20.8; 

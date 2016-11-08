@@ -380,7 +380,6 @@ def p_generaGOSUB(p):
 		pilaOperandos.append(listaFunciones[pos].tipo)
 		pilaOperandosDirMem.append(mem)
 		listaCuadruplos.append(cuadr)
-		print "+++++++++++++++++++++++Parche guadalupano", llamada
 	pass
 #Sintaxis de llamada a una funcion 
 def p_funcs(p):
@@ -446,7 +445,6 @@ def p_verificarTiposFunc(p):
 	global llamada
 	pos = busquedaFunc(llamada)
 	arrParametros = listaFunciones[pos].arrParam
-	print "-----------------------",pos, " ", llamada
 	auxParam = arrParametros[contParam].tipo
 	auxPila = pilaOperandos.pop()
 	mem = pilaOperandosDirMem.pop()
@@ -505,7 +503,6 @@ def p_checarOperadorIgual(p):
 			operando1C = pilaOperandosDirMem.pop()
 			cuadr = Cuadruplo(signo, operando2C, -1, operando1C)
 			listaCuadruplos.append(cuadr)
-			print pilaOperandosDirMem, "-------------", pilaOperandos
 	pass
 
 def p_opcionAsignacion(p):
@@ -636,7 +633,6 @@ def p_checarIF(p):
 		pilaSaltos.append(lenCuadruplos)
 		print pilaOperandos
 		temporal = pilaOperandosDirMem.pop()
-		print "$$$$$$$$$$$$$$$$$$$$$$$$$$$" , temporal 
 		cuadr = Cuadruplo(16,temporal,-1,0)
 		print "Guarde cuadruplo IF"
 		listaCuadruplos.append(cuadr)
@@ -739,12 +735,10 @@ def p_checaoperador6(p):
 				resultadoT = pilaOperandosDirMem.pop()
 				operando2C = pilaOperandosDirMem.pop()
 				operando1C = pilaOperandosDirMem.pop()
-				print "RESULTADO!!!!!!!!!!!!!!!!!", resultadoT
 				cuadr = Cuadruplo(operadorActual, operando1C,operando2C,resultadoT)
 				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)
 				pilaOperandosDirMem.append(resultadoT)
-				print "CUADRUPLO!!!!!!!!!!!!!", operadorActual, " ", operando1C, " ", operando2C, " ", resultadoT
 				print "asdasd ", pilaOperandos, " ", resultadoT
 
 	pass
@@ -908,7 +902,7 @@ def p_checarWhile(p):
 	global listaCuadruplos
 	lenCuadruplos = len(listaCuadruplos)
 	pilaSaltos.append(lenCuadruplos)
-	print "Se guardo el salto. " , len(pilaSaltos)
+	print "---------Se guardo el salto. " , pilaSaltos
 	pass
 
 def p_checarContenido(p):
@@ -921,8 +915,9 @@ def p_checarContenido(p):
 		print "Error semantico en while"
 	else:
 		resultado = aux
+		temp = pilaOperandosDirMem.pop()
 		#GOTO FALSO RESULTADO _____
-		cuadr = Cuadruplo(16,-1, resultado ,0)
+		cuadr = Cuadruplo(16,temp, -1,0)
 		listaCuadruplos.append(cuadr)
 		pilaSaltos.append(len(listaCuadruplos) - 1)
 		print "Se guardo GOTO FALSO WHILE: ", cuadr.operador, cuadr.temporal
@@ -933,7 +928,8 @@ def p_finPilaSaltosWhile(p):
 	global pilaSaltos
 	global listaCuadruplos
 	saltos = pilaSaltos.pop()
-	cuadr = Cuadruplo(17,-1,-1,saltos)
+	saltos2 = pilaSaltos.pop()
+	cuadr = Cuadruplo(17,-1,-1,saltos2)
 	listaCuadruplos.append(cuadr)
 	lenCuadruplos = len(listaCuadruplos)
 	listaCuadruplos[saltos].temporal = lenCuadruplos

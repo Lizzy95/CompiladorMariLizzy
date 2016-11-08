@@ -186,7 +186,7 @@ def multiplicacion(operando1, operando2, resultado):
  	else:
 		memoria.listaMem[tipoActual][auxResultado] = int(valor1) * int(valor2)
 	listaMemoria.append(memoria)
-	print "la mltuplicacion es", memoria.listaMem[tipoActual][auxResultado]
+	print "la multiplicacion es", memoria.listaMem[tipoActual][auxResultado]
 	
 
 def division(operando1, operando2, resultado):
@@ -261,7 +261,16 @@ def asignacion(operando1, operando2, resultado):
 
 
 def goto(operando1, operando2, resultado):
-	print "entra goto"
+	global contCuadruplos
+	global listaCuadruplos
+	print "entra goto \n"
+	
+	if listaCuadruplos[int(resultado)].operador == 17:
+		print "----- entraaaa "
+	contCuadruplos =  int(resultado)
+	#else:
+		#contCuadruplos = int(resultado)
+
 
 def comparacionMenor(operando1, operando2, resultado):
 	print "entra comparacionMenor"
@@ -288,10 +297,8 @@ def comparacionMenor(operando1, operando2, resultado):
 		valor2 = diccionarioConstantes[operando2]
 	else:
 		aux1 = tipodato[int(operando2)/1000](operando2)
-		print "entraaa", memoria.listaMem[tipoActual][aux1]
 		valor2 = memoria.listaMem[tipoActual][aux1] 
- 	
- 	
+ 	auxResultado = tipodato[int(resultado)/1000](resultado)
  	if float(valor1) < float(valor2):
  		memoria.listaMem[tipoActual][auxResultado] = 1
  	else:
@@ -300,10 +307,6 @@ def comparacionMenor(operando1, operando2, resultado):
 
 	listaMemoria.append(memoria)
 	print "la comparacion menor  es", memoria.listaMem[tipoActual][auxResultado]
-
-
-
-
 
 def comparacionMayor(operando1, operando2, resultado):
 	print "entra comparacionMayor"
@@ -340,6 +343,7 @@ def comparacionMayor(operando1, operando2, resultado):
 
 	listaMemoria.append(memoria)
 	print "la comparacion mayor  es", memoria.listaMem[tipoActual][auxResultado]
+
 def comparacionMenorIgual(operando1, operando2, resultado):
 	print "entra comparacionMenorIgual"
 	global pilaMemoria
@@ -376,6 +380,7 @@ def comparacionMenorIgual(operando1, operando2, resultado):
 
 	listaMemoria.append(memoria)
 	print "la comparacion menor igual  es", memoria.listaMem[tipoActual][auxResultado]
+
 def comparacionMayorIgual(operando1, operando2, resultado):
 	print "entra comparacionMayorIgual"
 	global pilaMemoria
@@ -446,6 +451,7 @@ def comparacionIgual(operando1, operando2, resultado):
 
 	listaMemoria.append(memoria)
 	print "la comparacion igual igual  es", memoria.listaMem[tipoActual][auxResultado]
+
 def comparacionDiferente(operando1, operando2, resultado):
 	print "entra comparacionDiferente"
 	global pilaMemoria
@@ -580,10 +586,6 @@ def gotoFalso(operando1, operando2, resultado):
 
 
 	print "entra gotoFalsor"
-def goto(operando1, operando2, resultado):
-	global contCuadruplos
-	contCuadruplos = contCuadruplos + 1
-	print "entra goto"
 def leer(operando1, operando2, resultado):
 	print "entra leer"
 def dibujar(operando1, operando2, resultado):
