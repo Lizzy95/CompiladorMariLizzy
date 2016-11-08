@@ -1,8 +1,12 @@
 inicio
 {
 	entero aAA,  bBbB;
-	if (true | false){
+	decimal bS; 
+	if (false && true){
 		aAA = 0;
+		bBbB = 0;
 	}
+
+	bS = 100.9 * 20.8; 
 }
 fin

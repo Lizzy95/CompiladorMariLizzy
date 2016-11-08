@@ -492,7 +492,6 @@ def comparacionOR(operando1, operando2, resultado):
 	valor1 = 0
 	valor2 = 0
 	memoria = listaMemoria.pop()
-
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
@@ -553,7 +552,33 @@ def comparacionAND(operando1, operando2, resultado):
 	print "la comparacion AND es", memoria.listaMem[tipoActual][auxResultado]
 def gotoFalso(operando1, operando2, resultado):
 	global contCuadruplos
-	contCuadruplos = contCuadruplos + 1
+	global diccionarioConstantes
+	global listaMem
+	memoria = listaMemoria.pop()
+	valor1 = 0
+
+
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			valor1  = memoria.listaMem[tipoActual][aux1] 
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
+
+	print "Valor 1 = ", valor1
+	if valor1 == 0:
+		contCuadruplos = resultado
+	else:
+		contCuadruplos = contCuadruplos + 1
+
+
+	listaMemoria.append(memoria)
+
+
+
 	print "entra gotoFalsor"
 def goto(operando1, operando2, resultado):
 	global contCuadruplos

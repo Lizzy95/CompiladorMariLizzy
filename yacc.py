@@ -505,6 +505,7 @@ def p_checarOperadorIgual(p):
 			operando1C = pilaOperandosDirMem.pop()
 			cuadr = Cuadruplo(signo, operando2C, -1, operando1C)
 			listaCuadruplos.append(cuadr)
+			print pilaOperandosDirMem, "-------------", pilaOperandos
 	pass
 
 def p_opcionAsignacion(p):
@@ -603,8 +604,8 @@ def p_color(p):
 	pass
 
 def p_condicion(p):
-	''' condicion : IF "(" expresion ")" checarIF finPilaSaltos
-				  | IF "(" expresion ")" checarIF checarElse  finPilaSaltos'''
+	''' condicion : IF "(" expresion ")" checarIF bloqueCond finPilaSaltos
+				  | IF "(" expresion ")" checarIF bloqueCond checarElse  finPilaSaltos'''
 	pass
 
 def p_bloqueCond(p):
@@ -620,18 +621,23 @@ def p_regresaCond(p):
 	pass
 
 def p_checarIF(p):
-	'''checarIF : bloqueCond '''
+	'''checarIF : '''
 	print "Entre a checar IF"
 	global pilaOperandos
 	global pilaSaltos
 	global pilaOperadores
+	global pilaOperandosDirMem
 	aux = pilaOperandos.pop()
 	if aux != 8: 
 		print "Error semantico en condicion IF"
+		sys.exit()
 	else:
 		lenCuadruplos = len(listaCuadruplos)
 		pilaSaltos.append(lenCuadruplos)
-		cuadr = Cuadruplo(16,-1,-1,0)
+		print pilaOperandos
+		temporal = pilaOperandosDirMem.pop()
+		print "$$$$$$$$$$$$$$$$$$$$$$$$$$$" , temporal 
+		cuadr = Cuadruplo(16,temporal,-1,0)
 		print "Guarde cuadruplo IF"
 		listaCuadruplos.append(cuadr)
 		print pilaOperandos
@@ -706,6 +712,7 @@ def p_checaoperador6(p):
 	global pilaOperadores
 	global pilaOperandos
 	global diccionarioMemoria
+	global pilaOperandosDirMem
 	opr = len(pilaOperadores)
 	print "Entra checaroperador 6"
 	print ("PilaOperadores: ", pilaOperadores)
@@ -732,9 +739,14 @@ def p_checaoperador6(p):
 				resultadoT = pilaOperandosDirMem.pop()
 				operando2C = pilaOperandosDirMem.pop()
 				operando1C = pilaOperandosDirMem.pop()
+				print "RESULTADO!!!!!!!!!!!!!!!!!", resultadoT
 				cuadr = Cuadruplo(operadorActual, operando1C,operando2C,resultadoT)
 				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)
+				pilaOperandosDirMem.append(resultadoT)
+				print "CUADRUPLO!!!!!!!!!!!!!", operadorActual, " ", operando1C, " ", operando2C, " ", resultadoT
+				print "asdasd ", pilaOperandos, " ", resultadoT
+
 	pass
 
 def p_exp(p):
@@ -993,6 +1005,7 @@ def p_recibe_TRUE(p):
 	agregarVar = TVar(p[1],8, valormem)
 	diccionarioMemoria['4'][str(8)] = valormem + 1
 	listaFunciones[posicion].arrVar.append(agregarVar)
+	diccConstantes[valormem] = p[1]
 	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(8)
 	pass
@@ -1007,8 +1020,9 @@ def p_recibe_FALSE(p):
 	var = diccionarioMemoria['4']
 	valormem = var[str(8)]
 	agregarVar = TVar(p[1],8, valormem)
-	diccionarioMemoria['3'][str(8)] = valormem + 1
+	diccionarioMemoria['4'][str(8)] = valormem + 1
 	listaFunciones[posicion].arrVar.append(agregarVar)
+	diccConstantes[valormem] = p[1]
 	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(8)
 	pass

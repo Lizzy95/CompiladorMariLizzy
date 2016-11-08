@@ -90,14 +90,14 @@ Rule 80    color -> AMARILLO
 Rule 81    color -> VERDE
 Rule 82    color -> ROJO
 Rule 83    color -> AZUL
-Rule 84    condicion -> IF ( expresion ) checarIF finPilaSaltos
-Rule 85    condicion -> IF ( expresion ) checarIF checarElse finPilaSaltos
+Rule 84    condicion -> IF ( expresion ) checarIF bloqueCond finPilaSaltos
+Rule 85    condicion -> IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos
 Rule 86    bloqueCond -> { estatuto regresaCond }
 Rule 87    bloqueCond -> { regresaCond }
 Rule 88    bloqueCond -> { }
 Rule 89    regresaCond -> RETURN ID
 Rule 90    regresaCond -> empty
-Rule 91    checarIF -> bloqueCond
+Rule 91    checarIF -> <empty>
 Rule 92    checarElse -> ELSE bloqueCond
 Rule 93    finPilaSaltos -> <empty>
 Rule 94    expresion -> exp operacionLogica checaoperador6
@@ -228,7 +228,7 @@ arreglo              : 8
 asignacion           : 38
 auxExp               : 48
 bloque               : 1
-bloqueCond           : 91 92 126
+bloqueCond           : 84 85 92 126
 bloquefunc           : 23
 checaNumParam        : 48
 checaoperador6       : 94
@@ -1099,8 +1099,8 @@ state 57
     (61) asignacion -> . ID ;
     (78) escritura -> . DIBUJAR guardarToken ( guardarParametros ) ;
     (79) escritura -> . mueve
-    (84) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (85) condicion -> . IF ( expresion ) checarIF checarElse finPilaSaltos
+    (84) condicion -> . IF ( expresion ) checarIF bloqueCond finPilaSaltos
+    (85) condicion -> . IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos
     (72) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
     (126) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloqueCond finPilaSaltosWhile
     (48) funcs -> . ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB
@@ -1183,8 +1183,8 @@ state 63
     (61) asignacion -> . ID ;
     (78) escritura -> . DIBUJAR guardarToken ( guardarParametros ) ;
     (79) escritura -> . mueve
-    (84) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (85) condicion -> . IF ( expresion ) checarIF checarElse finPilaSaltos
+    (84) condicion -> . IF ( expresion ) checarIF bloqueCond finPilaSaltos
+    (85) condicion -> . IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos
     (72) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
     (126) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloqueCond finPilaSaltosWhile
     (48) funcs -> . ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB
@@ -1269,8 +1269,8 @@ state 68
     (61) asignacion -> . ID ;
     (78) escritura -> . DIBUJAR guardarToken ( guardarParametros ) ;
     (79) escritura -> . mueve
-    (84) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (85) condicion -> . IF ( expresion ) checarIF checarElse finPilaSaltos
+    (84) condicion -> . IF ( expresion ) checarIF bloqueCond finPilaSaltos
+    (85) condicion -> . IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos
     (72) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
     (126) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloqueCond finPilaSaltosWhile
     (48) funcs -> . ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB
@@ -1313,8 +1313,8 @@ state 69
     (61) asignacion -> . ID ;
     (78) escritura -> . DIBUJAR guardarToken ( guardarParametros ) ;
     (79) escritura -> . mueve
-    (84) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (85) condicion -> . IF ( expresion ) checarIF checarElse finPilaSaltos
+    (84) condicion -> . IF ( expresion ) checarIF bloqueCond finPilaSaltos
+    (85) condicion -> . IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos
     (72) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
     (126) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloqueCond finPilaSaltosWhile
     (48) funcs -> . ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB
@@ -1357,8 +1357,8 @@ state 70
     (61) asignacion -> . ID ;
     (78) escritura -> . DIBUJAR guardarToken ( guardarParametros ) ;
     (79) escritura -> . mueve
-    (84) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (85) condicion -> . IF ( expresion ) checarIF checarElse finPilaSaltos
+    (84) condicion -> . IF ( expresion ) checarIF bloqueCond finPilaSaltos
+    (85) condicion -> . IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos
     (72) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
     (126) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloqueCond finPilaSaltosWhile
     (48) funcs -> . ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB
@@ -1415,8 +1415,8 @@ state 71
 
 state 72
 
-    (84) condicion -> IF . ( expresion ) checarIF finPilaSaltos
-    (85) condicion -> IF . ( expresion ) checarIF checarElse finPilaSaltos
+    (84) condicion -> IF . ( expresion ) checarIF bloqueCond finPilaSaltos
+    (85) condicion -> IF . ( expresion ) checarIF bloqueCond checarElse finPilaSaltos
 
     (               shift and go to state 94
 
@@ -1446,8 +1446,8 @@ state 74
     (61) asignacion -> . ID ;
     (78) escritura -> . DIBUJAR guardarToken ( guardarParametros ) ;
     (79) escritura -> . mueve
-    (84) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (85) condicion -> . IF ( expresion ) checarIF checarElse finPilaSaltos
+    (84) condicion -> . IF ( expresion ) checarIF bloqueCond finPilaSaltos
+    (85) condicion -> . IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos
     (72) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
     (126) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloqueCond finPilaSaltosWhile
     (48) funcs -> . ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB
@@ -1506,8 +1506,8 @@ state 77
     (61) asignacion -> . ID ;
     (78) escritura -> . DIBUJAR guardarToken ( guardarParametros ) ;
     (79) escritura -> . mueve
-    (84) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (85) condicion -> . IF ( expresion ) checarIF checarElse finPilaSaltos
+    (84) condicion -> . IF ( expresion ) checarIF bloqueCond finPilaSaltos
+    (85) condicion -> . IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos
     (72) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
     (126) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloqueCond finPilaSaltosWhile
     (48) funcs -> . ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB
@@ -1725,14 +1725,14 @@ state 93
     LEER            reduce using rule 61 (asignacion -> ID ; .)
     WHILE           reduce using rule 61 (asignacion -> ID ; .)
     MUEVE           reduce using rule 61 (asignacion -> ID ; .)
-    }               reduce using rule 61 (asignacion -> ID ; .)
     RETURN          reduce using rule 61 (asignacion -> ID ; .)
+    }               reduce using rule 61 (asignacion -> ID ; .)
 
 
 state 94
 
-    (84) condicion -> IF ( . expresion ) checarIF finPilaSaltos
-    (85) condicion -> IF ( . expresion ) checarIF checarElse finPilaSaltos
+    (84) condicion -> IF ( . expresion ) checarIF bloqueCond finPilaSaltos
+    (85) condicion -> IF ( . expresion ) checarIF bloqueCond checarElse finPilaSaltos
     (94) expresion -> . exp operacionLogica checaoperador6
     (95) expresion -> . exp
     (107) exp -> . termino checaroperador4
@@ -1760,13 +1760,13 @@ state 94
 
     expresion                      shift and go to state 128
     recibe_TRUE                    shift and go to state 121
-    exp                            shift and go to state 131
     recibe_CTF                     shift and go to state 123
     recibe_CTI                     shift and go to state 130
     varcte                         shift and go to state 122
     factor                         shift and go to state 126
     recibe_ID                      shift and go to state 125
     termino                        shift and go to state 118
+    exp                            shift and go to state 131
     recibe_FALSE                   shift and go to state 133
     fondoFalso                     shift and go to state 132
 
@@ -2021,6 +2021,7 @@ state 117
 
     (136) recibe_CTF -> CTF .
 
+    ,               reduce using rule 136 (recibe_CTF -> CTF .)
     *               reduce using rule 136 (recibe_CTF -> CTF .)
     /               reduce using rule 136 (recibe_CTF -> CTF .)
     +               reduce using rule 136 (recibe_CTF -> CTF .)
@@ -2035,7 +2036,6 @@ state 117
     COAND           reduce using rule 136 (recibe_CTF -> CTF .)
     )               reduce using rule 136 (recibe_CTF -> CTF .)
     ;               reduce using rule 136 (recibe_CTF -> CTF .)
-    ,               reduce using rule 136 (recibe_CTF -> CTF .)
 
 
 state 118
@@ -2140,7 +2140,6 @@ state 121
     +               reduce using rule 133 (varcte -> recibe_TRUE .)
     -               reduce using rule 133 (varcte -> recibe_TRUE .)
     ;               reduce using rule 133 (varcte -> recibe_TRUE .)
-    )               reduce using rule 133 (varcte -> recibe_TRUE .)
     >               reduce using rule 133 (varcte -> recibe_TRUE .)
     <               reduce using rule 133 (varcte -> recibe_TRUE .)
     MENORIGUAL      reduce using rule 133 (varcte -> recibe_TRUE .)
@@ -2149,6 +2148,7 @@ state 121
     DIFERENTE       reduce using rule 133 (varcte -> recibe_TRUE .)
     |               reduce using rule 133 (varcte -> recibe_TRUE .)
     COAND           reduce using rule 133 (varcte -> recibe_TRUE .)
+    )               reduce using rule 133 (varcte -> recibe_TRUE .)
     ,               reduce using rule 133 (varcte -> recibe_TRUE .)
 
 
@@ -2182,7 +2182,6 @@ state 123
     +               reduce using rule 131 (varcte -> recibe_CTF .)
     -               reduce using rule 131 (varcte -> recibe_CTF .)
     ;               reduce using rule 131 (varcte -> recibe_CTF .)
-    )               reduce using rule 131 (varcte -> recibe_CTF .)
     >               reduce using rule 131 (varcte -> recibe_CTF .)
     <               reduce using rule 131 (varcte -> recibe_CTF .)
     MENORIGUAL      reduce using rule 131 (varcte -> recibe_CTF .)
@@ -2191,6 +2190,7 @@ state 123
     DIFERENTE       reduce using rule 131 (varcte -> recibe_CTF .)
     |               reduce using rule 131 (varcte -> recibe_CTF .)
     COAND           reduce using rule 131 (varcte -> recibe_CTF .)
+    )               reduce using rule 131 (varcte -> recibe_CTF .)
     ,               reduce using rule 131 (varcte -> recibe_CTF .)
 
 
@@ -2215,7 +2215,6 @@ state 125
     +               reduce using rule 130 (varcte -> recibe_ID .)
     -               reduce using rule 130 (varcte -> recibe_ID .)
     ;               reduce using rule 130 (varcte -> recibe_ID .)
-    )               reduce using rule 130 (varcte -> recibe_ID .)
     >               reduce using rule 130 (varcte -> recibe_ID .)
     <               reduce using rule 130 (varcte -> recibe_ID .)
     MENORIGUAL      reduce using rule 130 (varcte -> recibe_ID .)
@@ -2224,6 +2223,7 @@ state 125
     DIFERENTE       reduce using rule 130 (varcte -> recibe_ID .)
     |               reduce using rule 130 (varcte -> recibe_ID .)
     COAND           reduce using rule 130 (varcte -> recibe_ID .)
+    )               reduce using rule 130 (varcte -> recibe_ID .)
     ,               reduce using rule 130 (varcte -> recibe_ID .)
 
 
@@ -2307,8 +2307,8 @@ state 127
 
 state 128
 
-    (84) condicion -> IF ( expresion . ) checarIF finPilaSaltos
-    (85) condicion -> IF ( expresion . ) checarIF checarElse finPilaSaltos
+    (84) condicion -> IF ( expresion . ) checarIF bloqueCond finPilaSaltos
+    (85) condicion -> IF ( expresion . ) checarIF bloqueCond checarElse finPilaSaltos
 
     )               shift and go to state 157
 
@@ -2343,7 +2343,6 @@ state 130
     +               reduce using rule 132 (varcte -> recibe_CTI .)
     -               reduce using rule 132 (varcte -> recibe_CTI .)
     ;               reduce using rule 132 (varcte -> recibe_CTI .)
-    )               reduce using rule 132 (varcte -> recibe_CTI .)
     >               reduce using rule 132 (varcte -> recibe_CTI .)
     <               reduce using rule 132 (varcte -> recibe_CTI .)
     MENORIGUAL      reduce using rule 132 (varcte -> recibe_CTI .)
@@ -2352,6 +2351,7 @@ state 130
     DIFERENTE       reduce using rule 132 (varcte -> recibe_CTI .)
     |               reduce using rule 132 (varcte -> recibe_CTI .)
     COAND           reduce using rule 132 (varcte -> recibe_CTI .)
+    )               reduce using rule 132 (varcte -> recibe_CTI .)
     ,               reduce using rule 132 (varcte -> recibe_CTI .)
 
 
@@ -2435,7 +2435,6 @@ state 133
     +               reduce using rule 134 (varcte -> recibe_FALSE .)
     -               reduce using rule 134 (varcte -> recibe_FALSE .)
     ;               reduce using rule 134 (varcte -> recibe_FALSE .)
-    )               reduce using rule 134 (varcte -> recibe_FALSE .)
     >               reduce using rule 134 (varcte -> recibe_FALSE .)
     <               reduce using rule 134 (varcte -> recibe_FALSE .)
     MENORIGUAL      reduce using rule 134 (varcte -> recibe_FALSE .)
@@ -2444,6 +2443,7 @@ state 133
     DIFERENTE       reduce using rule 134 (varcte -> recibe_FALSE .)
     |               reduce using rule 134 (varcte -> recibe_FALSE .)
     COAND           reduce using rule 134 (varcte -> recibe_FALSE .)
+    )               reduce using rule 134 (varcte -> recibe_FALSE .)
     ,               reduce using rule 134 (varcte -> recibe_FALSE .)
 
 
@@ -2488,8 +2488,8 @@ state 137
     (61) asignacion -> . ID ;
     (78) escritura -> . DIBUJAR guardarToken ( guardarParametros ) ;
     (79) escritura -> . mueve
-    (84) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (85) condicion -> . IF ( expresion ) checarIF checarElse finPilaSaltos
+    (84) condicion -> . IF ( expresion ) checarIF bloqueCond finPilaSaltos
+    (85) condicion -> . IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos
     (72) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
     (126) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloqueCond finPilaSaltosWhile
     (48) funcs -> . ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB
@@ -2701,6 +2701,8 @@ state 150
 
     (107) exp -> termino checaroperador4 .
 
+    ,               reduce using rule 107 (exp -> termino checaroperador4 .)
+    )               reduce using rule 107 (exp -> termino checaroperador4 .)
     >               reduce using rule 107 (exp -> termino checaroperador4 .)
     <               reduce using rule 107 (exp -> termino checaroperador4 .)
     MENORIGUAL      reduce using rule 107 (exp -> termino checaroperador4 .)
@@ -2709,9 +2711,7 @@ state 150
     DIFERENTE       reduce using rule 107 (exp -> termino checaroperador4 .)
     |               reduce using rule 107 (exp -> termino checaroperador4 .)
     COAND           reduce using rule 107 (exp -> termino checaroperador4 .)
-    )               reduce using rule 107 (exp -> termino checaroperador4 .)
     ;               reduce using rule 107 (exp -> termino checaroperador4 .)
-    ,               reduce using rule 107 (exp -> termino checaroperador4 .)
 
 
 state 151
@@ -2809,8 +2809,8 @@ state 155
     |               reduce using rule 116 (termino -> factor checaroperador5 .)
     COAND           reduce using rule 116 (termino -> factor checaroperador5 .)
     )               reduce using rule 116 (termino -> factor checaroperador5 .)
-    ,               reduce using rule 116 (termino -> factor checaroperador5 .)
     ;               reduce using rule 116 (termino -> factor checaroperador5 .)
+    ,               reduce using rule 116 (termino -> factor checaroperador5 .)
 
 
 state 156
@@ -2850,17 +2850,13 @@ state 156
 
 state 157
 
-    (84) condicion -> IF ( expresion ) . checarIF finPilaSaltos
-    (85) condicion -> IF ( expresion ) . checarIF checarElse finPilaSaltos
-    (91) checarIF -> . bloqueCond
-    (86) bloqueCond -> . { estatuto regresaCond }
-    (87) bloqueCond -> . { regresaCond }
-    (88) bloqueCond -> . { }
+    (84) condicion -> IF ( expresion ) . checarIF bloqueCond finPilaSaltos
+    (85) condicion -> IF ( expresion ) . checarIF bloqueCond checarElse finPilaSaltos
+    (91) checarIF -> .
 
-    {               shift and go to state 189
+    {               reduce using rule 91 (checarIF -> .)
 
     checarIF                       shift and go to state 188
-    bloqueCond                     shift and go to state 190
 
 state 158
 
@@ -2917,7 +2913,7 @@ state 162
 
     )               reduce using rule 106 (checaoperador6 -> .)
 
-    checaoperador6                 shift and go to state 191
+    checaoperador6                 shift and go to state 189
 
 state 163
 
@@ -2947,7 +2943,7 @@ state 163
 
     varcte                         shift and go to state 122
     recibe_TRUE                    shift and go to state 121
-    exp                            shift and go to state 192
+    exp                            shift and go to state 190
     recibe_CTF                     shift and go to state 123
     recibe_CTI                     shift and go to state 130
     recibe_ID                      shift and go to state 125
@@ -3009,9 +3005,9 @@ state 168
     (123) factor -> fondoFalso expresion . finFondoFalso
     (109) finFondoFalso -> . )
 
-    )               shift and go to state 193
+    )               shift and go to state 191
 
-    finFondoFalso                  shift and go to state 194
+    finFondoFalso                  shift and go to state 192
 
 state 169
 
@@ -3021,13 +3017,13 @@ state 169
     [               reduce using rule 71 (checarLectura -> .)
     ;               reduce using rule 71 (checarLectura -> .)
 
-    checarLectura                  shift and go to state 195
+    checarLectura                  shift and go to state 193
 
 state 170
 
     (78) escritura -> DIBUJAR guardarToken ( guardarParametros . ) ;
 
-    )               shift and go to state 196
+    )               shift and go to state 194
 
 
 state 171
@@ -3037,13 +3033,13 @@ state 171
 
     (               reduce using rule 62 (guardarIDPila -> .)
 
-    guardarIDPila                  shift and go to state 197
+    guardarIDPila                  shift and go to state 195
 
 state 172
 
     (37) regresa -> RETURN . ID
 
-    ID              shift and go to state 198
+    ID              shift and go to state 196
 
 
 state 173
@@ -3053,20 +3049,20 @@ state 173
 
     RETURN          shift and go to state 172
 
-    regresa                        shift and go to state 199
+    regresa                        shift and go to state 197
 
 state 174
 
     (32) bloquefunc -> { vars guardarCuadruplo regresa . } liberarVar
 
-    }               shift and go to state 200
+    }               shift and go to state 198
 
 
 state 175
 
     (33) bloquefunc -> { guardarCuadruplo escritura regresa . } liberarVar
 
-    }               shift and go to state 201
+    }               shift and go to state 199
 
 
 state 176
@@ -3076,7 +3072,7 @@ state 176
 
     {               reduce using rule 128 (checarContenido -> .)
 
-    checarContenido                shift and go to state 202
+    checarContenido                shift and go to state 200
 
 state 177
 
@@ -3085,7 +3081,7 @@ state 177
 
     CTI             shift and go to state 120
 
-    recibe_CTI                     shift and go to state 203
+    recibe_CTI                     shift and go to state 201
 
 state 178
 
@@ -3101,7 +3097,7 @@ state 178
     }               reduce using rule 63 (checarOperadorIgual -> .)
     RETURN          reduce using rule 63 (checarOperadorIgual -> .)
 
-    checarOperadorIgual            shift and go to state 204
+    checarOperadorIgual            shift and go to state 202
 
 state 179
 
@@ -3143,7 +3139,7 @@ state 182
 
     =               reduce using rule 64 (opcionAsignacion -> [ CTI ] .)
     ;               reduce using rule 64 (opcionAsignacion -> [ CTI ] .)
-    [               shift and go to state 205
+    [               shift and go to state 203
 
 
 state 183
@@ -3153,9 +3149,9 @@ state 183
     (55) llegaComa -> . ,
 
     )               reduce using rule 54 (auxExp -> listaExp .)
-    ,               shift and go to state 207
+    ,               shift and go to state 205
 
-    llegaComa                      shift and go to state 206
+    llegaComa                      shift and go to state 204
 
 state 184
 
@@ -3165,16 +3161,16 @@ state 184
     ,               reduce using rule 56 (verificarTiposFunc -> .)
     )               reduce using rule 56 (verificarTiposFunc -> .)
 
-    verificarTiposFunc             shift and go to state 208
+    verificarTiposFunc             shift and go to state 206
 
 state 185
 
     (48) funcs -> ID guardarIDFunc verProc generarERA auxExp . checaNumParam generaGOSUB
     (46) checaNumParam -> . )
 
-    )               shift and go to state 209
+    )               shift and go to state 207
 
-    checaNumParam                  shift and go to state 210
+    checaNumParam                  shift and go to state 208
 
 state 186
 
@@ -3214,103 +3210,31 @@ state 187
 
 state 188
 
-    (84) condicion -> IF ( expresion ) checarIF . finPilaSaltos
-    (85) condicion -> IF ( expresion ) checarIF . checarElse finPilaSaltos
-    (93) finPilaSaltos -> .
-    (92) checarElse -> . ELSE bloqueCond
+    (84) condicion -> IF ( expresion ) checarIF . bloqueCond finPilaSaltos
+    (85) condicion -> IF ( expresion ) checarIF . bloqueCond checarElse finPilaSaltos
+    (86) bloqueCond -> . { estatuto regresaCond }
+    (87) bloqueCond -> . { regresaCond }
+    (88) bloqueCond -> . { }
 
-    ID              reduce using rule 93 (finPilaSaltos -> .)
-    DIBUJAR         reduce using rule 93 (finPilaSaltos -> .)
-    IF              reduce using rule 93 (finPilaSaltos -> .)
-    LEER            reduce using rule 93 (finPilaSaltos -> .)
-    WHILE           reduce using rule 93 (finPilaSaltos -> .)
-    MUEVE           reduce using rule 93 (finPilaSaltos -> .)
-    }               reduce using rule 93 (finPilaSaltos -> .)
-    RETURN          reduce using rule 93 (finPilaSaltos -> .)
-    ELSE            shift and go to state 212
+    {               shift and go to state 209
 
-    finPilaSaltos                  shift and go to state 213
-    checarElse                     shift and go to state 211
+    bloqueCond                     shift and go to state 210
 
 state 189
-
-    (86) bloqueCond -> { . estatuto regresaCond }
-    (87) bloqueCond -> { . regresaCond }
-    (88) bloqueCond -> { . }
-    (38) estatuto -> . asignacion estatutoAux
-    (39) estatuto -> . escritura estatutoAux
-    (40) estatuto -> . condicion estatutoAux
-    (41) estatuto -> . lectura estatutoAux
-    (42) estatuto -> . whiles estatutoAux
-    (43) estatuto -> . funcs estatutoAux
-    (89) regresaCond -> . RETURN ID
-    (90) regresaCond -> . empty
-    (60) asignacion -> . ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual
-    (61) asignacion -> . ID ;
-    (78) escritura -> . DIBUJAR guardarToken ( guardarParametros ) ;
-    (79) escritura -> . mueve
-    (84) condicion -> . IF ( expresion ) checarIF finPilaSaltos
-    (85) condicion -> . IF ( expresion ) checarIF checarElse finPilaSaltos
-    (72) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
-    (126) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloqueCond finPilaSaltosWhile
-    (48) funcs -> . ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB
-    (49) funcs -> . ID
-    (156) empty -> .
-    (149) mueve -> . MUEVE guardarToken opcionMue
-
-  ! shift/reduce conflict for } resolved as shift
-    }               shift and go to state 218
-    RETURN          shift and go to state 214
-    ID              shift and go to state 71
-    DIBUJAR         shift and go to state 75
-    IF              shift and go to state 72
-    LEER            shift and go to state 73
-    WHILE           shift and go to state 64
-    MUEVE           shift and go to state 65
-
-  ! }               [ reduce using rule 156 (empty -> .) ]
-
-    funcs                          shift and go to state 63
-    estatuto                       shift and go to state 215
-    mueve                          shift and go to state 67
-    condicion                      shift and go to state 68
-    lectura                        shift and go to state 69
-    empty                          shift and go to state 216
-    whiles                         shift and go to state 70
-    asignacion                     shift and go to state 74
-    regresaCond                    shift and go to state 217
-    escritura                      shift and go to state 77
-
-state 190
-
-    (91) checarIF -> bloqueCond .
-
-    ELSE            reduce using rule 91 (checarIF -> bloqueCond .)
-    ID              reduce using rule 91 (checarIF -> bloqueCond .)
-    DIBUJAR         reduce using rule 91 (checarIF -> bloqueCond .)
-    IF              reduce using rule 91 (checarIF -> bloqueCond .)
-    LEER            reduce using rule 91 (checarIF -> bloqueCond .)
-    WHILE           reduce using rule 91 (checarIF -> bloqueCond .)
-    MUEVE           reduce using rule 91 (checarIF -> bloqueCond .)
-    }               reduce using rule 91 (checarIF -> bloqueCond .)
-    RETURN          reduce using rule 91 (checarIF -> bloqueCond .)
-
-
-state 191
 
     (94) expresion -> exp operacionLogica checaoperador6 .
 
     )               reduce using rule 94 (expresion -> exp operacionLogica checaoperador6 .)
 
 
-state 192
+state 190
 
     (104) operacionLogica -> push_logica exp .
 
     )               reduce using rule 104 (operacionLogica -> push_logica exp .)
 
 
-state 193
+state 191
 
     (109) finFondoFalso -> ) .
 
@@ -3331,7 +3255,7 @@ state 193
     ,               reduce using rule 109 (finFondoFalso -> ) .)
 
 
-state 194
+state 192
 
     (123) factor -> fondoFalso expresion finFondoFalso .
 
@@ -3352,7 +3276,7 @@ state 194
     ,               reduce using rule 123 (factor -> fondoFalso expresion finFondoFalso .)
 
 
-state 195
+state 193
 
     (72) lectura -> LEER guardarToken ID guardarIDPila checarLectura . opcionesLectura ;
     (73) opcionesLectura -> . [ CTI ]
@@ -3360,43 +3284,43 @@ state 195
     (75) opcionesLectura -> . empty
     (156) empty -> .
 
-    [               shift and go to state 219
+    [               shift and go to state 211
     ;               reduce using rule 156 (empty -> .)
 
-    empty                          shift and go to state 221
-    opcionesLectura                shift and go to state 220
+    empty                          shift and go to state 213
+    opcionesLectura                shift and go to state 212
 
-state 196
+state 194
 
     (78) escritura -> DIBUJAR guardarToken ( guardarParametros ) . ;
 
-    ;               shift and go to state 222
+    ;               shift and go to state 214
 
 
-state 197
+state 195
 
     (76) guardarParametros -> ID guardarIDPila . pos color checarDibujar
     (125) pos -> . ( varcte , varcte )
 
-    (               shift and go to state 223
+    (               shift and go to state 215
 
-    pos                            shift and go to state 224
+    pos                            shift and go to state 216
 
-state 198
+state 196
 
     (37) regresa -> RETURN ID .
 
     }               reduce using rule 37 (regresa -> RETURN ID .)
 
 
-state 199
+state 197
 
     (31) bloquefunc -> { vars guardarCuadruplo estatuto regresa . } liberarVar
 
-    }               shift and go to state 225
+    }               shift and go to state 217
 
 
-state 200
+state 198
 
     (32) bloquefunc -> { vars guardarCuadruplo regresa } . liberarVar
     (35) liberarVar -> .
@@ -3404,9 +3328,9 @@ state 200
     FUNC            reduce using rule 35 (liberarVar -> .)
     INICIO          reduce using rule 35 (liberarVar -> .)
 
-    liberarVar                     shift and go to state 226
+    liberarVar                     shift and go to state 218
 
-state 201
+state 199
 
     (33) bloquefunc -> { guardarCuadruplo escritura regresa } . liberarVar
     (35) liberarVar -> .
@@ -3414,29 +3338,29 @@ state 201
     FUNC            reduce using rule 35 (liberarVar -> .)
     INICIO          reduce using rule 35 (liberarVar -> .)
 
-    liberarVar                     shift and go to state 227
+    liberarVar                     shift and go to state 219
 
-state 202
+state 200
 
     (126) whiles -> WHILE checarWhile ( expresion ) checarContenido . bloqueCond finPilaSaltosWhile
     (86) bloqueCond -> . { estatuto regresaCond }
     (87) bloqueCond -> . { regresaCond }
     (88) bloqueCond -> . { }
 
-    {               shift and go to state 189
+    {               shift and go to state 209
 
-    bloqueCond                     shift and go to state 228
+    bloqueCond                     shift and go to state 220
 
-state 203
+state 201
 
     (150) opcionMue -> direccion ID guardarIDPila recibe_CTI . checarMover ;
     (155) checarMover -> .
 
     ;               reduce using rule 155 (checarMover -> .)
 
-    checarMover                    shift and go to state 229
+    checarMover                    shift and go to state 221
 
-state 204
+state 202
 
     (60) asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .
 
@@ -3446,38 +3370,38 @@ state 204
     LEER            reduce using rule 60 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
     WHILE           reduce using rule 60 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
     MUEVE           reduce using rule 60 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
-    }               reduce using rule 60 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
     RETURN          reduce using rule 60 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
+    }               reduce using rule 60 (asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual .)
 
 
-state 205
+state 203
 
     (65) opcionAsignacion -> [ CTI ] [ . CTI ]
 
-    CTI             shift and go to state 230
+    CTI             shift and go to state 222
 
 
-state 206
+state 204
 
     (53) auxExp -> listaExp llegaComa .
 
     )               reduce using rule 53 (auxExp -> listaExp llegaComa .)
 
 
-state 207
+state 205
 
     (55) llegaComa -> , .
 
-    )               reduce using rule 55 (llegaComa -> , .)
     (               reduce using rule 55 (llegaComa -> , .)
     ID              reduce using rule 55 (llegaComa -> , .)
     CTF             reduce using rule 55 (llegaComa -> , .)
     CTI             reduce using rule 55 (llegaComa -> , .)
     TRUE            reduce using rule 55 (llegaComa -> , .)
     FALSE           reduce using rule 55 (llegaComa -> , .)
+    )               reduce using rule 55 (llegaComa -> , .)
 
 
-state 208
+state 206
 
     (57) listaExp -> exp verificarTiposFunc . masExps
     (58) masExps -> . llegaComa listaExp
@@ -3486,14 +3410,14 @@ state 208
 
   ! shift/reduce conflict for , resolved as shift
     )               reduce using rule 59 (masExps -> .)
-    ,               shift and go to state 207
+    ,               shift and go to state 205
 
   ! ,               [ reduce using rule 59 (masExps -> .) ]
 
-    llegaComa                      shift and go to state 231
-    masExps                        shift and go to state 232
+    llegaComa                      shift and go to state 223
+    masExps                        shift and go to state 224
 
-state 209
+state 207
 
     (46) checaNumParam -> ) .
 
@@ -3508,7 +3432,7 @@ state 209
     ;               reduce using rule 46 (checaNumParam -> ) .)
 
 
-state 210
+state 208
 
     (48) funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam . generaGOSUB
     (47) generaGOSUB -> .
@@ -3523,12 +3447,63 @@ state 210
     RETURN          reduce using rule 47 (generaGOSUB -> .)
     ;               reduce using rule 47 (generaGOSUB -> .)
 
-    generaGOSUB                    shift and go to state 233
+    generaGOSUB                    shift and go to state 225
 
-state 211
+state 209
 
-    (85) condicion -> IF ( expresion ) checarIF checarElse . finPilaSaltos
+    (86) bloqueCond -> { . estatuto regresaCond }
+    (87) bloqueCond -> { . regresaCond }
+    (88) bloqueCond -> { . }
+    (38) estatuto -> . asignacion estatutoAux
+    (39) estatuto -> . escritura estatutoAux
+    (40) estatuto -> . condicion estatutoAux
+    (41) estatuto -> . lectura estatutoAux
+    (42) estatuto -> . whiles estatutoAux
+    (43) estatuto -> . funcs estatutoAux
+    (89) regresaCond -> . RETURN ID
+    (90) regresaCond -> . empty
+    (60) asignacion -> . ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual
+    (61) asignacion -> . ID ;
+    (78) escritura -> . DIBUJAR guardarToken ( guardarParametros ) ;
+    (79) escritura -> . mueve
+    (84) condicion -> . IF ( expresion ) checarIF bloqueCond finPilaSaltos
+    (85) condicion -> . IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos
+    (72) lectura -> . LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ;
+    (126) whiles -> . WHILE checarWhile ( expresion ) checarContenido bloqueCond finPilaSaltosWhile
+    (48) funcs -> . ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB
+    (49) funcs -> . ID
+    (156) empty -> .
+    (149) mueve -> . MUEVE guardarToken opcionMue
+
+  ! shift/reduce conflict for } resolved as shift
+    }               shift and go to state 230
+    RETURN          shift and go to state 226
+    ID              shift and go to state 71
+    DIBUJAR         shift and go to state 75
+    IF              shift and go to state 72
+    LEER            shift and go to state 73
+    WHILE           shift and go to state 64
+    MUEVE           shift and go to state 65
+
+  ! }               [ reduce using rule 156 (empty -> .) ]
+
+    funcs                          shift and go to state 63
+    estatuto                       shift and go to state 227
+    mueve                          shift and go to state 67
+    condicion                      shift and go to state 68
+    lectura                        shift and go to state 69
+    empty                          shift and go to state 228
+    whiles                         shift and go to state 70
+    asignacion                     shift and go to state 74
+    regresaCond                    shift and go to state 229
+    escritura                      shift and go to state 77
+
+state 210
+
+    (84) condicion -> IF ( expresion ) checarIF bloqueCond . finPilaSaltos
+    (85) condicion -> IF ( expresion ) checarIF bloqueCond . checarElse finPilaSaltos
     (93) finPilaSaltos -> .
+    (92) checarElse -> . ELSE bloqueCond
 
     ID              reduce using rule 93 (finPilaSaltos -> .)
     DIBUJAR         reduce using rule 93 (finPilaSaltos -> .)
@@ -3538,106 +3513,34 @@ state 211
     MUEVE           reduce using rule 93 (finPilaSaltos -> .)
     }               reduce using rule 93 (finPilaSaltos -> .)
     RETURN          reduce using rule 93 (finPilaSaltos -> .)
+    ELSE            shift and go to state 232
 
-    finPilaSaltos                  shift and go to state 234
+    finPilaSaltos                  shift and go to state 233
+    checarElse                     shift and go to state 231
 
-state 212
-
-    (92) checarElse -> ELSE . bloqueCond
-    (86) bloqueCond -> . { estatuto regresaCond }
-    (87) bloqueCond -> . { regresaCond }
-    (88) bloqueCond -> . { }
-
-    {               shift and go to state 189
-
-    bloqueCond                     shift and go to state 235
-
-state 213
-
-    (84) condicion -> IF ( expresion ) checarIF finPilaSaltos .
-
-    ID              reduce using rule 84 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    DIBUJAR         reduce using rule 84 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    IF              reduce using rule 84 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    LEER            reduce using rule 84 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    WHILE           reduce using rule 84 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    MUEVE           reduce using rule 84 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    RETURN          reduce using rule 84 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-    }               reduce using rule 84 (condicion -> IF ( expresion ) checarIF finPilaSaltos .)
-
-
-state 214
-
-    (89) regresaCond -> RETURN . ID
-
-    ID              shift and go to state 236
-
-
-state 215
-
-    (86) bloqueCond -> { estatuto . regresaCond }
-    (89) regresaCond -> . RETURN ID
-    (90) regresaCond -> . empty
-    (156) empty -> .
-
-    RETURN          shift and go to state 214
-    }               reduce using rule 156 (empty -> .)
-
-    regresaCond                    shift and go to state 237
-    empty                          shift and go to state 216
-
-state 216
-
-    (90) regresaCond -> empty .
-
-    }               reduce using rule 90 (regresaCond -> empty .)
-
-
-state 217
-
-    (87) bloqueCond -> { regresaCond . }
-
-    }               shift and go to state 238
-
-
-state 218
-
-    (88) bloqueCond -> { } .
-
-    ID              reduce using rule 88 (bloqueCond -> { } .)
-    DIBUJAR         reduce using rule 88 (bloqueCond -> { } .)
-    IF              reduce using rule 88 (bloqueCond -> { } .)
-    LEER            reduce using rule 88 (bloqueCond -> { } .)
-    WHILE           reduce using rule 88 (bloqueCond -> { } .)
-    MUEVE           reduce using rule 88 (bloqueCond -> { } .)
-    }               reduce using rule 88 (bloqueCond -> { } .)
-    RETURN          reduce using rule 88 (bloqueCond -> { } .)
-    ELSE            reduce using rule 88 (bloqueCond -> { } .)
-
-
-state 219
+state 211
 
     (73) opcionesLectura -> [ . CTI ]
     (74) opcionesLectura -> [ . CTI ] [ CTI ]
 
-    CTI             shift and go to state 239
+    CTI             shift and go to state 234
 
 
-state 220
+state 212
 
     (72) lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura . ;
 
-    ;               shift and go to state 240
+    ;               shift and go to state 235
 
 
-state 221
+state 213
 
     (75) opcionesLectura -> empty .
 
     ;               reduce using rule 75 (opcionesLectura -> empty .)
 
 
-state 222
+state 214
 
     (78) escritura -> DIBUJAR guardarToken ( guardarParametros ) ; .
 
@@ -3651,7 +3554,7 @@ state 222
     }               reduce using rule 78 (escritura -> DIBUJAR guardarToken ( guardarParametros ) ; .)
 
 
-state 223
+state 215
 
     (125) pos -> ( . varcte , varcte )
     (130) varcte -> . recibe_ID
@@ -3672,13 +3575,13 @@ state 223
     FALSE           shift and go to state 129
 
     recibe_TRUE                    shift and go to state 121
-    varcte                         shift and go to state 241
+    varcte                         shift and go to state 236
     recibe_CTF                     shift and go to state 123
     recibe_CTI                     shift and go to state 130
     recibe_ID                      shift and go to state 125
     recibe_FALSE                   shift and go to state 133
 
-state 224
+state 216
 
     (76) guardarParametros -> ID guardarIDPila pos . color checarDibujar
     (80) color -> . AMARILLO
@@ -3686,14 +3589,14 @@ state 224
     (82) color -> . ROJO
     (83) color -> . AZUL
 
-    AMARILLO        shift and go to state 243
-    VERDE           shift and go to state 246
-    ROJO            shift and go to state 244
-    AZUL            shift and go to state 245
+    AMARILLO        shift and go to state 238
+    VERDE           shift and go to state 241
+    ROJO            shift and go to state 239
+    AZUL            shift and go to state 240
 
-    color                          shift and go to state 242
+    color                          shift and go to state 237
 
-state 225
+state 217
 
     (31) bloquefunc -> { vars guardarCuadruplo estatuto regresa } . liberarVar
     (35) liberarVar -> .
@@ -3701,9 +3604,9 @@ state 225
     FUNC            reduce using rule 35 (liberarVar -> .)
     INICIO          reduce using rule 35 (liberarVar -> .)
 
-    liberarVar                     shift and go to state 247
+    liberarVar                     shift and go to state 242
 
-state 226
+state 218
 
     (32) bloquefunc -> { vars guardarCuadruplo regresa } liberarVar .
 
@@ -3711,7 +3614,7 @@ state 226
     INICIO          reduce using rule 32 (bloquefunc -> { vars guardarCuadruplo regresa } liberarVar .)
 
 
-state 227
+state 219
 
     (33) bloquefunc -> { guardarCuadruplo escritura regresa } liberarVar .
 
@@ -3719,7 +3622,7 @@ state 227
     INICIO          reduce using rule 33 (bloquefunc -> { guardarCuadruplo escritura regresa } liberarVar .)
 
 
-state 228
+state 220
 
     (126) whiles -> WHILE checarWhile ( expresion ) checarContenido bloqueCond . finPilaSaltosWhile
     (129) finPilaSaltosWhile -> .
@@ -3733,23 +3636,23 @@ state 228
     }               reduce using rule 129 (finPilaSaltosWhile -> .)
     RETURN          reduce using rule 129 (finPilaSaltosWhile -> .)
 
-    finPilaSaltosWhile             shift and go to state 248
+    finPilaSaltosWhile             shift and go to state 243
 
-state 229
+state 221
 
     (150) opcionMue -> direccion ID guardarIDPila recibe_CTI checarMover . ;
 
-    ;               shift and go to state 249
+    ;               shift and go to state 244
 
 
-state 230
+state 222
 
     (65) opcionAsignacion -> [ CTI ] [ CTI . ]
 
-    ]               shift and go to state 250
+    ]               shift and go to state 245
 
 
-state 231
+state 223
 
     (58) masExps -> llegaComa . listaExp
     (57) listaExp -> . exp verificarTiposFunc masExps
@@ -3781,14 +3684,14 @@ state 231
     recibe_CTI                     shift and go to state 130
     varcte                         shift and go to state 122
     factor                         shift and go to state 126
-    listaExp                       shift and go to state 251
+    listaExp                       shift and go to state 246
     recibe_ID                      shift and go to state 125
     termino                        shift and go to state 118
     exp                            shift and go to state 184
     recibe_FALSE                   shift and go to state 133
     fondoFalso                     shift and go to state 132
 
-state 232
+state 224
 
     (57) listaExp -> exp verificarTiposFunc masExps .
 
@@ -3796,7 +3699,7 @@ state 232
     )               reduce using rule 57 (listaExp -> exp verificarTiposFunc masExps .)
 
 
-state 233
+state 225
 
     (48) funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .
 
@@ -3811,72 +3714,105 @@ state 233
     ;               reduce using rule 48 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
 
 
+state 226
+
+    (89) regresaCond -> RETURN . ID
+
+    ID              shift and go to state 247
+
+
+state 227
+
+    (86) bloqueCond -> { estatuto . regresaCond }
+    (89) regresaCond -> . RETURN ID
+    (90) regresaCond -> . empty
+    (156) empty -> .
+
+    RETURN          shift and go to state 226
+    }               reduce using rule 156 (empty -> .)
+
+    regresaCond                    shift and go to state 248
+    empty                          shift and go to state 228
+
+state 228
+
+    (90) regresaCond -> empty .
+
+    }               reduce using rule 90 (regresaCond -> empty .)
+
+
+state 229
+
+    (87) bloqueCond -> { regresaCond . }
+
+    }               shift and go to state 249
+
+
+state 230
+
+    (88) bloqueCond -> { } .
+
+    ELSE            reduce using rule 88 (bloqueCond -> { } .)
+    ID              reduce using rule 88 (bloqueCond -> { } .)
+    DIBUJAR         reduce using rule 88 (bloqueCond -> { } .)
+    IF              reduce using rule 88 (bloqueCond -> { } .)
+    LEER            reduce using rule 88 (bloqueCond -> { } .)
+    WHILE           reduce using rule 88 (bloqueCond -> { } .)
+    MUEVE           reduce using rule 88 (bloqueCond -> { } .)
+    }               reduce using rule 88 (bloqueCond -> { } .)
+    RETURN          reduce using rule 88 (bloqueCond -> { } .)
+
+
+state 231
+
+    (85) condicion -> IF ( expresion ) checarIF bloqueCond checarElse . finPilaSaltos
+    (93) finPilaSaltos -> .
+
+    ID              reduce using rule 93 (finPilaSaltos -> .)
+    DIBUJAR         reduce using rule 93 (finPilaSaltos -> .)
+    IF              reduce using rule 93 (finPilaSaltos -> .)
+    LEER            reduce using rule 93 (finPilaSaltos -> .)
+    WHILE           reduce using rule 93 (finPilaSaltos -> .)
+    MUEVE           reduce using rule 93 (finPilaSaltos -> .)
+    }               reduce using rule 93 (finPilaSaltos -> .)
+    RETURN          reduce using rule 93 (finPilaSaltos -> .)
+
+    finPilaSaltos                  shift and go to state 250
+
+state 232
+
+    (92) checarElse -> ELSE . bloqueCond
+    (86) bloqueCond -> . { estatuto regresaCond }
+    (87) bloqueCond -> . { regresaCond }
+    (88) bloqueCond -> . { }
+
+    {               shift and go to state 209
+
+    bloqueCond                     shift and go to state 251
+
+state 233
+
+    (84) condicion -> IF ( expresion ) checarIF bloqueCond finPilaSaltos .
+
+    ID              reduce using rule 84 (condicion -> IF ( expresion ) checarIF bloqueCond finPilaSaltos .)
+    DIBUJAR         reduce using rule 84 (condicion -> IF ( expresion ) checarIF bloqueCond finPilaSaltos .)
+    IF              reduce using rule 84 (condicion -> IF ( expresion ) checarIF bloqueCond finPilaSaltos .)
+    LEER            reduce using rule 84 (condicion -> IF ( expresion ) checarIF bloqueCond finPilaSaltos .)
+    WHILE           reduce using rule 84 (condicion -> IF ( expresion ) checarIF bloqueCond finPilaSaltos .)
+    MUEVE           reduce using rule 84 (condicion -> IF ( expresion ) checarIF bloqueCond finPilaSaltos .)
+    RETURN          reduce using rule 84 (condicion -> IF ( expresion ) checarIF bloqueCond finPilaSaltos .)
+    }               reduce using rule 84 (condicion -> IF ( expresion ) checarIF bloqueCond finPilaSaltos .)
+
+
 state 234
-
-    (85) condicion -> IF ( expresion ) checarIF checarElse finPilaSaltos .
-
-    ID              reduce using rule 85 (condicion -> IF ( expresion ) checarIF checarElse finPilaSaltos .)
-    DIBUJAR         reduce using rule 85 (condicion -> IF ( expresion ) checarIF checarElse finPilaSaltos .)
-    IF              reduce using rule 85 (condicion -> IF ( expresion ) checarIF checarElse finPilaSaltos .)
-    LEER            reduce using rule 85 (condicion -> IF ( expresion ) checarIF checarElse finPilaSaltos .)
-    WHILE           reduce using rule 85 (condicion -> IF ( expresion ) checarIF checarElse finPilaSaltos .)
-    MUEVE           reduce using rule 85 (condicion -> IF ( expresion ) checarIF checarElse finPilaSaltos .)
-    RETURN          reduce using rule 85 (condicion -> IF ( expresion ) checarIF checarElse finPilaSaltos .)
-    }               reduce using rule 85 (condicion -> IF ( expresion ) checarIF checarElse finPilaSaltos .)
-
-
-state 235
-
-    (92) checarElse -> ELSE bloqueCond .
-
-    ID              reduce using rule 92 (checarElse -> ELSE bloqueCond .)
-    DIBUJAR         reduce using rule 92 (checarElse -> ELSE bloqueCond .)
-    IF              reduce using rule 92 (checarElse -> ELSE bloqueCond .)
-    LEER            reduce using rule 92 (checarElse -> ELSE bloqueCond .)
-    WHILE           reduce using rule 92 (checarElse -> ELSE bloqueCond .)
-    MUEVE           reduce using rule 92 (checarElse -> ELSE bloqueCond .)
-    }               reduce using rule 92 (checarElse -> ELSE bloqueCond .)
-    RETURN          reduce using rule 92 (checarElse -> ELSE bloqueCond .)
-
-
-state 236
-
-    (89) regresaCond -> RETURN ID .
-
-    }               reduce using rule 89 (regresaCond -> RETURN ID .)
-
-
-state 237
-
-    (86) bloqueCond -> { estatuto regresaCond . }
-
-    }               shift and go to state 252
-
-
-state 238
-
-    (87) bloqueCond -> { regresaCond } .
-
-    ID              reduce using rule 87 (bloqueCond -> { regresaCond } .)
-    DIBUJAR         reduce using rule 87 (bloqueCond -> { regresaCond } .)
-    IF              reduce using rule 87 (bloqueCond -> { regresaCond } .)
-    LEER            reduce using rule 87 (bloqueCond -> { regresaCond } .)
-    WHILE           reduce using rule 87 (bloqueCond -> { regresaCond } .)
-    MUEVE           reduce using rule 87 (bloqueCond -> { regresaCond } .)
-    }               reduce using rule 87 (bloqueCond -> { regresaCond } .)
-    RETURN          reduce using rule 87 (bloqueCond -> { regresaCond } .)
-    ELSE            reduce using rule 87 (bloqueCond -> { regresaCond } .)
-
-
-state 239
 
     (73) opcionesLectura -> [ CTI . ]
     (74) opcionesLectura -> [ CTI . ] [ CTI ]
 
-    ]               shift and go to state 253
+    ]               shift and go to state 252
 
 
-state 240
+state 235
 
     (72) lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ; .
 
@@ -3890,51 +3826,51 @@ state 240
     RETURN          reduce using rule 72 (lectura -> LEER guardarToken ID guardarIDPila checarLectura opcionesLectura ; .)
 
 
-state 241
+state 236
 
     (125) pos -> ( varcte . , varcte )
 
-    ,               shift and go to state 254
+    ,               shift and go to state 253
 
 
-state 242
+state 237
 
     (76) guardarParametros -> ID guardarIDPila pos color . checarDibujar
     (77) checarDibujar -> .
 
     )               reduce using rule 77 (checarDibujar -> .)
 
-    checarDibujar                  shift and go to state 255
+    checarDibujar                  shift and go to state 254
 
-state 243
+state 238
 
     (80) color -> AMARILLO .
 
     )               reduce using rule 80 (color -> AMARILLO .)
 
 
-state 244
+state 239
 
     (82) color -> ROJO .
 
     )               reduce using rule 82 (color -> ROJO .)
 
 
-state 245
+state 240
 
     (83) color -> AZUL .
 
     )               reduce using rule 83 (color -> AZUL .)
 
 
-state 246
+state 241
 
     (81) color -> VERDE .
 
     )               reduce using rule 81 (color -> VERDE .)
 
 
-state 247
+state 242
 
     (31) bloquefunc -> { vars guardarCuadruplo estatuto regresa } liberarVar .
 
@@ -3942,7 +3878,7 @@ state 247
     INICIO          reduce using rule 31 (bloquefunc -> { vars guardarCuadruplo estatuto regresa } liberarVar .)
 
 
-state 248
+state 243
 
     (126) whiles -> WHILE checarWhile ( expresion ) checarContenido bloqueCond finPilaSaltosWhile .
 
@@ -3956,7 +3892,7 @@ state 248
     RETURN          reduce using rule 126 (whiles -> WHILE checarWhile ( expresion ) checarContenido bloqueCond finPilaSaltosWhile .)
 
 
-state 249
+state 244
 
     (150) opcionMue -> direccion ID guardarIDPila recibe_CTI checarMover ; .
 
@@ -3970,7 +3906,7 @@ state 249
     RETURN          reduce using rule 150 (opcionMue -> direccion ID guardarIDPila recibe_CTI checarMover ; .)
 
 
-state 250
+state 245
 
     (65) opcionAsignacion -> [ CTI ] [ CTI ] .
 
@@ -3978,7 +3914,7 @@ state 250
     ;               reduce using rule 65 (opcionAsignacion -> [ CTI ] [ CTI ] .)
 
 
-state 251
+state 246
 
     (58) masExps -> llegaComa listaExp .
 
@@ -3986,22 +3922,64 @@ state 251
     )               reduce using rule 58 (masExps -> llegaComa listaExp .)
 
 
+state 247
+
+    (89) regresaCond -> RETURN ID .
+
+    }               reduce using rule 89 (regresaCond -> RETURN ID .)
+
+
+state 248
+
+    (86) bloqueCond -> { estatuto regresaCond . }
+
+    }               shift and go to state 255
+
+
+state 249
+
+    (87) bloqueCond -> { regresaCond } .
+
+    ELSE            reduce using rule 87 (bloqueCond -> { regresaCond } .)
+    ID              reduce using rule 87 (bloqueCond -> { regresaCond } .)
+    DIBUJAR         reduce using rule 87 (bloqueCond -> { regresaCond } .)
+    IF              reduce using rule 87 (bloqueCond -> { regresaCond } .)
+    LEER            reduce using rule 87 (bloqueCond -> { regresaCond } .)
+    WHILE           reduce using rule 87 (bloqueCond -> { regresaCond } .)
+    MUEVE           reduce using rule 87 (bloqueCond -> { regresaCond } .)
+    }               reduce using rule 87 (bloqueCond -> { regresaCond } .)
+    RETURN          reduce using rule 87 (bloqueCond -> { regresaCond } .)
+
+
+state 250
+
+    (85) condicion -> IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos .
+
+    ID              reduce using rule 85 (condicion -> IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos .)
+    DIBUJAR         reduce using rule 85 (condicion -> IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos .)
+    IF              reduce using rule 85 (condicion -> IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos .)
+    LEER            reduce using rule 85 (condicion -> IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos .)
+    WHILE           reduce using rule 85 (condicion -> IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos .)
+    MUEVE           reduce using rule 85 (condicion -> IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos .)
+    RETURN          reduce using rule 85 (condicion -> IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos .)
+    }               reduce using rule 85 (condicion -> IF ( expresion ) checarIF bloqueCond checarElse finPilaSaltos .)
+
+
+state 251
+
+    (92) checarElse -> ELSE bloqueCond .
+
+    ID              reduce using rule 92 (checarElse -> ELSE bloqueCond .)
+    DIBUJAR         reduce using rule 92 (checarElse -> ELSE bloqueCond .)
+    IF              reduce using rule 92 (checarElse -> ELSE bloqueCond .)
+    LEER            reduce using rule 92 (checarElse -> ELSE bloqueCond .)
+    WHILE           reduce using rule 92 (checarElse -> ELSE bloqueCond .)
+    MUEVE           reduce using rule 92 (checarElse -> ELSE bloqueCond .)
+    }               reduce using rule 92 (checarElse -> ELSE bloqueCond .)
+    RETURN          reduce using rule 92 (checarElse -> ELSE bloqueCond .)
+
+
 state 252
-
-    (86) bloqueCond -> { estatuto regresaCond } .
-
-    ID              reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
-    DIBUJAR         reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
-    IF              reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
-    LEER            reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
-    WHILE           reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
-    MUEVE           reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
-    }               reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
-    RETURN          reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
-    ELSE            reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
-
-
-state 253
 
     (73) opcionesLectura -> [ CTI ] .
     (74) opcionesLectura -> [ CTI ] . [ CTI ]
@@ -4010,7 +3988,7 @@ state 253
     [               shift and go to state 256
 
 
-state 254
+state 253
 
     (125) pos -> ( varcte , . varcte )
     (130) varcte -> . recibe_ID
@@ -4037,11 +4015,26 @@ state 254
     recibe_ID                      shift and go to state 125
     recibe_FALSE                   shift and go to state 133
 
-state 255
+state 254
 
     (76) guardarParametros -> ID guardarIDPila pos color checarDibujar .
 
     )               reduce using rule 76 (guardarParametros -> ID guardarIDPila pos color checarDibujar .)
+
+
+state 255
+
+    (86) bloqueCond -> { estatuto regresaCond } .
+
+    ELSE            reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
+    ID              reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
+    DIBUJAR         reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
+    IF              reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
+    LEER            reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
+    WHILE           reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
+    MUEVE           reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
+    }               reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
+    RETURN          reduce using rule 86 (bloqueCond -> { estatuto regresaCond } .)
 
 
 state 256
@@ -4087,8 +4080,8 @@ WARNING:
 WARNING: shift/reduce conflict for ; in state 22 resolved as shift
 WARNING: shift/reduce conflict for } in state 37 resolved as shift
 WARNING: shift/reduce conflict for ; in state 71 resolved as shift
-WARNING: shift/reduce conflict for } in state 189 resolved as shift
-WARNING: shift/reduce conflict for , in state 208 resolved as shift
+WARNING: shift/reduce conflict for , in state 206 resolved as shift
+WARNING: shift/reduce conflict for } in state 209 resolved as shift
 WARNING: reduce/reduce conflict in state 28 resolved using rule (vars -> empty)
 WARNING: rejected rule (masTipos -> empty) in state 28
 WARNING: reduce/reduce conflict in state 55 resolved using rule (funcion -> empty)
