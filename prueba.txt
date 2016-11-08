@@ -1,11 +1,11 @@
 func entero lizzy(entero aAA){
 	entero mBm; 
-
+	mBm = lizzy(aAA);
 	return mBm
 }
 func entero marii(entero aAA){
 	entero mBm; 
-
+	mBm = lizzy(aAA);
 	return mBm
 }
 inicio

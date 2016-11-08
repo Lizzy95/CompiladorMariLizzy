@@ -301,10 +301,15 @@ def retorno(operando1, operando2, resultado):
 	contCuadruplos = contCuadruplos + 1
 def abajo(operando1, operando2, resultado):
 	print "entra abajo"
+	
 def generarERA(operando1, operando2, resultado):
 	print "entra generarERA"
+	global contCuadruplos
+	contCuadruplos = contCuadruplos + 1
 def generaParam(operando1, operando2, resultado):
 	print "entra generaParam"
+	global contCuadruplos
+	contCuadruplos = contCuadruplos + 1
 
 def generaGOSUB(operando1, operando2, resultado):
 	print "entra generaGOSUB"

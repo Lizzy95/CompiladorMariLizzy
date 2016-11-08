@@ -369,6 +369,17 @@ def p_generaGOSUB(p):
 	cuadr = Cuadruplo(32,-1,-1,llamada)
 	listaCuadruplos.append(cuadr)
 	print "Se guardo GOSUB", llamada
+	pos = busquedaFunc(llamada)
+	if funcionActual != "inicio":
+		var = diccionarioMemoria['3']
+		mem = var[str(listaFunciones[pos].tipo)]
+		pos2 = diccionarioVarGlobal[llamada]
+		cuadr = Cuadruplo(5,pos2,-1,mem)
+		diccionarioMemoria['3'][listaFunciones[pos].tipo] = mem + 1
+		pilaOperandos.append(listaFunciones[pos].tipo)
+		pilaOperandosDirMem.append(mem)
+		listaCuadruplos.append(cuadr)
+		print "+++++++++++++++++++++++Parche guadalupano", llamada
 	pass
 #Sintaxis de llamada a una funcion 
 def p_funcs(p):
