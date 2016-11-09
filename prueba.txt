@@ -1,12 +1,17 @@
+func entero lizzy(entero marii, entero mama){
+	entero juan;
+	juan = 10 * 100;
+	juan = juan / 2;
+
+	return juan
+}
 inicio
 {
 	entero aAA,  bBbB;
-	decimal bS; 
-	aAA = 0;
-	while (aAA < 200){
-		aAA = aAA + 1;
-	}
 
-	bS = 100.9 * 20.8; 
+	aAA = 9;
+	bBbB = lizzy(aAA,bBbB);
+
+	aAA = 100; 
 }
 fin

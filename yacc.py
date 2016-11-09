@@ -249,9 +249,11 @@ def p_liberarVar(p):
 	global diccionarioMemoria
 	global listaFunciones
 	global listaCuadruplos
+	global funcionActual
 	posicion = busquedaLista()
-	cuadr = Cuadruplo(29, -1, -1, -1)
-	listaCuadruplos.append(cuadr)
+	if funcionActual != 'inicio':
+		cuadr = Cuadruplo(29, -1, -1, -1)
+		listaCuadruplos.append(cuadr)
 
 
 	loc = diccionarioMemoria['2']
@@ -310,15 +312,6 @@ def p_liberarVar(p):
 	temp['7'] =  22001
 	temp['8'] =  23001
 
-	cte = diccionarioMemoria['4'] 
-	cte['1'] =  24001
-	cte['2'] = 25001
-	cte['3'] = 26001
-	cte['4'] = 27001
-	cte['5'] =  28001
-	cte['6'] =  29001
-	cte['7'] =  30001
-	cte['8'] =  31001
 	
 	pass
 #Regla para actualizar los gotos de una funcion
@@ -367,10 +360,15 @@ def p_generaGOSUB(p):
 	'''generaGOSUB : '''
 	global listaCuadruplos
 	global llamada
-	cuadr = Cuadruplo(32,-1,-1,llamada)
-	listaCuadruplos.append(cuadr)
+	global diccionarioVarGlobal
+
 	print "Se guardo GOSUB", llamada
 	pos = busquedaFunc(llamada)
+	aux1 = listaFunciones[pos].cuadruploInicial
+
+	cuadr = Cuadruplo(32,-1,-1,aux1)
+	listaCuadruplos.append(cuadr)
+	print "LLLLLLLLLLLLLLLLLLLLLLLLLLLLL",listaFunciones[pos].cuadruploInicial
 	if funcionActual != "inicio":
 		var = diccionarioMemoria['3']
 		mem = var[str(listaFunciones[pos].tipo)]
@@ -451,7 +449,8 @@ def p_verificarTiposFunc(p):
 	if(auxParam != auxPila):
 		print "TIPO DE PARAMETRO INCORRECTO"
 	else: 
-		cuadr = Cuadruplo(31, -1, mem, contParam)
+		aux = arrParametros[contParam].direcmem
+		cuadr = Cuadruplo(31, -1, mem,aux)
 		listaCuadruplos.append(cuadr)
 	pass
 

@@ -168,6 +168,7 @@ def multiplicacion(operando1, operando2, resultado):
 	valor1 = 0
 	valor2 = 0
 	memoria = listaMemoria.pop()
+
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
@@ -601,23 +602,58 @@ def arriba(operando1, operando2, resultado):
 def retorno(operando1, operando2, resultado):
 	print "entra retorno"
 	global contCuadruplos
-	contCuadruplos = contCuadruplos + 1
+	global listaMemoria
+	funcionMem = listaMemoria.pop()
+	print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",funcionMem.cuadrRetorno
+	contCuadruplos = funcionMem.cuadrRetorno
+
 def abajo(operando1, operando2, resultado):
 	print "entra abajo"
 	
 def generarERA(operando1, operando2, resultado):
 	print "entra generarERA"
+	global listaMemoria
 	global contCuadruplos
+	print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", contCuadruplos	
+	memoriaMain = Memoria(0,{},{},{},{},{},{},{},{},{},{},{},{}, {},{},{},{})
+	listaMemoria.append(memoriaMain)
 	contCuadruplos = contCuadruplos + 1
+
+
 def generaParam(operando1, operando2, resultado):
 	print "entra generaParam"
 	global contCuadruplos
+	global listaMemoria
+
+	funcionMem = listaMemoria.pop()
+	funcionMain = listaMemoria.pop()
+
+	print "Operando 1  = ", operando1
+	print "Operando2 = ", operando2
+	print "Resultado = ",resultado
+
+	valor1 = 0
+	if diccionarioConstantes.has_key(operando2):
+		valor1 = diccionarioConstantes[operando2]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		valor1  = funcionMain.listaMem[tipoActual][aux1] 
 	contCuadruplos = contCuadruplos + 1
+	auxResultado = tipodato[int(resultado)/1000](resultado)
+	funcionMem.listaMem[tipoActual][auxResultado] = valor1
+	print funcionMem.listaMem
+	listaMemoria.append(funcionMain)
+	listaMemoria.append(funcionMem)
 
 def generaGOSUB(operando1, operando2, resultado):
 	print "entra generaGOSUB"
 	global contCuadruplos
-	contCuadruplos = contCuadruplos + 1
+	global listaMemoria
+	memoria  = listaMemoria.pop()
+	memoria.cuadrRetorno = contCuadruplos + 1
+	listaMemoria.append(memoria)
+	contCuadruplos = int(resultado)
+	print "----------", len(listaMemoria)
 
 
 

@@ -16,5 +16,5 @@ class Memoria:
 		self.arrEstrellaTemp = []
 		self.arrDecimalTemp = []
 		self.arrBoolTemp = []
-		self.cuadrRetorno = 0
+		self.cuadrRetorno = cuadrRetorno
 		self.listaMem = [arrEntero, arrCuadrado,arrRectangulo, arrCirculo, arrLinea, arrEstrella, arrDecimal, arrBool, arrEnteroTemp, arrCuadradoTemp,arrRectanguloTemp,arrCirculoTemp, arrLineaTemp,arrEstrellaTemp, arrDecimalTemp, arrBoolTemp]
