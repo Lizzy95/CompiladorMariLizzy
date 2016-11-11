@@ -27,6 +27,5 @@ inicio
 	aAA = 10;
 	aAA = lizzy(aAA);
 	
-	bBBB = 0;
 }
 fin

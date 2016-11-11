@@ -655,7 +655,6 @@ def generaParam(operando1, operando2, resultado):
 	contCuadruplos = contCuadruplos + 1
 	auxResultado = tipodato[int(resultado)/1000](resultado)
 	funcionMem.listaMem[tipoActual][auxResultado] = valor1
-	print funcionMem.listaMem
 	listaMemoria.append(funcionMain)
 	listaMemoria.append(funcionMem)
 
@@ -667,9 +666,6 @@ def generaGOSUB(operando1, operando2, resultado):
 	memoria.cuadrRetorno = contCuadruplos + 1
 	listaMemoria.append(memoria)
 	contCuadruplos = int(resultado)
-
-
-
 
 options = {
 	'1' : suma,
