@@ -130,14 +130,22 @@ def suma(operando1, operando2, resultado):
 def resta(operando1, operando2, resultado):
 	global pilaMemoria
 	global diccionarioConstantes
-	print "entra resta"
+	print "entra resta", operando1, " ", operando2, " ", resultado
 	global contCuadruplos
 	global tipoActual
 	global listaMemoria
+	global listaCuadruplos
 	contCuadruplos = contCuadruplos + 1
 	valor1 = 0
 	valor2 = 0
-	memoria = listaMemoria.pop()
+	auxMem = listaMemoria.pop()
+	print "---", listaCuadruplos[contCuadruplos].operador
+	if listaCuadruplos[contCuadruplos].operador == '31':
+		print "entreee"
+		memoria = listaMemoria.pop()
+	else:
+		memoria = auxMem
+
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
@@ -149,12 +157,15 @@ def resta(operando1, operando2, resultado):
 		aux1 = tipodato[int(operando2)/1000](operando2)
 		valor2 = memoria.listaMem[tipoActual][aux1] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
- 	print valor1, " ", valor2
  	if '.' in str(valor1) or '.' in str(valor2):
  		memoria.listaMem[tipoActual][auxResultado] = float(valor1) - float(valor2)
  	else:
 		memoria.listaMem[tipoActual][auxResultado] = int(valor1) - int(valor2)
-	listaMemoria.append(memoria)
+	if listaCuadruplos[contCuadruplos].operador == '31':
+		listaMemoria.append(memoria)
+		listaMemoria.append(auxMem)
+	else:
+		listaMemoria.append(memoria)
 	print "la resta es", memoria.listaMem[tipoActual][auxResultado]
 	
 
@@ -182,7 +193,6 @@ def multiplicacion(operando1, operando2, resultado):
 		print "aux1 = ", aux1
 		valor2 = memoria.listaMem[tipoActual][aux1] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
- 	print valor1, " ", valor2
  	if '.' in str(valor1) or '.' in str(valor2):
  		memoria.listaMem[tipoActual][auxResultado] = float(valor1) * float(valor2)
  	else:
@@ -202,7 +212,6 @@ def division(operando1, operando2, resultado):
 	valor1 = 0
 	valor2 = 0
 	memoria = listaMemoria.pop()
-	print diccionarioConstantes
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
@@ -210,16 +219,12 @@ def division(operando1, operando2, resultado):
 		print "operando1", operando1
 		print "operando2", operando2
 		print "aux1 = ", aux1
-		print tipoActual
-		print memoria.listaMem
 		valor1  = memoria.listaMem[tipoActual][aux1]  
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
 		aux1 = tipodato[int(operando2)/1000](operando2)
 		print "aux1 = ", aux1
-		print tipoActual
-		print memoria.listaMem
 		valor2 = memoria.listaMem[tipoActual][aux1] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	print valor1, " ", valor2
@@ -249,7 +254,6 @@ def asignacion(operando1, operando2, resultado):
 	global tipoActual
 	global listaMemoria
 	memoria = listaMemoria.pop()
-	print diccionarioConstantes
 	valor1 = 0
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
@@ -271,7 +275,7 @@ def goto(operando1, operando2, resultado):
 	if listaCuadruplos[int(resultado)].operador == 17:
 		print "----- entraaaa "
 	contCuadruplos =  int(resultado)
-	listaCuadruplos.pop()
+	#listaCuadruplos.pop()
 	#else:
 		#contCuadruplos = int(resultado)
 
@@ -373,7 +377,6 @@ def comparacionMenorIgual(operando1, operando2, resultado):
 		valor2 = diccionarioConstantes[operando2]
 	else:
 		aux1 = tipodato[int(operando2)/1000](operando2)
-		print" entra" , memoria
 		valor2 = memoria.listaMem[tipoActual][aux1] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
@@ -598,7 +601,8 @@ def derecha(operando1, operando2, resultado):
 def arriba(operando1, operando2, resultado):
 	print "entra arriba"
 def retorno(operando1, operando2, resultado):
-	print "entra retorno"
+	print "entra retorno", operando1, " ", operando2, " ", resultado
+
 	global contCuadruplos
 	global listaMemoria
 	global diccionarioConstantes
@@ -611,7 +615,7 @@ def retorno(operando1, operando2, resultado):
 		aux1 = tipodato[int(operando2)/1000](operando2)
 		valor1  = funcionMem.listaMem[tipoActual][aux1] 
 	diccionarioConstantes[str(int(resultado))] = valor1
-	
+	print " regresaa", funcionMem.cuadrRetorno, " ", len(listaCuadruplos)
 	contCuadruplos = funcionMem.cuadrRetorno
 	listaMemoria.append(funcionMain)
 
@@ -637,9 +641,9 @@ def generaParam(operando1, operando2, resultado):
 	funcionMem = listaMemoria.pop()
 	funcionMain = listaMemoria.pop()
 
-	print "Operando 1  = ", operando1
-	print "Operando2 = ", operando2
-	print "Resultado = ",resultado
+	# print "Operando 1  = ", operando1
+	# print "Operando2 = ", operando2
+	# print "Resultado = ",resultado
 
 
 	valor1 = 0
@@ -663,7 +667,6 @@ def generaGOSUB(operando1, operando2, resultado):
 	memoria.cuadrRetorno = contCuadruplos + 1
 	listaMemoria.append(memoria)
 	contCuadruplos = int(resultado)
-	print "----------", len(listaMemoria)
 
 
 

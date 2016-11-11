@@ -1,20 +1,23 @@
 func entero marrriiiiis(entero dE){
 	entero bB;
-	bB = 10;
+	bB = 40;
 	return bB
 }
 func entero lizzy(entero mA){
 	entero hH, nM;
-	hH = 10;
-
+	hH = 50;
+	nM = 30;
 	if(mA == 0){
 		hH = 100000;
+		return hH
 	}
 	else{
-		hH = 200;
+		marrriiiiis(nM)
+
+		hH = 1000;
 	}
 
-	return mA
+	return hH
 }
 
 inicio
@@ -24,7 +27,6 @@ inicio
 	aAA = 10;
 	aAA = lizzy(aAA);
 	
-
-
+	bBBB = 0;
 }
 fin

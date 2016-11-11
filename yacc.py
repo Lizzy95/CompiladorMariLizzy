@@ -397,6 +397,7 @@ def p_generaGOSUB(p):
 		var = diccionarioMemoria['3']
 		mem = var[str(listaFunciones[pos].tipo)]
 		pos2 = diccionarioVarGlobal[llamada]
+		print"pppppppppppppppppppp", pos2, " ", mem
 		cuadr = Cuadruplo(5,pos2,-1,mem)
 		diccionarioMemoria['3'][listaFunciones[pos].tipo] = mem + 1
 		pilaOperandos.append(listaFunciones[pos].tipo)
@@ -525,6 +526,7 @@ def p_checarOperadorIgual(p):
 			print("SE CHECO EL CUADRUPLO ASIGNACION Y ES CORRECTO ", operando1, operando2, signo)
 			operando2C = pilaOperandosDirMem.pop()
 			operando1C = pilaOperandosDirMem.pop()
+			print operando2C, " ", operando1C
 			cuadr = Cuadruplo(signo, operando2C, -1, operando1C)
 			pilaOperandosDirMem.append(operando1C)
 			listaCuadruplos.append(cuadr)
@@ -627,7 +629,7 @@ def p_color(p):
 
 def p_condicion(p):
 	''' condicion : IF "(" expresion ")" checarIF bloqueCond finPilaSaltos
-				  | IF "(" expresion ")" checarIF bloqueCond checarElse  finPilaSaltos'''
+				  | IF "(" expresion ")" checarIF bloqueCond checarElse bloqueCond finPilaSaltos'''
 	pass
 
 def p_bloqueCond(p):
@@ -667,7 +669,7 @@ def p_checarIF(p):
 	pass
 
 def p_checarElse(p):
-	'''checarElse : ELSE bloqueCond  '''
+	'''checarElse : ELSE '''
 	print "Entre a checar else"
 	global pilaSaltos
 	global listaCuadruplos
@@ -677,16 +679,16 @@ def p_checarElse(p):
 	#rellena el goto falso
 	lenCuadruplos = len(listaCuadruplos)
 	salto = pilaSaltos.pop()
-	listaCuadruplos[salto].temporal = lenCuadruplos -1
+	listaCuadruplos[salto].temporal = lenCuadruplos
 	pilaSaltos.append(lenCuadruplos - 1)
 	pass
 
 def p_finPilaSaltos(p):
 	'''finPilaSaltos : '''
-	print "Entre fin pila saltos"
+	print "Entre fin pila saltos", pilaSaltos
 	salto = pilaSaltos.pop()
 	lenCuadruplos = len(listaCuadruplos)
-	listaCuadruplos[salto].temporal = lenCuadruplos - 2
+	listaCuadruplos[salto].temporal = lenCuadruplos
 	pass
 
 def p_expresion(p):
