@@ -261,7 +261,13 @@ def asignacion(operando1, operando2, resultado):
 		aux1 = tipodato[int(operando1)/1000](operando1)
 		valor1  = memoria.listaMem[tipoActual][aux1] 
 	contCuadruplos = contCuadruplos + 1
-	auxResultado = tipodato[int(resultado)/1000](resultado)
+	auxp = int(resultado)
+	if diccionarioConstantes.has_key(str(auxp)):
+		print "entra222"
+		auxResultado = diccionarioConstantes[str(auxp)]
+	else:
+		print "saleeexs"
+		auxResultado = tipodato[int(resultado)/1000](resultado)
 	memoria.listaMem[tipoActual][auxResultado] = valor1
 	listaMemoria.append(memoria)
 	print "asignacion ", memoria.listaMem[tipoActual][auxResultado]
@@ -725,6 +731,3 @@ listaMemoria.append(memoriaMain)
 
 while contCuadruplos < len(listaCuadruplos):
 	options[listaCuadruplos[contCuadruplos].operador](listaCuadruplos[contCuadruplos].operando1, listaCuadruplos[contCuadruplos].operando2, listaCuadruplos[contCuadruplos].temporal)
-
-
-

@@ -270,16 +270,12 @@ def p_liberarVar(p):
 	global funcionActual
 	global pilaOperandos
 	global pilaOperandosDirMem
+	global pilaOperadores
 	global diccionarioVarGlobal
-
 	posicion = busquedaLista()
-	if funcionActual != 'inicio':
-		aux = pilaOperandosDirMem.pop()
-		cuadr = Cuadruplo(29, -1, aux, diccionarioVarGlobal[funcionActual])
-		listaCuadruplos.append(cuadr)
-	print "-------------------------",pilaOperandos, funcionActual
-	print "!!!!!!!!!!!",pilaOperandosDirMem
-
+	pilaOperandosDirMem = []
+	pilaOperandos = []
+	pilaOperadores = []
 	loc = diccionarioMemoria['2']
 	auxLoc = loc['1'] - 8001
 	auxCua = loc['2'] - 9001
@@ -352,8 +348,30 @@ def p_guardarCuadruplo(p):
 	pass
 #Sintaxis para el retorno de una variable
 def p_regresa(p):
-	''' regresa : RETURN ID '''
+	''' regresa : RETURN ID generarCuadRetorno'''
 	pass
+
+def p_generarCuadRetorno(p):
+	''' generarCuadRetorno : '''
+	global listaCuadruplos
+	global diccionarioVarGlobal
+	global pilaOperadores
+	global pilaOperandosDirMem
+	global funcionActual
+	global listaFunciones
+	global pilaOperandos
+
+	posicion = busquedaLista()
+	posicion2 = busquedaVar(p[-1])
+	if posicion2 != -1:
+		memoria = listaFunciones[posicion].arrVar[posicion2]
+		pilaOperandos.append(memoria.tipo)
+		pilaOperandosDirMem.append(memoria.direcmem)
+	if funcionActual != 'inicio':
+		aux = pilaOperandosDirMem.pop()
+		cuadr = Cuadruplo(29, -1, aux, diccionarioVarGlobal[funcionActual])
+		listaCuadruplos.append(cuadr)
+		pilaOperandos.pop()
 #Sintaxis para estatutos
 def p_estatuto(p):
 	'''estatuto : asignacion estatutoAux
@@ -385,6 +403,7 @@ def p_generaGOSUB(p):
 	global listaCuadruplos
 	global llamada
 	global diccionarioVarGlobal
+	global listaFunciones
 
 	print "Se guardo GOSUB", llamada
 	pos = busquedaFunc(llamada)
