@@ -1,17 +1,30 @@
-func entero lizzy(entero marii, entero mama){
-	entero juan;
-	juan = 10 * 100;
-	juan = juan / 2;
-
-	return juan
+func entero marrriiiiis(entero dE){
+	entero bB;
+	bB = 10;
+	return bB
 }
+func entero lizzy(entero mA){
+	entero hH, nM;
+	hH = 10;
+
+	if(mA == 0){
+		hH = 100000;
+	}
+	else{
+		hH = 200;
+	}
+
+	return mA
+}
+
 inicio
 {
-	entero aAA,  bBbB;
+	entero aAA,bBBB, gGGGG;
+	gGGGG = 3;
+	aAA = 10;
+	aAA = lizzy(aAA);
+	
 
-	aAA = 9;
-	bBbB = lizzy(aAA,bBbB);
 
-	aAA = 100; 
 }
 fin

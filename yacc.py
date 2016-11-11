@@ -65,9 +65,8 @@ def p_bloque(p):
 	pass
 #Sintaxis de declaracion de variables
 def p_vars(p):
-	'''vars : tipo ID guardarIDs ";" masTipos
+	'''vars : tipo listaIDS ";" masTipos
 		| tipo ID guardarIDs arreglo  ";" masTipos
-		| tipo listaIDS ";" masTipos
 		| empty'''
 	print("VARS: Estructura basica")
 	pass
@@ -82,7 +81,12 @@ def p_listaIDS(p):
 	pass
 
 def p_masIDS(p):
-	'''masIDS : "," ID guardarIDs
+	'''masIDS :  "," ID guardarIDs masIDS2
+			   | empty '''
+	pass
+
+def p_masIDS2(p):
+	'''masIDS2 :  "," ID guardarIDs masIDS
 			   | empty '''
 	pass
 #Sintaxis para declaracion de arreglos
@@ -189,9 +193,23 @@ def busquedaVar(varActual):
 					return cont
 				else:
 					cont += 1
-
-
 	return -1
+
+#Funcion para buscar una variable en la tabla de parametros de la funcion 
+def busquedaVarParam(varActual):
+	global listaFunciones
+	global funcionActual
+	#imprimirLista()
+	cont = 0
+	for elemento in listaFunciones:
+		if funcionActual == elemento.nombre:
+			for elemento2 in elemento.arrParam:
+				if(varActual == elemento2.nombre):
+					return cont
+				else:
+					cont += 1
+	return -1
+
 #Funcion para buscar si hay uan variable global previamente declarada y si no regresa -1 para poder declararla
 def busquedaVarGlobal(var):
 	global diccionarioVarGlobal
@@ -250,11 +268,17 @@ def p_liberarVar(p):
 	global listaFunciones
 	global listaCuadruplos
 	global funcionActual
+	global pilaOperandos
+	global pilaOperandosDirMem
+	global diccionarioVarGlobal
+
 	posicion = busquedaLista()
 	if funcionActual != 'inicio':
-		cuadr = Cuadruplo(29, -1, -1, -1)
+		aux = pilaOperandosDirMem.pop()
+		cuadr = Cuadruplo(29, -1, aux, diccionarioVarGlobal[funcionActual])
 		listaCuadruplos.append(cuadr)
-
+	print "-------------------------",pilaOperandos, funcionActual
+	print "!!!!!!!!!!!",pilaOperandosDirMem
 
 	loc = diccionarioMemoria['2']
 	auxLoc = loc['1'] - 8001
@@ -488,6 +512,7 @@ def p_guardarIDPila(p):
 def p_checarOperadorIgual(p):
 	'''checarOperadorIgual :  '''
 	global pilaOperadores
+	global listaCuadruplos
 	signo = pilaOperadores.pop()
 	if(signo == 5):
 		operando2 = pilaOperandos.pop()
@@ -501,6 +526,7 @@ def p_checarOperadorIgual(p):
 			operando2C = pilaOperandosDirMem.pop()
 			operando1C = pilaOperandosDirMem.pop()
 			cuadr = Cuadruplo(signo, operando2C, -1, operando1C)
+			pilaOperandosDirMem.append(operando1C)
 			listaCuadruplos.append(cuadr)
 	pass
 
@@ -651,7 +677,7 @@ def p_checarElse(p):
 	#rellena el goto falso
 	lenCuadruplos = len(listaCuadruplos)
 	salto = pilaSaltos.pop()
-	listaCuadruplos[salto].temporal = lenCuadruplos
+	listaCuadruplos[salto].temporal = lenCuadruplos -1
 	pilaSaltos.append(lenCuadruplos - 1)
 	pass
 
@@ -660,7 +686,7 @@ def p_finPilaSaltos(p):
 	print "Entre fin pila saltos"
 	salto = pilaSaltos.pop()
 	lenCuadruplos = len(listaCuadruplos)
-	listaCuadruplos[salto].temporal = lenCuadruplos - 1
+	listaCuadruplos[salto].temporal = lenCuadruplos - 2
 	pass
 
 def p_expresion(p):
@@ -805,6 +831,7 @@ def p_checaroperador4(p):
 				cuadr = Cuadruplo(operadorActual, operando1C,operando2C,resultadoT)
 				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)
+#				pilaOperandosDirMem.append(resultadoT)
 	pass
 
 def p_signo(p):
@@ -864,6 +891,7 @@ def p_checaroperador5(p):
 				cuadr = Cuadruplo(operadorActual, operando1C,operando2C,resultadoT)
 				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)
+				#pilaOperandosDirMem.append(resultadoT)
 	pass
 
 def p_masop(p):
@@ -949,9 +977,15 @@ def p_recibe_ID(p):
 	pos = busquedaLista()
 	print("Guardar: ", p[1])
 	pos2 = busquedaVar(p[1])
-	if(pos2 != -1 ):
+	pos3 = busquedaVarParam(p[1])
+	if(pos2 != -1):
 		var = listaFunciones[pos].arrVar[pos2].tipo
 		direc = listaFunciones[pos].arrVar[pos2].direcmem
+		pilaOperandosDirMem.append(direc)
+		pilaOperandos.append(var)
+	elif(pos3 != -1):
+		var = listaFunciones[pos].arrParam[pos3].tipo
+		direc = listaFunciones[pos].arrParam[pos3].direcmem
 		pilaOperandosDirMem.append(direc)
 		pilaOperandos.append(var)
 	else:

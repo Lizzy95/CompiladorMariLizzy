@@ -6,6 +6,7 @@ listaFunc = []
 listaCuadruplos = []
 tipoActual = 0 
 diccionarioConstantes = {}
+diccionarioGlobal = {}
 listaMemoria = []
 contCuadruplos = 0
 
@@ -241,13 +242,14 @@ def division(operando1, operando2, resultado):
 	listaMemoria.append(memoria)
 
 def asignacion(operando1, operando2, resultado):
-	print "entra asignacion"
+	print "entra asignacion", operando2, " ", operando1, " ", resultado
 	global contCuadruplos
 	global pilaMemoria
 	global diccionarioConstantes
 	global tipoActual
 	global listaMemoria
 	memoria = listaMemoria.pop()
+	print diccionarioConstantes
 	valor1 = 0
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
@@ -265,10 +267,11 @@ def goto(operando1, operando2, resultado):
 	global contCuadruplos
 	global listaCuadruplos
 	print "entra goto \n"
-	
+	print resultado
 	if listaCuadruplos[int(resultado)].operador == 17:
 		print "----- entraaaa "
 	contCuadruplos =  int(resultado)
+	listaCuadruplos.pop()
 	#else:
 		#contCuadruplos = int(resultado)
 
@@ -577,16 +580,11 @@ def gotoFalso(operando1, operando2, resultado):
 
 	print "Valor 1 = ", valor1
 	if valor1 == 0:
-		contCuadruplos = resultado
+		contCuadruplos = int(resultado)
 	else:
 		contCuadruplos = contCuadruplos + 1
-
-
 	listaMemoria.append(memoria)
-
-
-
-	print "entra gotoFalsor"
+	print "entra gotoFalsor", resultado," ", operando2
 def leer(operando1, operando2, resultado):
 	print "entra leer"
 def dibujar(operando1, operando2, resultado):
@@ -603,9 +601,19 @@ def retorno(operando1, operando2, resultado):
 	print "entra retorno"
 	global contCuadruplos
 	global listaMemoria
+	global diccionarioConstantes
 	funcionMem = listaMemoria.pop()
-	print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",funcionMem.cuadrRetorno
+	funcionMain = listaMemoria.pop()
+	valor1 = 0
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+	else:
+		aux1 = tipodato[int(operando2)/1000](operando2)
+		valor1  = funcionMem.listaMem[tipoActual][aux1] 
+	diccionarioConstantes[str(int(resultado))] = valor1
+	
 	contCuadruplos = funcionMem.cuadrRetorno
+	listaMemoria.append(funcionMain)
 
 def abajo(operando1, operando2, resultado):
 	print "entra abajo"
@@ -624,6 +632,7 @@ def generaParam(operando1, operando2, resultado):
 	print "entra generaParam"
 	global contCuadruplos
 	global listaMemoria
+	global tipoActual
 
 	funcionMem = listaMemoria.pop()
 	funcionMain = listaMemoria.pop()
@@ -631,6 +640,7 @@ def generaParam(operando1, operando2, resultado):
 	print "Operando 1  = ", operando1
 	print "Operando2 = ", operando2
 	print "Resultado = ",resultado
+
 
 	valor1 = 0
 	if diccionarioConstantes.has_key(operando2):
