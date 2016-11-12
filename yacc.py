@@ -138,7 +138,6 @@ def p_funcAgregar(p):
 		diccionarioMemoria['1'][str(tipoActual)] = valormem + 1
 		diccionarioVarGlobal[p[-1]] = valormem
 
-
 def p_param(p):
 	''' param : tipo  ID guardarIDParam maspaID 
 		 		| empty'''
@@ -444,8 +443,6 @@ def p_guardarIDFunc(p):
 	aux1 = p[-1]
 	print "resul", p[-1]
 	pilaOperandosDirMem.append(diccionarioVarGlobal[p[-1]])
-
-
 
 def p_verProc(p):
 	''' verProc : '''

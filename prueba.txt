@@ -1,18 +1,19 @@
 func entero marrriiiiis(entero dE){
 	entero bB;
-	bB = 43;
+	bB = dE;
 	return bB
 }
 func entero lizzy(entero mA){
 	entero hH, nM;
 	hH = 50;
-	nM = hH;
-	if(mA == 0){
+	nM = mA;
+	if(mA < 0 ){
 		hH = 100000;
 		return hH
 	}
 	else{
-		hH =  lizzy(mA -1 );
+		nM = mA;
+		hH =  lizzy(nM-1);
 	}
 	return hH
 }
