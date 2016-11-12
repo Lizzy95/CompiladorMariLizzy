@@ -261,6 +261,7 @@ def asignacion(operando1, operando2, resultado):
 		aux1 = tipodato[int(operando1)/1000](operando1)
 		valor1  = memoria.listaMem[tipoActual][aux1] 
 	contCuadruplos = contCuadruplos + 1
+	print int(resultado)
 	auxp = int(resultado)
 	if diccionarioConstantes.has_key(str(auxp)):
 		print "entra222"
@@ -615,8 +616,9 @@ def retorno(operando1, operando2, resultado):
 	funcionMem = listaMemoria.pop()
 	funcionMain = listaMemoria.pop()
 	valor1 = 0
-	if diccionarioConstantes.has_key(operando1):
-		valor1 = diccionarioConstantes[operando1]
+	print diccionarioConstantes
+	if diccionarioConstantes.has_key(operando2):
+		valor1 = diccionarioConstantes[operando2]
 	else:
 		aux1 = tipodato[int(operando2)/1000](operando2)
 		valor1  = funcionMem.listaMem[tipoActual][aux1] 

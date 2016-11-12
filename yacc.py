@@ -363,6 +363,7 @@ def p_generarCuadRetorno(p):
 
 	posicion = busquedaLista()
 	posicion2 = busquedaVar(p[-1])
+	print "---------------",pilaOperandosDirMem
 	if posicion2 != -1:
 		memoria = listaFunciones[posicion].arrVar[posicion2]
 		pilaOperandos.append(memoria.tipo)
@@ -412,22 +413,24 @@ def p_generaGOSUB(p):
 	cuadr = Cuadruplo(32,-1,-1,aux1)
 	listaCuadruplos.append(cuadr)
 	print "LLLLLLLLLLLLLLLLLLLLLLLLLLLLL",listaFunciones[pos].cuadruploInicial
-	if funcionActual != "inicio":
-		var = diccionarioMemoria['3']
-		mem = var[str(listaFunciones[pos].tipo)]
-		pos2 = diccionarioVarGlobal[llamada]
-		print"pppppppppppppppppppp", pos2, " ", mem
-		cuadr = Cuadruplo(5,pos2,-1,mem)
-		diccionarioMemoria['3'][listaFunciones[pos].tipo] = mem + 1
-		pilaOperandos.append(listaFunciones[pos].tipo)
-		pilaOperandosDirMem.append(mem)
-		listaCuadruplos.append(cuadr)
+	print pilaOperandosDirMem
+	#if funcionActual != "inicio":
+	var = diccionarioMemoria['3']
+	mem = var[str(listaFunciones[pos].tipo)]
+	pos2 = diccionarioVarGlobal[llamada]
+	print"pppppppppppppppppppp", pos2, " ", mem
+	cuadr = Cuadruplo(5,pos2,-1,mem)
+	diccionarioMemoria['3'][listaFunciones[pos].tipo] = mem + 1
+	#pilaOperandos.append(listaFunciones[pos].tipo)
+	#pilaOperandosDirMem.append(mem)
+	print pilaOperandosDirMem
+	listaCuadruplos.append(cuadr)
 	pass
 #Sintaxis de llamada a una funcion 
 def p_funcs(p):
-	''' funcs : ID guardarIDFunc verProc generarERA auxExp  checaNumParam generaGOSUB
-			  | ID '''
+	''' funcs : ID guardarIDFunc verProc generarERA auxExp  checaNumParam generaGOSUB '''
 	pass
+
 def p_guardarIDFunc(p):
 	''' guardarIDFunc : '''
 	global pilaOperandos
@@ -436,7 +439,10 @@ def p_guardarIDFunc(p):
 	pos = busquedaFunc(p[-1])
 	aux = listaFunciones[pos].tipo
 	pilaOperandos.append(aux)
+	print "-+----", pilaOperandosDirMem
 	print diccionarioVarGlobal
+	aux1 = p[-1]
+	print "resul", p[-1]
 	pilaOperandosDirMem.append(diccionarioVarGlobal[p[-1]])
 
 
@@ -509,7 +515,7 @@ def p_masExps(p):
 
 def p_asignacion(p):
 	''' asignacion : ID guardarIDPila opcionAsignacion valorAsig ";" checarOperadorIgual
-				 | ID ";" '''
+				 '''
 	pass
 
 def p_guardarIDPila(p): 
@@ -543,12 +549,14 @@ def p_checarOperadorIgual(p):
 			sys.exit()
 		else: 
 			print("SE CHECO EL CUADRUPLO ASIGNACION Y ES CORRECTO ", operando1, operando2, signo)
+			print"-------", pilaOperandosDirMem
 			operando2C = pilaOperandosDirMem.pop()
 			operando1C = pilaOperandosDirMem.pop()
 			print operando2C, " ", operando1C
 			cuadr = Cuadruplo(signo, operando2C, -1, operando1C)
-			pilaOperandosDirMem.append(operando1C)
+			#pilaOperandosDirMem.append(operando1C)
 			listaCuadruplos.append(cuadr)
+			print "++++++++++++",pilaOperandosDirMem
 	pass
 
 def p_opcionAsignacion(p):
@@ -558,12 +566,11 @@ def p_opcionAsignacion(p):
 	pass
 
 def p_valorAsig(p):
-	''' valorAsig : "="  exp
-				  | "=" funcs
+	''' valorAsig : "="  expresion
 				  | empty'''
 	
 	global pilaOperadores
-
+	print "entraaaa --------"
 	if p[1] == "=":
 		pilaOperadores.append(5)
 
@@ -659,7 +666,7 @@ def p_bloqueCond(p):
 	pass
 
 def p_regresaCond(p):
-	''' regresaCond :  RETURN ID
+	''' regresaCond :  RETURN ID generarCuadRetorno
 					| empty'''
 	pass
 
@@ -852,7 +859,6 @@ def p_checaroperador4(p):
 				cuadr = Cuadruplo(operadorActual, operando1C,operando2C,resultadoT)
 				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)
-#				pilaOperandosDirMem.append(resultadoT)
 	pass
 
 def p_signo(p):
@@ -912,7 +918,6 @@ def p_checaroperador5(p):
 				cuadr = Cuadruplo(operadorActual, operando1C,operando2C,resultadoT)
 				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)
-				#pilaOperandosDirMem.append(resultadoT)
 	pass
 
 def p_masop(p):
@@ -989,7 +994,8 @@ def p_varcte(p):
 			   | recibe_CTF 
 			   | recibe_CTI  
 			   | recibe_TRUE 
-			   | recibe_FALSE '''
+			   | recibe_FALSE 
+			   | funcs '''
 	pass
 
 def p_recibe_ID(p):
