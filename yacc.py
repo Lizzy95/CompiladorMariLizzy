@@ -388,7 +388,7 @@ def p_estatutoAux(p):
 	pass
 #Regla para verificar que el numero de parametros sea el mismo
 def p_checaNumParam(p):
-	''' checaNumParam : ")"'''
+	''' checaNumParam : finFondoFalso '''
 	global contParam
 	global listaFunciones
 	global llamada
@@ -454,7 +454,7 @@ def p_verProc(p):
 	pass
 #Regla para generar Era
 def p_generarEra(p):
-	''' generarERA : "(" '''
+	''' generarERA : fondoFalso '''
 	global listaCuadruplos
 	global listaFunciones
 	global contParam
@@ -463,7 +463,10 @@ def p_generarEra(p):
 	pos = busquedaLista()
 	arrParametros = listaFunciones[pos].arrParam
 	longitud = len (arrParametros)
-	cuadr = Cuadruplo(30, -1, -1, llamada)
+	r = diccionarioVarGlobal[llamada]
+	print "$$$$$$$$$$$$$$$$$$$$$$$$",diccionarioVarGlobal
+	print llamada
+	cuadr = Cuadruplo(30, -1, -1,r )
 	listaCuadruplos.append(cuadr)
 	print "Se guardo ERA ", llamada
 	pass
@@ -502,7 +505,7 @@ def p_verificarTiposFunc(p):
 	pass
 
 def p_listaExp(p):
-	'''listaExp : exp verificarTiposFunc masExps'''
+	'''listaExp : expresion verificarTiposFunc masExps'''
 	pass
 
 def p_masExps(p):

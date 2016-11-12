@@ -54,17 +54,17 @@ Rule 44    estatuto -> whiles estatutoAux
 Rule 45    estatuto -> funcs estatutoAux
 Rule 46    estatutoAux -> estatuto
 Rule 47    estatutoAux -> empty
-Rule 48    checaNumParam -> )
+Rule 48    checaNumParam -> finFondoFalso
 Rule 49    generaGOSUB -> <empty>
 Rule 50    funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB
 Rule 51    guardarIDFunc -> <empty>
 Rule 52    verProc -> <empty>
-Rule 53    generarERA -> (
+Rule 53    generarERA -> fondoFalso
 Rule 54    auxExp -> listaExp llegaComa
 Rule 55    auxExp -> listaExp
 Rule 56    llegaComa -> ,
 Rule 57    verificarTiposFunc -> <empty>
-Rule 58    listaExp -> exp verificarTiposFunc masExps
+Rule 58    listaExp -> expresion verificarTiposFunc masExps
 Rule 59    masExps -> llegaComa listaExp
 Rule 60    masExps -> <empty>
 Rule 61    asignacion -> ID guardarIDPila opcionAsignacion valorAsig ; checarOperadorIgual
@@ -166,8 +166,8 @@ Rule 156   empty -> <empty>
 
 Terminals, with rules where they appear
 
-(                    : 24 53 77 83 84 107 124 125
-)                    : 24 48 77 83 84 108 124 125
+(                    : 24 77 83 84 107 124 125
+)                    : 24 77 83 84 108 124 125
 *                    : 120
 +                    : 113
 ,                    : 13 15 30 56 124
@@ -249,13 +249,13 @@ empty                : 9 11 14 16 19 21 23 27 31 47 66 68 74 89
 escritura            : 34 41
 estatuto             : 4 32 46 85
 estatutoAux          : 40 41 42 43 44 45
-exp                  : 58 93 94 103 111
-expresion            : 67 83 84 122 125
+exp                  : 93 94 103 111
+expresion            : 58 67 83 84 122 125
 factor               : 115
-finFondoFalso        : 122
+finFondoFalso        : 48 122
 finPilaSaltos        : 83 84
 finPilaSaltosWhile   : 125
-fondoFalso           : 122
+fondoFalso           : 53 122
 funcAgregar          : 20
 funcAgregarInicio    : 1
 funcion              : 1 2 22
@@ -1956,11 +1956,13 @@ state 117
 state 118
 
     (50) funcs -> ID guardarIDFunc verProc . generarERA auxExp checaNumParam generaGOSUB
-    (53) generarERA -> . (
+    (53) generarERA -> . fondoFalso
+    (107) fondoFalso -> . (
 
-    (               shift and go to state 149
+    (               shift and go to state 127
 
-    generarERA                     shift and go to state 150
+    generarERA                     shift and go to state 149
+    fondoFalso                     shift and go to state 150
 
 state 119
 
@@ -1972,6 +1974,7 @@ state 119
     -               reduce using rule 134 (varcte -> funcs .)
     )               reduce using rule 134 (varcte -> funcs .)
     ;               reduce using rule 134 (varcte -> funcs .)
+    ,               reduce using rule 134 (varcte -> funcs .)
     >               reduce using rule 134 (varcte -> funcs .)
     <               reduce using rule 134 (varcte -> funcs .)
     MENORIGUAL      reduce using rule 134 (varcte -> funcs .)
@@ -1980,7 +1983,6 @@ state 119
     DIFERENTE       reduce using rule 134 (varcte -> funcs .)
     |               reduce using rule 134 (varcte -> funcs .)
     COAND           reduce using rule 134 (varcte -> funcs .)
-    ,               reduce using rule 134 (varcte -> funcs .)
 
 
 state 120
@@ -2072,8 +2074,8 @@ state 122
     |               reduce using rule 138 (recibe_TRUE -> TRUE .)
     COAND           reduce using rule 138 (recibe_TRUE -> TRUE .)
     )               reduce using rule 138 (recibe_TRUE -> TRUE .)
-    ;               reduce using rule 138 (recibe_TRUE -> TRUE .)
     ,               reduce using rule 138 (recibe_TRUE -> TRUE .)
+    ;               reduce using rule 138 (recibe_TRUE -> TRUE .)
 
 
 state 123
@@ -2107,6 +2109,7 @@ state 124
     -               reduce using rule 132 (varcte -> recibe_TRUE .)
     )               reduce using rule 132 (varcte -> recibe_TRUE .)
     ;               reduce using rule 132 (varcte -> recibe_TRUE .)
+    ,               reduce using rule 132 (varcte -> recibe_TRUE .)
     >               reduce using rule 132 (varcte -> recibe_TRUE .)
     <               reduce using rule 132 (varcte -> recibe_TRUE .)
     MENORIGUAL      reduce using rule 132 (varcte -> recibe_TRUE .)
@@ -2115,7 +2118,6 @@ state 124
     DIFERENTE       reduce using rule 132 (varcte -> recibe_TRUE .)
     |               reduce using rule 132 (varcte -> recibe_TRUE .)
     COAND           reduce using rule 132 (varcte -> recibe_TRUE .)
-    ,               reduce using rule 132 (varcte -> recibe_TRUE .)
 
 
 state 125
@@ -2149,6 +2151,7 @@ state 126
     -               reduce using rule 130 (varcte -> recibe_CTF .)
     )               reduce using rule 130 (varcte -> recibe_CTF .)
     ;               reduce using rule 130 (varcte -> recibe_CTF .)
+    ,               reduce using rule 130 (varcte -> recibe_CTF .)
     >               reduce using rule 130 (varcte -> recibe_CTF .)
     <               reduce using rule 130 (varcte -> recibe_CTF .)
     MENORIGUAL      reduce using rule 130 (varcte -> recibe_CTF .)
@@ -2157,7 +2160,6 @@ state 126
     DIFERENTE       reduce using rule 130 (varcte -> recibe_CTF .)
     |               reduce using rule 130 (varcte -> recibe_CTF .)
     COAND           reduce using rule 130 (varcte -> recibe_CTF .)
-    ,               reduce using rule 130 (varcte -> recibe_CTF .)
 
 
 state 127
@@ -2182,6 +2184,7 @@ state 128
     -               reduce using rule 129 (varcte -> recibe_ID .)
     )               reduce using rule 129 (varcte -> recibe_ID .)
     ;               reduce using rule 129 (varcte -> recibe_ID .)
+    ,               reduce using rule 129 (varcte -> recibe_ID .)
     >               reduce using rule 129 (varcte -> recibe_ID .)
     <               reduce using rule 129 (varcte -> recibe_ID .)
     MENORIGUAL      reduce using rule 129 (varcte -> recibe_ID .)
@@ -2190,7 +2193,6 @@ state 128
     DIFERENTE       reduce using rule 129 (varcte -> recibe_ID .)
     |               reduce using rule 129 (varcte -> recibe_ID .)
     COAND           reduce using rule 129 (varcte -> recibe_ID .)
-    ,               reduce using rule 129 (varcte -> recibe_ID .)
 
 
 state 129
@@ -2314,6 +2316,7 @@ state 133
     -               reduce using rule 131 (varcte -> recibe_CTI .)
     )               reduce using rule 131 (varcte -> recibe_CTI .)
     ;               reduce using rule 131 (varcte -> recibe_CTI .)
+    ,               reduce using rule 131 (varcte -> recibe_CTI .)
     >               reduce using rule 131 (varcte -> recibe_CTI .)
     <               reduce using rule 131 (varcte -> recibe_CTI .)
     MENORIGUAL      reduce using rule 131 (varcte -> recibe_CTI .)
@@ -2322,7 +2325,6 @@ state 133
     DIFERENTE       reduce using rule 131 (varcte -> recibe_CTI .)
     |               reduce using rule 131 (varcte -> recibe_CTI .)
     COAND           reduce using rule 131 (varcte -> recibe_CTI .)
-    ,               reduce using rule 131 (varcte -> recibe_CTI .)
 
 
 state 134
@@ -2342,7 +2344,9 @@ state 134
 
   ! reduce/reduce conflict for ) resolved using rule 94 (expresion -> exp .)
   ! reduce/reduce conflict for ; resolved using rule 94 (expresion -> exp .)
+  ! reduce/reduce conflict for , resolved using rule 94 (expresion -> exp .)
     )               reduce using rule 94 (expresion -> exp .)
+    ,               reduce using rule 94 (expresion -> exp .)
     ;               reduce using rule 94 (expresion -> exp .)
     >               shift and go to state 171
     <               shift and go to state 170
@@ -2355,6 +2359,7 @@ state 134
 
   ! )               [ reduce using rule 104 (operacionLogica -> .) ]
   ! ;               [ reduce using rule 104 (operacionLogica -> .) ]
+  ! ,               [ reduce using rule 104 (operacionLogica -> .) ]
 
     operacionLogica                shift and go to state 166
     push_logica                    shift and go to state 167
@@ -2412,6 +2417,7 @@ state 136
     -               reduce using rule 133 (varcte -> recibe_FALSE .)
     )               reduce using rule 133 (varcte -> recibe_FALSE .)
     ;               reduce using rule 133 (varcte -> recibe_FALSE .)
+    ,               reduce using rule 133 (varcte -> recibe_FALSE .)
     >               reduce using rule 133 (varcte -> recibe_FALSE .)
     <               reduce using rule 133 (varcte -> recibe_FALSE .)
     MENORIGUAL      reduce using rule 133 (varcte -> recibe_FALSE .)
@@ -2420,7 +2426,6 @@ state 136
     DIFERENTE       reduce using rule 133 (varcte -> recibe_FALSE .)
     |               reduce using rule 133 (varcte -> recibe_FALSE .)
     COAND           reduce using rule 133 (varcte -> recibe_FALSE .)
-    ,               reduce using rule 133 (varcte -> recibe_FALSE .)
 
 
 state 137
@@ -2587,22 +2592,12 @@ state 148
 
 state 149
 
-    (53) generarERA -> ( .
-
-    (               reduce using rule 53 (generarERA -> ( .)
-    ID              reduce using rule 53 (generarERA -> ( .)
-    CTF             reduce using rule 53 (generarERA -> ( .)
-    CTI             reduce using rule 53 (generarERA -> ( .)
-    TRUE            reduce using rule 53 (generarERA -> ( .)
-    FALSE           reduce using rule 53 (generarERA -> ( .)
-
-
-state 150
-
     (50) funcs -> ID guardarIDFunc verProc generarERA . auxExp checaNumParam generaGOSUB
     (54) auxExp -> . listaExp llegaComa
     (55) auxExp -> . listaExp
-    (58) listaExp -> . exp verificarTiposFunc masExps
+    (58) listaExp -> . expresion verificarTiposFunc masExps
+    (93) expresion -> . exp operacionLogica checaoperador6
+    (94) expresion -> . exp
     (106) exp -> . termino checaroperador4
     (115) termino -> . factor checaroperador5
     (122) factor -> . fondoFalso expresion finFondoFalso
@@ -2629,7 +2624,6 @@ state 150
     FALSE           shift and go to state 132
 
     funcs                          shift and go to state 119
-    listaExp                       shift and go to state 185
     termino                        shift and go to state 121
     recibe_TRUE                    shift and go to state 124
     varcte                         shift and go to state 125
@@ -2637,10 +2631,24 @@ state 150
     recibe_CTI                     shift and go to state 133
     recibe_ID                      shift and go to state 128
     factor                         shift and go to state 129
-    exp                            shift and go to state 186
-    auxExp                         shift and go to state 187
+    listaExp                       shift and go to state 185
+    auxExp                         shift and go to state 186
+    expresion                      shift and go to state 187
+    exp                            shift and go to state 134
     fondoFalso                     shift and go to state 135
     recibe_FALSE                   shift and go to state 136
+
+state 150
+
+    (53) generarERA -> fondoFalso .
+
+    (               reduce using rule 53 (generarERA -> fondoFalso .)
+    ID              reduce using rule 53 (generarERA -> fondoFalso .)
+    CTF             reduce using rule 53 (generarERA -> fondoFalso .)
+    CTI             reduce using rule 53 (generarERA -> fondoFalso .)
+    TRUE            reduce using rule 53 (generarERA -> fondoFalso .)
+    FALSE           reduce using rule 53 (generarERA -> fondoFalso .)
+
 
 state 151
 
@@ -2798,8 +2806,8 @@ state 159
     |               reduce using rule 115 (termino -> factor checaroperador5 .)
     COAND           reduce using rule 115 (termino -> factor checaroperador5 .)
     )               reduce using rule 115 (termino -> factor checaroperador5 .)
-    ;               reduce using rule 115 (termino -> factor checaroperador5 .)
     ,               reduce using rule 115 (termino -> factor checaroperador5 .)
+    ;               reduce using rule 115 (termino -> factor checaroperador5 .)
 
 
 state 160
@@ -2905,6 +2913,7 @@ state 166
 
     )               reduce using rule 105 (checaoperador6 -> .)
     ;               reduce using rule 105 (checaoperador6 -> .)
+    ,               reduce using rule 105 (checaoperador6 -> .)
 
     checaoperador6                 shift and go to state 191
 
@@ -3125,22 +3134,24 @@ state 185
 
 state 186
 
-    (58) listaExp -> exp . verificarTiposFunc masExps
+    (50) funcs -> ID guardarIDFunc verProc generarERA auxExp . checaNumParam generaGOSUB
+    (48) checaNumParam -> . finFondoFalso
+    (108) finFondoFalso -> . )
+
+    )               shift and go to state 193
+
+    checaNumParam                  shift and go to state 208
+    finFondoFalso                  shift and go to state 209
+
+state 187
+
+    (58) listaExp -> expresion . verificarTiposFunc masExps
     (57) verificarTiposFunc -> .
 
     ,               reduce using rule 57 (verificarTiposFunc -> .)
     )               reduce using rule 57 (verificarTiposFunc -> .)
 
-    verificarTiposFunc             shift and go to state 208
-
-state 187
-
-    (50) funcs -> ID guardarIDFunc verProc generarERA auxExp . checaNumParam generaGOSUB
-    (48) checaNumParam -> . )
-
-    )               shift and go to state 209
-
-    checaNumParam                  shift and go to state 210
+    verificarTiposFunc             shift and go to state 210
 
 state 188
 
@@ -3195,6 +3206,7 @@ state 191
     (93) expresion -> exp operacionLogica checaoperador6 .
 
     )               reduce using rule 93 (expresion -> exp operacionLogica checaoperador6 .)
+    ,               reduce using rule 93 (expresion -> exp operacionLogica checaoperador6 .)
     ;               reduce using rule 93 (expresion -> exp operacionLogica checaoperador6 .)
 
 
@@ -3204,12 +3216,21 @@ state 192
 
     )               reduce using rule 103 (operacionLogica -> push_logica exp .)
     ;               reduce using rule 103 (operacionLogica -> push_logica exp .)
+    ,               reduce using rule 103 (operacionLogica -> push_logica exp .)
 
 
 state 193
 
     (108) finFondoFalso -> ) .
 
+    ID              reduce using rule 108 (finFondoFalso -> ) .)
+    DIBUJAR         reduce using rule 108 (finFondoFalso -> ) .)
+    IF              reduce using rule 108 (finFondoFalso -> ) .)
+    LEER            reduce using rule 108 (finFondoFalso -> ) .)
+    WHILE           reduce using rule 108 (finFondoFalso -> ) .)
+    MUEVE           reduce using rule 108 (finFondoFalso -> ) .)
+    }               reduce using rule 108 (finFondoFalso -> ) .)
+    RETURN          reduce using rule 108 (finFondoFalso -> ) .)
     *               reduce using rule 108 (finFondoFalso -> ) .)
     /               reduce using rule 108 (finFondoFalso -> ) .)
     +               reduce using rule 108 (finFondoFalso -> ) .)
@@ -3377,51 +3398,6 @@ state 207
 
 state 208
 
-    (58) listaExp -> exp verificarTiposFunc . masExps
-    (59) masExps -> . llegaComa listaExp
-    (60) masExps -> .
-    (56) llegaComa -> . ,
-
-  ! shift/reduce conflict for , resolved as shift
-    )               reduce using rule 60 (masExps -> .)
-    ,               shift and go to state 207
-
-  ! ,               [ reduce using rule 60 (masExps -> .) ]
-
-    llegaComa                      shift and go to state 226
-    masExps                        shift and go to state 227
-
-state 209
-
-    (48) checaNumParam -> ) .
-
-    ID              reduce using rule 48 (checaNumParam -> ) .)
-    DIBUJAR         reduce using rule 48 (checaNumParam -> ) .)
-    IF              reduce using rule 48 (checaNumParam -> ) .)
-    LEER            reduce using rule 48 (checaNumParam -> ) .)
-    WHILE           reduce using rule 48 (checaNumParam -> ) .)
-    MUEVE           reduce using rule 48 (checaNumParam -> ) .)
-    }               reduce using rule 48 (checaNumParam -> ) .)
-    RETURN          reduce using rule 48 (checaNumParam -> ) .)
-    *               reduce using rule 48 (checaNumParam -> ) .)
-    /               reduce using rule 48 (checaNumParam -> ) .)
-    +               reduce using rule 48 (checaNumParam -> ) .)
-    -               reduce using rule 48 (checaNumParam -> ) .)
-    >               reduce using rule 48 (checaNumParam -> ) .)
-    <               reduce using rule 48 (checaNumParam -> ) .)
-    MENORIGUAL      reduce using rule 48 (checaNumParam -> ) .)
-    MAYORIGUAL      reduce using rule 48 (checaNumParam -> ) .)
-    IGUALIGUAL      reduce using rule 48 (checaNumParam -> ) .)
-    DIFERENTE       reduce using rule 48 (checaNumParam -> ) .)
-    |               reduce using rule 48 (checaNumParam -> ) .)
-    COAND           reduce using rule 48 (checaNumParam -> ) .)
-    )               reduce using rule 48 (checaNumParam -> ) .)
-    ;               reduce using rule 48 (checaNumParam -> ) .)
-    ,               reduce using rule 48 (checaNumParam -> ) .)
-
-
-state 210
-
     (50) funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam . generaGOSUB
     (49) generaGOSUB -> .
 
@@ -3449,7 +3425,52 @@ state 210
     ;               reduce using rule 49 (generaGOSUB -> .)
     ,               reduce using rule 49 (generaGOSUB -> .)
 
-    generaGOSUB                    shift and go to state 228
+    generaGOSUB                    shift and go to state 226
+
+state 209
+
+    (48) checaNumParam -> finFondoFalso .
+
+    ID              reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    DIBUJAR         reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    IF              reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    LEER            reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    WHILE           reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    MUEVE           reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    }               reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    RETURN          reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    *               reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    /               reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    +               reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    -               reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    >               reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    <               reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    MENORIGUAL      reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    MAYORIGUAL      reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    IGUALIGUAL      reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    DIFERENTE       reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    |               reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    COAND           reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    )               reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    ;               reduce using rule 48 (checaNumParam -> finFondoFalso .)
+    ,               reduce using rule 48 (checaNumParam -> finFondoFalso .)
+
+
+state 210
+
+    (58) listaExp -> expresion verificarTiposFunc . masExps
+    (59) masExps -> . llegaComa listaExp
+    (60) masExps -> .
+    (56) llegaComa -> . ,
+
+  ! shift/reduce conflict for , resolved as shift
+    )               reduce using rule 60 (masExps -> .)
+    ,               shift and go to state 207
+
+  ! ,               [ reduce using rule 60 (masExps -> .) ]
+
+    llegaComa                      shift and go to state 227
+    masExps                        shift and go to state 228
 
 state 211
 
@@ -3664,8 +3685,39 @@ state 225
 
 state 226
 
+    (50) funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .
+
+    *               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    /               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    +               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    -               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    >               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    <               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    MENORIGUAL      reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    MAYORIGUAL      reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    IGUALIGUAL      reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    DIFERENTE       reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    |               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    COAND           reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    ;               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    ID              reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    DIBUJAR         reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    IF              reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    LEER            reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    WHILE           reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    MUEVE           reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    }               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    RETURN          reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    )               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    ,               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+
+
+state 227
+
     (59) masExps -> llegaComa . listaExp
-    (58) listaExp -> . exp verificarTiposFunc masExps
+    (58) listaExp -> . expresion verificarTiposFunc masExps
+    (93) expresion -> . exp operacionLogica checaoperador6
+    (94) expresion -> . exp
     (106) exp -> . termino checaroperador4
     (115) termino -> . factor checaroperador5
     (122) factor -> . fondoFalso expresion finFondoFalso
@@ -3700,45 +3752,17 @@ state 226
     recibe_CTI                     shift and go to state 133
     recibe_ID                      shift and go to state 128
     factor                         shift and go to state 129
-    exp                            shift and go to state 186
+    expresion                      shift and go to state 187
+    exp                            shift and go to state 134
     fondoFalso                     shift and go to state 135
     recibe_FALSE                   shift and go to state 136
 
-state 227
-
-    (58) listaExp -> exp verificarTiposFunc masExps .
-
-    ,               reduce using rule 58 (listaExp -> exp verificarTiposFunc masExps .)
-    )               reduce using rule 58 (listaExp -> exp verificarTiposFunc masExps .)
-
-
 state 228
 
-    (50) funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .
+    (58) listaExp -> expresion verificarTiposFunc masExps .
 
-    *               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    /               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    +               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    -               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    >               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    <               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    MENORIGUAL      reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    MAYORIGUAL      reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    IGUALIGUAL      reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    DIFERENTE       reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    |               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    COAND           reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    ;               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    ID              reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    DIBUJAR         reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    IF              reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    LEER            reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    WHILE           reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    MUEVE           reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    }               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    RETURN          reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    )               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
-    ,               reduce using rule 50 (funcs -> ID guardarIDFunc verProc generarERA auxExp checaNumParam generaGOSUB .)
+    ,               reduce using rule 58 (listaExp -> expresion verificarTiposFunc masExps .)
+    )               reduce using rule 58 (listaExp -> expresion verificarTiposFunc masExps .)
 
 
 state 229
@@ -3779,7 +3803,6 @@ state 233
 
     (87) bloqueCond -> { } .
 
-    ELSE            reduce using rule 87 (bloqueCond -> { } .)
     ID              reduce using rule 87 (bloqueCond -> { } .)
     DIBUJAR         reduce using rule 87 (bloqueCond -> { } .)
     IF              reduce using rule 87 (bloqueCond -> { } .)
@@ -3788,6 +3811,7 @@ state 233
     MUEVE           reduce using rule 87 (bloqueCond -> { } .)
     }               reduce using rule 87 (bloqueCond -> { } .)
     RETURN          reduce using rule 87 (bloqueCond -> { } .)
+    ELSE            reduce using rule 87 (bloqueCond -> { } .)
 
 
 state 234
@@ -3960,7 +3984,6 @@ state 252
 
     (86) bloqueCond -> { regresaCond } .
 
-    ELSE            reduce using rule 86 (bloqueCond -> { regresaCond } .)
     ID              reduce using rule 86 (bloqueCond -> { regresaCond } .)
     DIBUJAR         reduce using rule 86 (bloqueCond -> { regresaCond } .)
     IF              reduce using rule 86 (bloqueCond -> { regresaCond } .)
@@ -3969,6 +3992,7 @@ state 252
     MUEVE           reduce using rule 86 (bloqueCond -> { regresaCond } .)
     }               reduce using rule 86 (bloqueCond -> { regresaCond } .)
     RETURN          reduce using rule 86 (bloqueCond -> { regresaCond } .)
+    ELSE            reduce using rule 86 (bloqueCond -> { regresaCond } .)
 
 
 state 253
@@ -4044,7 +4068,6 @@ state 258
 
     (85) bloqueCond -> { estatuto regresaCond } .
 
-    ELSE            reduce using rule 85 (bloqueCond -> { estatuto regresaCond } .)
     ID              reduce using rule 85 (bloqueCond -> { estatuto regresaCond } .)
     DIBUJAR         reduce using rule 85 (bloqueCond -> { estatuto regresaCond } .)
     IF              reduce using rule 85 (bloqueCond -> { estatuto regresaCond } .)
@@ -4053,6 +4076,7 @@ state 258
     MUEVE           reduce using rule 85 (bloqueCond -> { estatuto regresaCond } .)
     }               reduce using rule 85 (bloqueCond -> { estatuto regresaCond } .)
     RETURN          reduce using rule 85 (bloqueCond -> { estatuto regresaCond } .)
+    ELSE            reduce using rule 85 (bloqueCond -> { estatuto regresaCond } .)
 
 
 state 259
@@ -4110,7 +4134,7 @@ WARNING:
 WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for } in state 36 resolved as shift
-WARNING: shift/reduce conflict for , in state 208 resolved as shift
+WARNING: shift/reduce conflict for , in state 210 resolved as shift
 WARNING: shift/reduce conflict for } in state 211 resolved as shift
 WARNING: reduce/reduce conflict in state 28 resolved using rule (vars -> empty)
 WARNING: rejected rule (masTipos -> empty) in state 28

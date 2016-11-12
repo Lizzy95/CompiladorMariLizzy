@@ -103,7 +103,14 @@ def suma(operando1, operando2, resultado):
 	contCuadruplos = contCuadruplos + 1
 	valor1 = 0
 	valor2 = 0
-	memoria = listaMemoria.pop()
+	auxMem = listaMemoria.pop()
+	if listaCuadruplos[contCuadruplos - 2].operador == '30':
+		memoria = listaMemoria.pop()
+	elif listaCuadruplos[contCuadruplos].operador == '31':
+		print memoria.listaMem
+		print auxMem.listaMem
+	else:
+		memoria = auxMem
 
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
@@ -139,10 +146,11 @@ def resta(operando1, operando2, resultado):
 	valor1 = 0
 	valor2 = 0
 	auxMem = listaMemoria.pop()
-	print "---", listaCuadruplos[contCuadruplos].operador
-	if listaCuadruplos[contCuadruplos].operador == '31':
-		print "entreee"
+	if listaCuadruplos[contCuadruplos - 2].operador == '30':
 		memoria = listaMemoria.pop()
+	elif listaCuadruplos[contCuadruplos].operador == '31':
+		print memoria.listaMem
+		print auxMem.listaMem
 	else:
 		memoria = auxMem
 
@@ -172,15 +180,30 @@ def resta(operando1, operando2, resultado):
 def multiplicacion(operando1, operando2, resultado):
 	global pilaMemoria
 	global diccionarioConstantes
-	print "entra multiplicacion"
+	print "entra multiplicacion", operando1, " ", operando2
 	global contCuadruplos
 	global tipoActual
 	global listaMemoria
 	contCuadruplos = contCuadruplos + 1
 	valor1 = 0
 	valor2 = 0
-	memoria = listaMemoria.pop()
+	auxMem = listaMemoria.pop()
+	print"----------", auxMem.listaMem
+	if listaCuadruplos[contCuadruplos - 2].operador == '30':
+		print "entraaa"
+		memoria = listaMemoria.pop()
+	elif listaCuadruplos[contCuadruplos].operador == '31':
+		print memoria.listaMem
+		print auxMem.listaMem
+	else:
+		print "entraaa21"
+		auxier = listaMemoria.pop()
+		print "entraa23",auxier.listaMem
+		memoria = auxMem
+		listaMemoria.append(auxier)
 
+	print "Operando 1 = ", operando1 , " Operando 2 = ", operando2
+	print diccionarioConstantes
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
@@ -193,6 +216,7 @@ def multiplicacion(operando1, operando2, resultado):
 		print "aux1 = ", aux1
 		valor2 = memoria.listaMem[tipoActual][aux1] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
+ 	print "valor1: ", valor1, "valor2: ",valor2
  	if '.' in str(valor1) or '.' in str(valor2):
  		memoria.listaMem[tipoActual][auxResultado] = float(valor1) * float(valor2)
  	else:
@@ -211,7 +235,14 @@ def division(operando1, operando2, resultado):
 	contCuadruplos = contCuadruplos + 1
 	valor1 = 0
 	valor2 = 0
-	memoria = listaMemoria.pop()
+	auxMem = listaMemoria.pop()
+	if listaCuadruplos[contCuadruplos - 2].operador == '30':
+		memoria = listaMemoria.pop()
+	elif listaCuadruplos[contCuadruplos].operador == '31':
+		print memoria.listaMem
+		print auxMem.listaMem
+	else:
+		memoria = auxMem
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
@@ -260,14 +291,14 @@ def asignacion(operando1, operando2, resultado):
 	else:
 		aux1 = tipodato[int(operando1)/1000](operando1)
 		valor1  = memoria.listaMem[tipoActual][aux1] 
+
 	contCuadruplos = contCuadruplos + 1
+	print "CONTADOR CUADRUPLOS  = ", contCuadruplos
 	print int(resultado)
 	auxp = int(resultado)
 	if diccionarioConstantes.has_key(str(auxp)):
-		print "entra222"
 		auxResultado = diccionarioConstantes[str(auxp)]
 	else:
-		print "saleeexs"
 		auxResultado = tipodato[int(resultado)/1000](resultado)
 	memoria.listaMem[tipoActual][auxResultado] = valor1
 	listaMemoria.append(memoria)
@@ -295,6 +326,7 @@ def comparacionMenor(operando1, operando2, resultado):
 	global tipoActual
 	global listaMemoria
 	contCuadruplos = contCuadruplos + 1
+	print "CONTADOR CUADRUPLOS  = ", contCuadruplos
 	valor1 = 0
 	valor2 = 0
 	memoria = listaMemoria.pop()
@@ -351,7 +383,7 @@ def comparacionMayor(operando1, operando2, resultado):
 		valor2 = memoria.listaMem[tipoActual][aux1] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
- 	if valor1 > valor2:
+ 	if float(valor1) > float(valor2):
  		memoria.listaMem[tipoActual][auxResultado] = 1
  	else:
  		memoria.listaMem[tipoActual][auxResultado] = 0
@@ -387,7 +419,9 @@ def comparacionMenorIgual(operando1, operando2, resultado):
 		valor2 = memoria.listaMem[tipoActual][aux1] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
- 	if valor1 <= valor2:
+ 	print "valor 1: ",valor1
+ 	print "valor 2: ",valor2
+ 	if float(valor1) <= float(valor2):
  		memoria.listaMem[tipoActual][auxResultado] = 1
  	else:
  		memoria.listaMem[tipoActual][auxResultado] = 0
@@ -423,7 +457,7 @@ def comparacionMayorIgual(operando1, operando2, resultado):
 		valor2 = memoria.listaMem[tipoActual][aux1] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
- 	if valor1 >= valor2:
+ 	if float(valor1) >= float(valor2):
  		memoria.listaMem[tipoActual][auxResultado] = 1
  	else:
  		memoria.listaMem[tipoActual][auxResultado] = 0
@@ -458,7 +492,7 @@ def comparacionIgual(operando1, operando2, resultado):
 		valor2 = memoria.listaMem[tipoActual][aux1] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
- 	if valor1 == valor2:
+ 	if float(valor1) == float(valor2):
  		memoria.listaMem[tipoActual][auxResultado] = 1
  	else:
  		memoria.listaMem[tipoActual][auxResultado] = 0
@@ -494,7 +528,7 @@ def comparacionDiferente(operando1, operando2, resultado):
 		valor2 = memoria.listaMem[tipoActual][aux1] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
- 	if valor1 != valor2:
+ 	if float(valor1) != float(valor2):
  		memoria.listaMem[tipoActual][auxResultado] = 1
  	else:
  		memoria.listaMem[tipoActual][auxResultado] = 0
@@ -528,7 +562,7 @@ def comparacionOR(operando1, operando2, resultado):
 		valor2 = memoria.listaMem[tipoActual][aux1] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
- 	if valor1 or valor2:
+ 	if float(valor1) or float(valor2):
  		memoria.listaMem[tipoActual][auxResultado] = 1
  	else:
  		memoria.listaMem[tipoActual][auxResultado] = 0
@@ -563,7 +597,7 @@ def comparacionAND(operando1, operando2, resultado):
 		valor2 = memoria.listaMem[tipoActual][aux1] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
- 	if valor1 and valor2:
+ 	if float(valor1) and float(valor2):
  		memoria.listaMem[tipoActual][auxResultado] = 1
  	else:
  		memoria.listaMem[tipoActual][auxResultado] = 0
@@ -609,21 +643,21 @@ def arriba(operando1, operando2, resultado):
 	print "entra arriba"
 def retorno(operando1, operando2, resultado):
 	print "entra retorno", operando1, " ", operando2, " ", resultado
-
 	global contCuadruplos
 	global listaMemoria
 	global diccionarioConstantes
+	print len(listaMemoria)
 	funcionMem = listaMemoria.pop()
 	funcionMain = listaMemoria.pop()
 	valor1 = 0
-	print diccionarioConstantes
 	if diccionarioConstantes.has_key(operando2):
 		valor1 = diccionarioConstantes[operando2]
 	else:
 		aux1 = tipodato[int(operando2)/1000](operando2)
 		valor1  = funcionMem.listaMem[tipoActual][aux1] 
-	diccionarioConstantes[str(int(resultado))] = valor1
+	# diccionarioConstantes[str(int(resultado))] = valor1
 	print " regresaa", funcionMem.cuadrRetorno, " ", len(listaCuadruplos)
+	print "CONTADOR CUADRUPLOS  = ", contCuadruplos
 	contCuadruplos = funcionMem.cuadrRetorno
 	listaMemoria.append(funcionMain)
 
@@ -634,8 +668,10 @@ def generarERA(operando1, operando2, resultado):
 	print "entra generarERA"
 	global listaMemoria
 	global contCuadruplos
+	global diccionarioConstantes
 	print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", contCuadruplos	
 	memoriaMain = Memoria(0,{},{},{},{},{},{},{},{},{},{},{},{}, {},{},{},{})
+	diccionarioConstantes[str(int(resultado))] = 0
 	listaMemoria.append(memoriaMain)
 	contCuadruplos = contCuadruplos + 1
 
@@ -671,6 +707,7 @@ def generaGOSUB(operando1, operando2, resultado):
 	global contCuadruplos
 	global listaMemoria
 	memoria  = listaMemoria.pop()
+	print "CONTADOR CUADRUPLOS  = ", contCuadruplos
 	memoria.cuadrRetorno = contCuadruplos + 1
 	listaMemoria.append(memoria)
 	contCuadruplos = int(resultado)
@@ -683,8 +720,8 @@ options = {
 	'5' : asignacion, 
 	'6' : comparacionMayor,
 	'7' : comparacionMenor,
-	'8': comparacionMenorIgual,
-	'9' : comparacionMayorIgual,
+	'9': comparacionMenorIgual,
+	'8' : comparacionMayorIgual,
 	'10' : comparacionIgual,
 	'11' : comparacionDiferente,
 	'12' : comparacionOR,
