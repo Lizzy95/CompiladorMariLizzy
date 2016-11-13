@@ -1,27 +1,18 @@
-func entero marrriiiiis(entero dE){
-	entero bB;
-	bB = 43;
-	return bB
-}
-func entero lizzy(entero mA){
+func entero factorial(entero mA){
 	entero hH, nM;
 	hH = 50;
 	nM = hH;
-	if(mA == 0){
-		hH = 2+ marrriiiiis(nM);
-		return 2+marrriiiiis(nM)
+	if(mA == 1){
+		return 1
 	}
-	else{
-		hH = 2* lizzy(mA -1 );
-	}
-	return hH
+	return mA * factorial(mA-1)
 }
 
 inicio
 {
 	entero aAA,bBBB, gGGGG;
 	gGGGG = 3;
-	aAA = 12;
-	aAA = lizzy(aAA);
+	aAA = 9;
+	aAA = factorial(aAA);
 }
 fin
