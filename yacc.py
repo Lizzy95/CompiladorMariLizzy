@@ -138,6 +138,7 @@ def p_funcAgregar(p):
 		diccionarioMemoria['1'][str(tipoActual)] = valormem + 1
 		diccionarioVarGlobal[p[-1]] = valormem
 
+
 def p_param(p):
 	''' param : tipo  ID guardarIDParam maspaID 
 		 		| empty'''
@@ -347,7 +348,7 @@ def p_guardarCuadruplo(p):
 	pass
 #Sintaxis para el retorno de una variable
 def p_regresa(p):
-	''' regresa : RETURN ID generarCuadRetorno'''
+	''' regresa : RETURN expresion generarCuadRetorno'''
 	pass
 
 def p_generarCuadRetorno(p):
@@ -388,7 +389,7 @@ def p_estatutoAux(p):
 	pass
 #Regla para verificar que el numero de parametros sea el mismo
 def p_checaNumParam(p):
-	''' checaNumParam : finFondoFalso '''
+	''' checaNumParam : finFondoFalso'''
 	global contParam
 	global listaFunciones
 	global llamada
@@ -443,6 +444,8 @@ def p_guardarIDFunc(p):
 	aux1 = p[-1]
 	print "resul", p[-1]
 	pilaOperandosDirMem.append(diccionarioVarGlobal[p[-1]])
+
+
 
 def p_verProc(p):
 	''' verProc : '''
@@ -505,7 +508,7 @@ def p_verificarTiposFunc(p):
 	pass
 
 def p_listaExp(p):
-	'''listaExp : expresion verificarTiposFunc masExps'''
+	'''listaExp : exp verificarTiposFunc masExps'''
 	pass
 
 def p_masExps(p):
@@ -666,7 +669,7 @@ def p_bloqueCond(p):
 	pass
 
 def p_regresaCond(p):
-	''' regresaCond :  RETURN ID generarCuadRetorno
+	''' regresaCond :  RETURN expresion generarCuadRetorno
 					| empty'''
 	pass
 

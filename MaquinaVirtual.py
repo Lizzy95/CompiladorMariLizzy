@@ -655,7 +655,7 @@ def retorno(operando1, operando2, resultado):
 	else:
 		aux1 = tipodato[int(operando2)/1000](operando2)
 		valor1  = funcionMem.listaMem[tipoActual][aux1] 
-	# diccionarioConstantes[str(int(resultado))] = valor1
+	diccionarioConstantes[str(int(resultado))] = valor1
 	print " regresaa", funcionMem.cuadrRetorno, " ", len(listaCuadruplos)
 	print "CONTADOR CUADRUPLOS  = ", contCuadruplos
 	contCuadruplos = funcionMem.cuadrRetorno
@@ -671,7 +671,7 @@ def generarERA(operando1, operando2, resultado):
 	global diccionarioConstantes
 	print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", contCuadruplos	
 	memoriaMain = Memoria(0,{},{},{},{},{},{},{},{},{},{},{},{}, {},{},{},{})
-	diccionarioConstantes[str(int(resultado))] = 0
+	#diccionarioConstantes[str(int(resultado))] = 1
 	listaMemoria.append(memoriaMain)
 	contCuadruplos = contCuadruplos + 1
 
@@ -688,8 +688,6 @@ def generaParam(operando1, operando2, resultado):
 	# print "Operando 1  = ", operando1
 	# print "Operando2 = ", operando2
 	# print "Resultado = ",resultado
-
-
 	valor1 = 0
 	if diccionarioConstantes.has_key(operando2):
 		valor1 = diccionarioConstantes[operando2]
