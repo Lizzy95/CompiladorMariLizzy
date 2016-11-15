@@ -40,7 +40,13 @@ def p_programa(p):
 	global pilaOperandosDirMem
 	global pilaSaltosFunc
 	global listaCuadruplos
+	global listaFunciones
 	print("SE TERMINO EL PROGRAMA PATIO CON EXITO!")
+	for elemento in listaFunciones:
+		for var in elemento.arrVar:
+			print var.ren , var.col
+
+
 	escribeArchivo()
 	#print(pilaOperandos, "la ", pilaOperandosDirMem, "de ", pilaOperadores)
 	pass
@@ -91,12 +97,36 @@ def p_masIDS2(p):
 	pass
 #Sintaxis para declaracion de arreglos
 def p_arreglo(p):
-	''' arreglo : "[" CTI "]" matriz '''
+	''' arreglo : "[" expresion  guardarExpArr  '''
+	pass
+def p_guardarExpArr(p):
+	''' guardarExpArr :  "]" matriz '''
+	global pilaOperandos
+	global pilaOperandosDirMem
+	global listaFunciones
+	pos = busquedaLista()
+	longi = len(listaFunciones[pos].arrVar) - 1
+	var = listaFunciones[pos].arrVar[longi]
+	temp = pilaOperandos.pop()
+	tempMem = pilaOperandosDirMem.pop()
+	var.ren = tempMem
 	pass
 #Sintaxis para la declaracion de matrices
 def p_matriz(p):
-	''' matriz : "[" CTI "]" 
+	''' matriz : "[" expresion guardarExpMat
 			   | empty '''
+	pass
+def p_guardarExpMat(p):
+	''' guardarExpMat :  "]" '''
+	global pilaOperandos
+	global pilaOperandosDirMem
+	global listaFunciones
+	pos = busquedaLista()
+	longi = len(listaFunciones[pos].arrVar) - 1
+	var = listaFunciones[pos].arrVar[longi]
+	temp = pilaOperandos.pop()
+	tempMem = pilaOperandosDirMem.pop()
+	var.col = tempMem
 	pass
 #Sintaxis para la creacion de funciones
 def p_funcion(p): 
@@ -157,7 +187,7 @@ def p_guardarIDParam(p):
 		posicion = busquedaLista()
 		var = diccionarioMemoria[tipofuncMem]
 		valormem = var[str(tipoActual)]
-		agregarVar = TVar(p[-1], tipoActual, valormem)
+		agregarVar = TVar(p[-1], tipoActual, valormem,0,0)
 		diccionarioMemoria[tipofuncMem][str(tipoActual)] = valormem + 1
 		listaFunciones[posicion].arrParam.append(agregarVar)
 		print "Se guardo el parametro en la tabla de parametros ", tipoActual
@@ -245,7 +275,7 @@ def p_guardarIDs(p):
 			posicion = busquedaLista()
 			var = diccionarioMemoria[tipofuncMem]
 			valormem = var[str(tipoActual)]
-			agregarVar = TVar(p[-1], tipoActual, valormem)
+			agregarVar = TVar(p[-1], tipoActual, valormem,0,0)
 			diccionarioMemoria[tipofuncMem][str(tipoActual)] = valormem + 1 
 			listaFunciones[posicion].arrVar.append(agregarVar)
 			print "Se guardo la variable en la tabla ", tipoActual
@@ -563,11 +593,33 @@ def p_checarOperadorIgual(p):
 	pass
 
 def p_opcionAsignacion(p):
-	''' opcionAsignacion : "[" CTI "]"
-						| "[" CTI "]" "[" CTI "]"
+	''' opcionAsignacion : "[" expresion generaCuadruploArreglo "]" 
+						| "[" expresion  generaCuadruploArreglo "]" "[" expresion generaCuadruploMatriz  "]"
 						| empty '''
 	pass
+def p_generaCuadruploArreglo(p):
+	''' generaCuadruploArreglo :  '''
+	global listaCuadruplos
+	global listaFunciones
+	global pilaOperadores
+	global pilaOperandosDirMem
+	pos = busquedaLista()
+	func = listaFunciones[pos].arrVar
+	longi = len(var)
 
+	operando1 = pilaOperandos.pop()
+	operandoMem1 = pilaOperandosDirMem.pop()
+	operando2 = pilaOperandos.pop()
+	operandoMem2 = pilaOperandosDirMem.pop()
+
+
+
+	cuadr = Cuadruplo(33, operandoMem1,,)
+	listaCuadruplos.append(cuadr)
+	pass
+def p_generaCuadruploMatriz(p):
+	''' generaCuadruploMatriz :  '''
+	pass
 def p_valorAsig(p):
 	''' valorAsig : "="  expresion
 				  | empty'''
@@ -609,8 +661,8 @@ def p_lectura(p):
 	pass
 
 def p_opcionesLectura(p):
-	''' opcionesLectura : "[" CTI "]"
-						| "[" CTI "]" "[" CTI "]"
+	''' opcionesLectura : "[" expresion "]"
+						| "[" expresion "]" "[" expresion "]"
 						| empty '''
 	pass
 
@@ -784,7 +836,7 @@ def p_checaoperador6(p):
 			else:
 				print("SE CHECO EL CUADRUPLO Y ES CORRECTO", operando2, operando1, operadorActual)
 				valormem = var[str(resultado)]
-				agregarVar = TVar('temp', resultado, valormem)
+				agregarVar = TVar('temp', resultado, valormem,0,0)
 				diccionarioMemoria['3'][str(resultado)] = valormem + 1
 				listaFunciones[posicion].arrVar.append(agregarVar)
 				pilaOperandosDirMem.append(valormem)
@@ -844,7 +896,7 @@ def p_checaroperador4(p):
 			posicion = busquedaLista()
 			var = diccionarioMemoria['3']
 			valormem = var[str(resultado)]
-			agregarVar = TVar('temp', resultado, valormem)
+			agregarVar = TVar('temp', resultado, valormem,0,0)
 			diccionarioMemoria['3'][str(resultado)] = valormem + 1
 			listaFunciones[posicion].arrVar.append(agregarVar)
 			pilaOperandosDirMem.append(valormem)
@@ -910,7 +962,7 @@ def p_checaroperador5(p):
 			else:
 				print("SE CHECO EL CUADRUPLO Y ES CORRECTO", operando2, operando1, operadorActual)
 				valormem = var[str(resultado)]
-				agregarVar = TVar('temp', resultado, valormem)
+				agregarVar = TVar('temp', resultado, valormem,0,0)
 				diccionarioMemoria['3'][str(resultado)] = valormem + 1
 				listaFunciones[posicion].arrVar.append(agregarVar)
 				pilaOperandosDirMem.append(valormem)
@@ -998,9 +1050,13 @@ def p_varcte(p):
 			   | recibe_CTI  
 			   | recibe_TRUE 
 			   | recibe_FALSE 
-			   | funcs '''
+			   | funcs
+			   | recibeArreglo '''
 	pass
 
+def p_recibeArreglo(p):
+	'''recibeArreglo : recibe_ID opcionAsignacion '''
+	pass
 def p_recibe_ID(p):
 	''' recibe_ID : ID '''
 	print("VARCTE: ", p[1])
@@ -1030,7 +1086,7 @@ def p_recibe_CTF(p):
 	posicion = busquedaLista()
 	var = diccionarioMemoria['4']
 	valormem = var[str(7)]
-	agregarVar = TVar(p[1],7, valormem)
+	agregarVar = TVar(p[1],7, valormem,0,0)
 	diccionarioMemoria['4'][str(7)] = valormem + 1
 	listaFunciones[posicion].arrVar.append(agregarVar)
 	diccConstantes[valormem] = p[1]
@@ -1046,7 +1102,7 @@ def p_recibe_CTI(p):
 	posicion = busquedaLista()
 	var = diccionarioMemoria['4']
 	valormem = var[str(1)]
-	agregarVar = TVar(p[1],1, valormem)
+	agregarVar = TVar(p[1],1, valormem,0,0)
 	diccionarioMemoria['4'][str(1)] = valormem + 1
 	listaFunciones[posicion].arrVar.append(agregarVar)
 	diccConstantes[valormem] = p[1]
@@ -1061,7 +1117,7 @@ def p_recibe_TRUE(p):
 	posicion = busquedaLista()
 	var = diccionarioMemoria['4']
 	valormem = var[str(8)]
-	agregarVar = TVar(p[1],8, valormem)
+	agregarVar = TVar(p[1],8, valormem,0,0)
 	diccionarioMemoria['4'][str(8)] = valormem + 1
 	listaFunciones[posicion].arrVar.append(agregarVar)
 	diccConstantes[valormem] = p[1]

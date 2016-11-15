@@ -30,6 +30,8 @@
 #30 ERA
 #31 PARAM
 #32 GOSUB
+#33 VER
+
 
 
 #enteros
