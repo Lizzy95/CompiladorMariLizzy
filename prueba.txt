@@ -1,4 +1,3 @@
-
 inicio
 {
 	entero bB;

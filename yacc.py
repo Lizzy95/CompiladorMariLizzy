@@ -46,11 +46,9 @@ def p_programa(p):
 	global listaCuadruplos
 	global listaFunciones
 	print("SE TERMINO EL PROGRAMA PATIO CON EXITO!")
-	for elemento in listaFunciones:
-		for var in elemento.arrVar:
-			print var.ren , var.col, var.nombre
-
-
+	# for elemento in listaFunciones:
+	# 	for var in elemento.arrVar:
+	# 		print var.ren , var.col, var.nombre
 	escribeArchivo()
 	#print(pilaOperandos, "la ", pilaOperandosDirMem, "de ", pilaOperadores)
 	pass
@@ -108,12 +106,7 @@ def p_arreglo(p):
 	pos = busquedaLista()
 	pos1 = busquedaVar(p[-2])
 	print "Entre  a arreglooo"
-	print pilaOperandos
-	print pilaOperandosDirMem
 	pilaOperandosDirMem.pop()
-	#pilaOperandosDirMem.append(listaFunciones[pos].arrVar[pos1].direcmem)
-	#pilaOperandos.append(listaFunciones[pos].arrVar[pos1].tipo)
-	print pilaOperandosDirMem
 	pass
 
 def p_guardarExpArr(p):
@@ -124,7 +117,7 @@ def p_guardarExpArr(p):
 	global diccionarioMemoria
 	global tipoActual
 	global tipofuncMem
-	print "entre a guardarrr ARREGLO", pilaOperandosDirMem
+	print "Entre a guardar exp arreglo"
 	if(len(pilaOperandosDirMem) != 1):
 		operando1 = pilaOperandosDirMem.pop()
 		res = pilaOperandosDirMem.pop()
@@ -149,7 +142,7 @@ def p_guardarExpMat(p):
 	global pilaOperandos
 	global pilaOperandosDirMem
 	global listaFunciones
-	print "entre a guardarrr MATRIZ", pilaOperandosDirMem
+	print "Entre guardar exp Matriz"
 	operando2 = pilaOperandosDirMem.pop()
 	operando1 = pilaOperandosDirMem.pop()
 	res = pilaOperandosDirMem.pop()
@@ -451,7 +444,6 @@ def p_generarCuadRetorno(p):
 
 	posicion = busquedaLista()
 	posicion2 = busquedaVar(p[-1])
-	print "---------------",pilaOperandosDirMem
 	if posicion2 != -1:
 		memoria = listaFunciones[posicion].arrVar[posicion2]
 		pilaOperandos.append(memoria.tipo)
@@ -501,7 +493,6 @@ def p_generaGOSUB(p):
 	cuadr = Cuadruplo(32,-1,-1,aux1)
 	listaCuadruplos.append(cuadr)
 	print "LLLLLLLLLLLLLLLLLLLLLLLLLLLLL",listaFunciones[pos].cuadruploInicial
-	print pilaOperandosDirMem
 	#if funcionActual != "inicio":
 	var = diccionarioMemoria['3']
 	mem = var[str(listaFunciones[pos].tipo)]
@@ -719,9 +710,6 @@ def p_generaCuadruploMatriz(p):
 		pilaOperandosDirMem.append(mem)
 		pilaOperandos.append(operando1)
 		diccionarioMemoria['3']['9'] = mem + 1
-	
-	print operandoMem1, colArreglo
-	print pilaOperandos
 	pass
 def p_valorAsig(p):
 	''' valorAsig : "="  expresion

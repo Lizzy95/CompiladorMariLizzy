@@ -1,0 +1,18 @@
+func entero factorial(entero mA){
+	entero hH, nM;
+	hH = 50;
+	nM = hH;
+	if(mA == 1){
+		return 1
+	}
+	return mA * factorial(mA-1)
+}
+
+inicio
+{
+	entero aAA,bBBB, gGGGG;
+	gGGGG = 3;
+	aAA = 9;
+	aAA = factorial(aAA);
+}
+fin

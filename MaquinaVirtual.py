@@ -196,11 +196,10 @@ def multiplicacion(operando1, operando2, resultado):
 		print memoria.listaMem
 		print auxMem.listaMem
 	else:
-		print "entraaa21"
-		auxier = listaMemoria.pop()
-		print "entraa23",auxier.listaMem
+		# print "entraaa21"
+		# auxier = listaMemoria.pop()
 		memoria = auxMem
-		listaMemoria.append(auxier)
+		# listaMemoria.append(auxier)
 
 	print "Operando 1 = ", operando1 , " Operando 2 = ", operando2
 	print diccionarioConstantes
