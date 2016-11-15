@@ -1,11 +1,11 @@
 
 inicio
 {
+	entero bB;
+	entero aA[2][3];
+	bB = aA[1][2];
 
-	entero nM;
-	entero aA[2][1];
-	nM = aA[0][0];
-	
+	leer aA[0][1];
 
 }
 fin
