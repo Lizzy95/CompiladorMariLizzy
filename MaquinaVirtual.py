@@ -74,6 +74,10 @@ def varBoolTemp(variable):
 	global tipoActual
 	tipoActual = 15
 	return int(variable) - 23001
+def varApuntTemp(variable):
+	global tipoActual
+	tipoActual = 16
+	return int(variable) - 24001
 
 tipodato = {
 	8 : varEntero,
@@ -92,11 +96,12 @@ tipodato = {
 	21 : varEstrTemp,
 	22 : varDecTemp,
 	23 : varBoolTemp,
+	24 : varApuntTemp,
 }
 def suma(operando1, operando2, resultado):
 	global pilaMemoria
 	global diccionarioConstantes
-	print "entra suma"
+	print "entra suma", operando1, operando2, resultado
 	global contCuadruplos
 	global tipoActual
 	global listaMemoria
@@ -104,6 +109,7 @@ def suma(operando1, operando2, resultado):
 	valor1 = 0
 	valor2 = 0
 	auxMem = listaMemoria.pop()
+
 	if listaCuadruplos[contCuadruplos - 2].operador == '30':
 		memoria = listaMemoria.pop()
 	elif listaCuadruplos[contCuadruplos].operador == '31':
@@ -111,26 +117,46 @@ def suma(operando1, operando2, resultado):
 		print auxMem.listaMem
 	else:
 		memoria = auxMem
-
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
 		try:
 			aux1 = tipodato[int(operando1)/1000](operando1)
-			valor1  = memoria.listaMem[tipoActual][aux1] 
+			if tipoActual == 16:
+				valor1 = memoria.listaMem[tipoActual][aux1]
+				operando1 = valor1
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				valor1  = memoria.listaMem[tipoActual][aux1]
+			else:
+				valor1  = memoria.listaMem[tipoActual][aux1]
 		except KeyError:
 			print "Variable no tiene valor asignado"
 			sys.exit()
-	if diccionarioConstantes.has_key(operando2):
-		valor2 = diccionarioConstantes[operando2]
+	auxResultado = tipodato[int(resultado)/1000](resultado)	
+	print auxResultado, resultado	
+	if tipoActual == 16:
+		print "entraaa"
+		memoria.listaMem[tipoActual][auxResultado] = int(valor1) + int(operando2)
 	else:
-		aux1 = tipodato[int(operando2)/1000](operando2)
-		valor2 = memoria.listaMem[tipoActual][aux1] 
- 	auxResultado = tipodato[int(resultado)/1000](resultado)
- 	if '.' in str(valor1) or '.' in str(valor2):
- 		memoria.listaMem[tipoActual][auxResultado] = float(valor1) + float(valor2)
- 	else:
-		memoria.listaMem[tipoActual][auxResultado] = int(valor1) + int(valor2)
+		print "entrssss"
+		if diccionarioConstantes.has_key(operando2):
+			print"entra if"
+			valor2 = diccionarioConstantes[operando2]
+		else:
+			print "enf"
+			aux2 = tipodato[int(operando2)/1000](operando2)
+			if tipoActual == 16:
+				valor2 = memoria.listaMem[tipoActual][aux2]
+				operando2 = valor2
+				aux2 = tipodato[int(operando2)/1000](operando2)
+				valor2  = memoria.listaMem[tipoActual][aux2]
+			else:
+				valor2  = memoria.listaMem[tipoActual][aux2] 
+	 	auxResultado = tipodato[int(resultado)/1000](resultado)
+	 	if '.' in str(valor1) or '.' in str(valor2):
+	 		memoria.listaMem[tipoActual][auxResultado] = float(valor1) + float(valor2)
+	 	else:
+			memoria.listaMem[tipoActual][auxResultado] = int(valor1) + int(valor2)
 	listaMemoria.append(memoria)
 	print "la suma es", memoria.listaMem[tipoActual][auxResultado]
 
@@ -285,20 +311,39 @@ def asignacion(operando1, operando2, resultado):
 	global listaMemoria
 	memoria = listaMemoria.pop()
 	valor1 = 0
+
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
 		aux1 = tipodato[int(operando1)/1000](operando1)
-		valor1  = memoria.listaMem[tipoActual][aux1] 
+		if tipoActual == 16:
+			valor1  = memoria.listaMem[tipoActual][aux1] 
+			operando1 = str(valor1)
+			if diccionarioConstantes.has_key(operando1):
+				valor1 = diccionarioConstantes[operando1]
+			else:
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				print ":",operando1, aux1, tipoActual, memoria.listaMem[tipoActual]
+				valor1  = memoria.listaMem[tipoActual][aux1] 
+		else:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			print operando1, aux1, tipoActual, memoria.listaMem
+			valor1  = memoria.listaMem[tipoActual][aux1] 
 
 	contCuadruplos = contCuadruplos + 1
 	print "CONTADOR CUADRUPLOS  = ", contCuadruplos
 	print int(resultado)
 	auxp = int(resultado)
+
 	if diccionarioConstantes.has_key(str(auxp)):
 		auxResultado = diccionarioConstantes[str(auxp)]
 	else:
 		auxResultado = tipodato[int(resultado)/1000](resultado)
+		if tipoActual == 16:
+			auxR = memoria.listaMem[tipoActual][auxResultado]
+			resultado = auxR
+			auxResultado = tipodato[int(resultado)/1000](resultado)
+
 	memoria.listaMem[tipoActual][auxResultado] = valor1
 	listaMemoria.append(memoria)
 	print "asignacion ", memoria.listaMem[tipoActual][auxResultado]
@@ -709,6 +754,37 @@ def generaGOSUB(operando1, operando2, resultado):
 	listaMemoria.append(memoria)
 	contCuadruplos = int(resultado)
 
+def generaVER(operando1, operando2, resultado):
+	print "entra generaVER"
+	print operando1
+	print operando2
+	print resultado
+	global contCuadruplos
+	global diccionarioConstantes
+	global listaMemoria
+	funcionMain = listaMemoria.pop()
+	if diccionarioConstantes.has_key(operando1):
+		valor1 = diccionarioConstantes[operando1]
+		print "Entre constante1", valor1
+	else:
+		aux1 = tipodato[int(operando1)/1000](operando1)
+		valor1  = funcionMain.listaMem[tipoActual][aux1] 
+
+	if diccionarioConstantes.has_key(str(int(resultado))):
+		valor2 = diccionarioConstantes[str(int(resultado))]
+		print "Entre constante2",valor2, str(int(resultado))
+	else:
+		aux1 = tipodato[int(resultado)/1000](resultado)
+		valor2  = funcionMain.listaMem[tipoActual][aux1] 
+
+	if float(valor1) < float(valor2) and float(valor1) >= 0.0:
+		contCuadruplos = contCuadruplos + 1 
+	else:
+		print "Error en indice de arreglo"
+		sys.exit()
+	listaMemoria.append(funcionMain)
+
+
 options = {
 	'1' : suma,
 	'2' : resta, 
@@ -736,6 +812,7 @@ options = {
 	'30' : generarERA,
 	'31' : generaParam,
 	'32' : generaGOSUB,
+	'33' : generaVER,
 	
 }
 archivo = open("maquiVirtual.txt")
@@ -762,7 +839,7 @@ while linea != '$$\n':
 	linea = archivo.readline()
 archivo.close()
 
-memoriaMain = Memoria(0,{},{},{},{},{},{},{},{},{},{},{},{}, {},{},{},{})
+memoriaMain = Memoria(0,{},{},{},{},{},{},{},{},{},{},{},{}, {},{},{},{},{})
 listaMemoria.append(memoriaMain)
 
 while contCuadruplos < len(listaCuadruplos):

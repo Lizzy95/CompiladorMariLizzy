@@ -1,10 +1,11 @@
 inicio
 {
 	entero bB;
-	entero aA[2][3];
-	bB = aA[1][2];
+	entero aA[4];
+	aA[2] = 5;
 
-	leer aA[0][1];
+	bB = 9 + aA[2];  
+
 
 }
 fin

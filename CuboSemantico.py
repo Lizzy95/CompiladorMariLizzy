@@ -34,6 +34,7 @@
 
 
 
+
 #enteros
 cuboSemantico = [[[-1 for k in range(14)] for j in range(9)] for i in range(9)]
 

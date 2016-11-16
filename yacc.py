@@ -106,7 +106,8 @@ def p_arreglo(p):
 	pos = busquedaLista()
 	pos1 = busquedaVar(p[-2])
 	print "Entre  a arreglooo"
-	pilaOperandosDirMem.pop()
+	if len(pilaOperandosDirMem) > 0:
+		pilaOperandosDirMem.pop()
 	pass
 
 def p_guardarExpArr(p):
@@ -118,7 +119,7 @@ def p_guardarExpArr(p):
 	global tipoActual
 	global tipofuncMem
 	print "Entre a guardar exp arreglo"
-	if(len(pilaOperandosDirMem) != 1):
+	if(len(pilaOperandosDirMem) != 1) and (len(pilaOperandosDirMem) > 0):
 		operando1 = pilaOperandosDirMem.pop()
 		res = pilaOperandosDirMem.pop()
 		pos = busquedaLista()
@@ -142,7 +143,7 @@ def p_guardarExpMat(p):
 	global pilaOperandos
 	global pilaOperandosDirMem
 	global listaFunciones
-	print "Entre guardar exp Matriz"
+	print "Entre guardar exp Matriz", pilaOperandosDirMem
 	operando2 = pilaOperandosDirMem.pop()
 	operando1 = pilaOperandosDirMem.pop()
 	res = pilaOperandosDirMem.pop()
@@ -605,6 +606,8 @@ def p_guardarIDPila(p):
 	global pilaOperandos
 	global listaCuadruplos
 	global pilaOperandosDirMem
+	global renArreglo
+	global colArreglo
 	posicion = busquedaLista()
 	print "guardarIDPila", p[-1]
 	posicion2 = busquedaVar(p[-1])
@@ -612,6 +615,9 @@ def p_guardarIDPila(p):
 		memoria = listaFunciones[posicion].arrVar[posicion2]
 		pilaOperandos.append(memoria.tipo)
 		pilaOperandosDirMem.append(memoria.direcmem)
+		print "entraaa", memoria.col, memoria.ren
+		colArreglo = memoria.col
+		renArreglo = memoria.ren
 	else:
 		print "NO SE PUEDE HACER UNA ASIGNACION A UNA VARIABLE QUE NO EXISTA"
 
@@ -644,12 +650,14 @@ def p_checarOperadorIgual(p):
 	pass
 
 def p_opcionAsignacion(p):
-	''' opcionAsignacion : "[" expresion "]" opcionmatriz 
+	''' opcionAsignacion : "[" expresion opcionmatriz 
  						| empty '''
  	pass
 
 def p_opcionmatriz(p):
-	'''opcionmatriz : "[" expresion generaCuadruploMatriz '''
+	'''opcionmatriz : "]" "[" expresion generaCuadruploMatriz
+					| generaCuadruploMatriz
+					| empty '''
 	pass
 
 def p_generaCuadruploMatriz(p):
@@ -663,14 +671,15 @@ def p_generaCuadruploMatriz(p):
 	pos = busquedaLista()
 	func = listaFunciones[pos].arrVar
 	longi = len(func)
-
+	print "dad", pilaOperandosDirMem
 	if colArreglo != 0:
 		operando1 = pilaOperandos.pop()
 		operandoMem1 = pilaOperandosDirMem.pop()
 		operando2 = pilaOperandos.pop()
 		operandoMem2 = pilaOperandosDirMem.pop()
 		#cuadruplo verificar
-		cuadr = Cuadruplo(33,operandoMem1, 0, renArreglo)
+		cuadr = Cuadruplo(33,operandoMem2, 0, renArreglo)
+		print "renArreglo ", renArreglo
 		listaCuadruplos.append(cuadr)
 		#direccion base para cuadruplos
 		dirBase = pilaOperandosDirMem.pop()
@@ -678,25 +687,26 @@ def p_generaCuadruploMatriz(p):
 
 		var = diccionarioMemoria['3']
 		mem = var[str(operando1)]
-		cuadr = Cuadruplo(3, renArreglo, colArreglo, mem)
+		cuadr = Cuadruplo(3, operandoMem2, operandoMem1, mem)
 		listaCuadruplos.append(cuadr)
-		cuadr2 = Cuadruplo(33,operandoMem2, 0, colArreglo)
+		cuadr2 = Cuadruplo(33,operandoMem1, 0, colArreglo)
 		listaCuadruplos.append(cuadr2)
-		cuadr1 = Cuadruplo(1, mem, colArreglo, mem+1)
+		cuadr1 = Cuadruplo(1, mem, operandoMem1, mem+1)
 		diccionarioMemoria['3'][listaFunciones[pos].tipo] = mem + 2
 		listaCuadruplos.append(cuadr1)
 		print "colArreglo = ", colArreglo
 		var1 = diccionarioMemoria['3']
 		mem1 = var['9']
 		cuadr = Cuadruplo(1, mem+1,dirBase, mem1)
+		listaCuadruplos.append(cuadr)
 		pilaOperandosDirMem.append(mem1)
 		pilaOperandos.append(operando1)
 		diccionarioMemoria['3']['9'] = mem1 + 1
 	else:
 		operando1 = pilaOperandos.pop()
 		operandoMem1 = pilaOperandosDirMem.pop()
-		operando2 = pilaOperandos.pop()
-		operandoMem2 = pilaOperandosDirMem.pop()
+		
+		
 		print "renArreglo = ", renArreglo
 
 		cuadr = Cuadruplo(33,operandoMem1, 0, renArreglo)
@@ -707,6 +717,7 @@ def p_generaCuadruploMatriz(p):
 		var = diccionarioMemoria['3']
 		mem = var['9']
 		cuadr = Cuadruplo(1, operandoMem1,dirBase, mem)
+		listaCuadruplos.append(cuadr)
 		pilaOperandosDirMem.append(mem)
 		pilaOperandos.append(operando1)
 		diccionarioMemoria['3']['9'] = mem + 1

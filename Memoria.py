@@ -1,5 +1,5 @@
 class Memoria:
-	def __init__(self, cuadrRetorno, arrEntero, arrCuadrado, arrRectangulo, arrCirculo, arrLinea, arrEstrella, arrDecimal, arrBool, arrEnteroTemp, arrCuadradoTemp, arrRectanguloTemp, arrCirculoTemp, arrLineaTemp, arrEstrellaTemp, arrDecimalTemp, arrBoolTemp):
+	def __init__(self, cuadrRetorno, arrEntero, arrCuadrado, arrRectangulo, arrCirculo, arrLinea, arrEstrella, arrDecimal, arrBool, arrEnteroTemp, arrCuadradoTemp, arrRectanguloTemp, arrCirculoTemp, arrLineaTemp, arrEstrellaTemp, arrDecimalTemp, arrBoolTemp,arrApuntTemp):
 		self.arrEntero = []
 		self.arrCuadrado = []
 		self.arrRectangulo = []
@@ -16,5 +16,6 @@ class Memoria:
 		self.arrEstrellaTemp = []
 		self.arrDecimalTemp = []
 		self.arrBoolTemp = []
+		self.arrApuntTemp = []
 		self.cuadrRetorno = cuadrRetorno
-		self.listaMem = [arrEntero, arrCuadrado,arrRectangulo, arrCirculo, arrLinea, arrEstrella, arrDecimal, arrBool, arrEnteroTemp, arrCuadradoTemp,arrRectanguloTemp,arrCirculoTemp, arrLineaTemp,arrEstrellaTemp, arrDecimalTemp, arrBoolTemp]
+		self.listaMem = [arrEntero, arrCuadrado,arrRectangulo, arrCirculo, arrLinea, arrEstrella, arrDecimal, arrBool, arrEnteroTemp, arrCuadradoTemp,arrRectanguloTemp,arrCirculoTemp, arrLineaTemp,arrEstrellaTemp, arrDecimalTemp, arrBoolTemp, arrApuntTemp]
