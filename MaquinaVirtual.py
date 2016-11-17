@@ -714,7 +714,7 @@ def generarERA(operando1, operando2, resultado):
 	global contCuadruplos
 	global diccionarioConstantes
 	print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", contCuadruplos	
-	memoriaMain = Memoria(0,{},{},{},{},{},{},{},{},{},{},{},{}, {},{},{},{})
+	memoriaMain = Memoria(0,{},{},{},{},{},{},{},{},{},{},{},{},{}, {},{},{},{})
 	#diccionarioConstantes[str(int(resultado))] = 1
 	listaMemoria.append(memoriaMain)
 	contCuadruplos = contCuadruplos + 1
