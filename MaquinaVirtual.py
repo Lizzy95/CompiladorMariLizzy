@@ -680,17 +680,23 @@ def leer(operando1, operando2, resultado):
 
 def defineColor(color):
 	if int (color) == 20:
-		turtle.fillcolor('yellow')
-		turtle.color('yellow')
+		turtle.fillcolor('#ffd750')
+		turtle.color('#ffd750')
 	elif int (color) == 21:
-		turtle.fillcolor('green')
-		turtle.color('green')
+		turtle.fillcolor('#07dc47')
+		turtle.color('#07dc47')
 	elif int (color) == 22:
 		turtle.fillcolor('red')
 		turtle.color('red')
 	elif int (color) == 23:
-		turtle.fillcolor("blue")
-		turtle.color("blue")
+		turtle.fillcolor("#002e9e")
+		turtle.color("#002e9e")
+	elif int (color) == 34:
+		turtle.fillcolor("#ff5079")
+		turtle.color("#ff5079")
+	elif int (color) == 35:
+		turtle.fillcolor("#7864ed")
+		turtle.color("#7864ed")
 
 def definePosicion(posicion):
 	global diccionarioConstantes
@@ -793,9 +799,33 @@ def dibujar(operando1, operando2, resultado):
 		dibujarEstrella(operando2,resultado)
 	contCuadruplos = contCuadruplos + 1
 
-
+def direccion(dir,cantidad):
+	print dir,cantidad
+	turtle.shape("turtle")
+	if dir == 25:
+		print "f"
+		turtle.left(cantidad)
+	elif dir == 26:
+		print "f"
+		turtle.right(cantidad)
+	elif dir == 27:
+		print "e"
+		turtle.forward(cantidad)
+	elif dir == 28:
+		print "m"
+		turtle.backward(cantidad)
 def mover(operando1, operando2, resultado):
 	print "entra mover"
+	global contCuadruplos
+	global diccionarioConstantes
+	dire = 0
+	
+	print resultado
+	if diccionarioConstantes.has_key(str(int(resultado))):
+		dire = diccionarioConstantes[str(int(resultado))]
+
+	direccion(int(operando2), int(dire))
+	contCuadruplos = contCuadruplos + 1
 def izquierda(operando1, operando2, resultado):
 	print "entra izquierda"
 def derecha(operando1, operando2, resultado):

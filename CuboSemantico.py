@@ -31,6 +31,8 @@
 #31 PARAM
 #32 GOSUB
 #33 VER
+#34 rosa
+#35 morado
 
 
 
@@ -55,7 +57,7 @@ cuboSemantico[1][1][11]= 8
 cuboSemantico[1][7][1]= 7
 cuboSemantico[1][7][2]= 7
 cuboSemantico[1][7][3]= 7
-cuboSemantico[1][7][5]= 2
+cuboSemantico[1][7][5]= 7
 cuboSemantico[1][7][6]= 8
 cuboSemantico[1][7][7]= 8
 cuboSemantico[1][7][8]= 8
@@ -70,10 +72,6 @@ cuboSemantico[2][2][2]= 2
 cuboSemantico[2][2][3]= 2
 cuboSemantico[2][2][4]= 2
 cuboSemantico[2][2][5]= 2
-
-
-
-
 
 #rectangulo
 cuboSemantico[3][3][1]= 3
@@ -112,23 +110,23 @@ cuboSemantico[7][7][2]= 7
 cuboSemantico[7][7][3]= 7
 cuboSemantico[7][7][4]= 7
 cuboSemantico[7][7][5]= 7
-cuboSemantico[7][7][6]= 7
-cuboSemantico[7][7][7]= 7
-cuboSemantico[7][7][8]= 7
-cuboSemantico[7][7][9]= 7
-cuboSemantico[7][7][10]= 7
+cuboSemantico[7][7][6]= 8
+cuboSemantico[7][7][7]= 8
+cuboSemantico[7][7][8]= 8
+cuboSemantico[7][7][9]= 8
+cuboSemantico[7][7][10]= 8
 cuboSemantico[7][7][11]= 8
 
-cuboSemantico[2][1][1]= 7
-cuboSemantico[2][1][2]= 7
-cuboSemantico[2][1][3]= 7
-cuboSemantico[2][1][5]= 2
-cuboSemantico[2][1][6]= 8
-cuboSemantico[2][1][7]= 8
-cuboSemantico[2][1][8]= 8
-cuboSemantico[2][1][9]= 8
-cuboSemantico[2][1][10]= 8
-cuboSemantico[2][1][11]= 8
+cuboSemantico[7][1][1]= 7
+cuboSemantico[7][1][2]= 7
+cuboSemantico[7][1][3]= 7
+cuboSemantico[7][1][5]= 7
+cuboSemantico[7][1][6]= 8
+cuboSemantico[7][1][7]= 8
+cuboSemantico[7][1][8]= 8
+cuboSemantico[7][1][9]= 8
+cuboSemantico[7][1][10]= 8
+cuboSemantico[7][1][11]= 8
 
 
 #bool

@@ -35,6 +35,8 @@ reserved = {
     'verde' : 'VERDE',
     'rojo' : 'ROJO',
     'azul' : 'AZUL',
+    'rosa' : 'ROSA',
+    'morado' : 'MORADO',
     'fin' : 'FIN',
 
 }

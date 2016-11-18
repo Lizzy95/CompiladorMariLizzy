@@ -1,13 +1,6 @@
 inicio
 {
 	estrella dB; 
-	rectangulo mN;
-	cuadrado lizzy;
-	
-	dibujar(dB (10,250) rojo);
-	dibujar(mN (10,10) verde);
-	dibujar(lizzy (0, 50) azul);
-	dibujar(dB (0, 1) rojo);
-
+	dibujar(dB (10,50) morado);
 }
 fin

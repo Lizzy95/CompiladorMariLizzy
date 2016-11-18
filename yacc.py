@@ -843,7 +843,9 @@ def p_color(p):
 	''' color : AMARILLO
 			  | VERDE
 			  | ROJO
-			  | AZUL '''
+			  | AZUL
+			  | ROSA
+			  | MORADO '''
 	if p[1] == "amarillo":
 		pilaOperandos.append(20)
 	elif p[1] == "verde":
@@ -852,6 +854,10 @@ def p_color(p):
 		pilaOperandos.append(22)
 	elif p[1] == "azul":
 		pilaOperandos.append(23)
+	elif p[1] == "rosa":
+		pilaOperandos.append(34)
+	elif p[1] == "morado":
+		pilaOperandos.append(35)
 	pass
 
 def p_condicion(p):
@@ -1350,7 +1356,7 @@ def p_mueve(p):
 	pass
 
 def p_opcionMue(p):
-	''' opcionMue : direccion ID guardarIDPila recibe_CTI checarMover ";" '''
+	''' opcionMue : direccion recibe_CTI checarMover ";" '''
 	pass
 
 def p_direccion(p):
@@ -1358,8 +1364,10 @@ def p_direccion(p):
 				| DERECHA
 				| ARRIBA
 				| ABAJO '''
+	global pilaOperandos
 	if p[1] == "izquierda":
 		pilaOperandos.append(25)
+		print pilaOperandos
 	elif p[1] == "derecha":
 		pilaOperandos.append(26)
 	elif p[1] == "arriba":
@@ -1375,13 +1383,11 @@ def p_checarMover(p):
 	global listaCuadruplos
 	signo = pilaOperadores.pop()
 	if signo == 24:
+		pilaOperandos.pop()
 		cant = pilaOperandosDirMem.pop()
-		ids = pilaOperandosDirMem.pop()
 		dirc = pilaOperandos.pop()
-		cuadr = Cuadruplo(signo, ids, dirc, cant)
+		cuadr = Cuadruplo(signo, 1, dirc, cant)
 		listaCuadruplos.append(cuadr)
-		pilaOperandos.pop()
-		pilaOperandos.pop()
 		print "SE GUARDO EL CUADRUPLO DE DIBUJAR"
 
 def p_empty(p):
@@ -1465,8 +1471,12 @@ def p_error(p):
 import ply.yacc as yacc
 parser = yacc.yacc()
 #yacc.yacc()
-def run(filename):
-	print filename
-	file = open(filename, "r")
-	yacc.parse(file.read())
-	file.close()
+
+file = open("prueba.txt", "r")
+yacc.parse(file.read())
+file.close()
+# def run(filename):
+# 	print filename
+# 	file = open("prueba.txt", "r")
+# 	yacc.parse(file.read())
+# 	file.close()
