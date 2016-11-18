@@ -1,19 +1,34 @@
 #!/usr/bin/python
 from turtle import *
 import ply.yacc as yacc
+import yacc
 from Tkinter import *
+import Tkinter,tkFileDialog
 import os
+filename = ""
+f2 = ""
 root = Tk()
+root.wm_title("LiMa")
 root.geometry("600x700")
 root.configure(bg = '#ffc0cb')
 # Code to add widgets will go here...
 def compilar():
-	os.system('python yacc.py')
+	#os.system('python yacc.py')
+	global filename
+	print filename
+	yacc.run(f2)
 
 def guardar():
-    text = T.get("1.0",'end-1c')
-    with open("prueba.txt", "w") as f:
-        f.writelines(text)
+	global filename
+	global f2
+	file = tkFileDialog.asksaveasfile(mode='w', defaultextension=".txt")
+	filename = file.name
+	(f1, f2) = os.path.split(filename)
+	print f2
+	text = T.get("1.0",'end-1c')
+	with open(f2, "w") as f:	
+		f.writelines(text)
+	yacc.run(f2)
 
 def ejecutar():
 	os.system('python MaquinaVirtual.py')

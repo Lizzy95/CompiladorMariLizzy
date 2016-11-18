@@ -1465,6 +1465,8 @@ def p_error(p):
 import ply.yacc as yacc
 parser = yacc.yacc()
 #yacc.yacc()
-file = open("prueba.txt", "r")
-yacc.parse(file.read())
-file.close()
+def run(filename):
+	print filename
+	file = open(filename, "r")
+	yacc.parse(file.read())
+	file.close()

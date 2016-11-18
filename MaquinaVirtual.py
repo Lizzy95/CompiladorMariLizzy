@@ -680,12 +680,16 @@ def leer(operando1, operando2, resultado):
 
 def defineColor(color):
 	if int (color) == 20:
+		turtle.fillcolor('yellow')
 		turtle.color('yellow')
 	elif int (color) == 21:
+		turtle.fillcolor('green')
 		turtle.color('green')
 	elif int (color) == 22:
+		turtle.fillcolor('red')
 		turtle.color('red')
 	elif int (color) == 23:
+		turtle.fillcolor("blue")
 		turtle.color("blue")
 
 def definePosicion(posicion):
@@ -712,14 +716,17 @@ def definePosicion(posicion):
 def dibujarCuadrado(pos, color):
 	definePosicion(pos)
 	defineColor(color)
+	begin_fill()
 	for i in range(4):
 		turtle.fd(100)
 		turtle.left(90)
+	end_fill()
 
 
 def dibujarRectangulo(pos, color):
 	definePosicion(pos)
-	defineColor(color)
+	defineColor(color)	
+	begin_fill()
 	turtle.forward(100)
 	turtle.left(90)
 	turtle.forward(50)
@@ -728,6 +735,7 @@ def dibujarRectangulo(pos, color):
 	turtle.left(90)
 	turtle.forward(50)
 	turtle.left(90)
+	end_fill()
 
 def dibujarCirculo(pos, color):
 	definePosicion(pos)
@@ -744,21 +752,18 @@ def dibujarLinea(pos, color):
 def dibujarEstrella(pos, color):
 	global contCuadruplos
 	print pos
-	print "lis", listaCuadruplos[contCuadruplos+1].operando1
 	definePosicion(pos)
 	defineColor(color)
 	angulo = 120
-
+	begin_fill()
 	for i in range(5):
 	    turtle.forward(50)
 	    turtle.right(angulo)
 	    turtle.forward(50)
 	    turtle.right(72 - angulo)
+	end_fill()
 	# exitonclick()
 	pass
-	
-
-
 
 def dibujar(operando1, operando2, resultado):
 	print "entra dibujar"
