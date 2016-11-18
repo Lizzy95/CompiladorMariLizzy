@@ -1,7 +1,9 @@
 from funcionVM import funcionVM
 from Cuadruplo import Cuadruplo
 from Memoria import Memoria
+from turtle import *
 import sys
+import turtle 
 listaFunc = []
 listaCuadruplos = []
 tipoActual = 0 
@@ -675,8 +677,118 @@ def gotoFalso(operando1, operando2, resultado):
 	print "entra gotoFalsor", resultado," ", operando2
 def leer(operando1, operando2, resultado):
 	print "entra leer"
+
+def defineColor(color):
+	if int (color) == 20:
+		turtle.color('yellow')
+	elif int (color) == 21:
+		turtle.color('green')
+	elif int (color) == 22:
+		turtle.color('red')
+	elif int (color) == 23:
+		turtle.color("blue")
+
+def definePosicion(posicion):
+	global diccionarioConstantes
+	pos1 = 0
+	pos2 = 0
+	posicion = posicion.strip('(')
+	posicion = posicion.strip(')')
+	posicion1 = posicion.split(',')
+	
+	
+	if diccionarioConstantes.has_key(posicion1[0]):
+		pos1 = diccionarioConstantes[posicion1[0]]
+
+	if diccionarioConstantes.has_key(posicion1[1]):
+		pos2 = diccionarioConstantes[posicion1[1]]
+
+	print pos1, pos2
+	turtle.penup()
+	setpos(int(pos1),int(pos2))
+	turtle.pendown()
+
+
+def dibujarCuadrado(pos, color):
+	definePosicion(pos)
+	defineColor(color)
+	for i in range(4):
+		turtle.fd(100)
+		turtle.left(90)
+
+
+def dibujarRectangulo(pos, color):
+	definePosicion(pos)
+	defineColor(color)
+	turtle.forward(100)
+	turtle.left(90)
+	turtle.forward(50)
+	turtle.left(90)
+	turtle.forward(100)
+	turtle.left(90)
+	turtle.forward(50)
+	turtle.left(90)
+
+def dibujarCirculo(pos, color):
+	definePosicion(pos)
+	defineColor(color)
+	turtle.circle(100)
+
+
+def dibujarLinea(pos, color):
+	definePosicion(pos)
+	defineColor(color)
+	turtle.forward(100)
+
+
+def dibujarEstrella(pos, color):
+	global contCuadruplos
+	print pos
+	print "lis", listaCuadruplos[contCuadruplos+1].operando1
+	definePosicion(pos)
+	defineColor(color)
+	angulo = 120
+
+	for i in range(5):
+	    turtle.forward(50)
+	    turtle.right(angulo)
+	    turtle.forward(50)
+	    turtle.right(72 - angulo)
+	# exitonclick()
+	pass
+	
+
+
+
 def dibujar(operando1, operando2, resultado):
 	print "entra dibujar"
+	
+	global contCuadruplos
+	global diccionarioConstantes
+	global tipoActual
+	try:
+		aux1 = tipodato[int(operando1)/1000](operando1)
+	except KeyError:
+		print "Variable no tiene valor asignado"
+		sys.exit()
+	
+	print operando1, ", ", operando2, ",", resultado
+
+	print tipoActual
+	if tipoActual == 1:
+		dibujarCuadrado(operando2,resultado)
+	elif tipoActual == 2:
+		dibujarRectangulo(operando2,resultado)
+	elif tipoActual == 3:
+		dibujarCirculo(operando2,resultado)
+	elif tipoActual  == 4:
+		dibujarLinea(operando2,resultado)
+	elif tipoActual ==5:
+		print "estrella"
+		dibujarEstrella(operando2,resultado)
+	contCuadruplos = contCuadruplos + 1
+
+
 def mover(operando1, operando2, resultado):
 	print "entra mover"
 def izquierda(operando1, operando2, resultado):
@@ -834,7 +946,13 @@ linea = archivo.readline()
 
 while linea != '$$\n':
 	lineaAux = linea.split(' ')
-	cuadr = Cuadruplo(lineaAux[0], lineaAux[1], lineaAux[2],lineaAux[3])
+	print lineaAux
+	print len(lineaAux)
+	if(len(lineaAux)) == 4: 
+		cuadr = Cuadruplo(lineaAux[0], lineaAux[1], lineaAux[2],lineaAux[3])
+	elif (len(lineaAux)) == 5:
+		cuadr = Cuadruplo(lineaAux[0], lineaAux[1], lineaAux[2]+lineaAux[3], lineaAux[4])
+
 	listaCuadruplos.append(cuadr)
 	linea = archivo.readline()
 archivo.close()
@@ -844,3 +962,4 @@ listaMemoria.append(memoriaMain)
 
 while contCuadruplos < len(listaCuadruplos):
 	options[listaCuadruplos[contCuadruplos].operador](listaCuadruplos[contCuadruplos].operando1, listaCuadruplos[contCuadruplos].operando2, listaCuadruplos[contCuadruplos].temporal)
+exitonclick()

@@ -1,13 +1,15 @@
+
 inicio
-{
-	entero bB;
-	entero fffFFF[2];
-
-	entero aA[4][4];
-	fffFFF[0] = 2;
-	aA[2][2] = 5;
-
-	bB = aA[2][2] + fffFFF[0]; 
+{	
+	
+	estrella dD; 
+	rectangulo mM;
+	
+	
+	
+		dibujar(dD (10,250) rojo);
+		dibujar(mM (10,10) verde);
+	
 
 }
 fin

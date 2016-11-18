@@ -827,11 +827,11 @@ def p_checarDibujar(p):
 		posy = pilaOperandosDirMem.pop()
 		posx = pilaOperandosDirMem.pop()
 		ids = pilaOperandosDirMem.pop()
-		cuadr = Cuadruplo(signo, ids, [posx,posy], col)
+		cuadr = Cuadruplo(signo,ids,(posx,posy),col)
 		listaCuadruplos.append(cuadr)
 		pilaOperandos.pop()
 		pilaOperandos.pop()
-		pilaOperandos.pop()
+	
 		print "SE GUARDO EL CUADRUPLO DE DIBUJAR"
 
 def p_escritura(p):
@@ -844,13 +844,13 @@ def p_color(p):
 			  | VERDE
 			  | ROJO
 			  | AZUL '''
-	if p[-1] == "amarillo":
+	if p[1] == "amarillo":
 		pilaOperandos.append(20)
-	elif p[-1] == "verde":
+	elif p[1] == "verde":
 		pilaOperandos.append(21)
-	elif p[-1] == "rojo":
+	elif p[1] == "rojo":
 		pilaOperandos.append(22)
-	elif p[-1] == "azul":
+	elif p[1] == "azul":
 		pilaOperandos.append(23)
 	pass
 
@@ -1332,7 +1332,7 @@ def p_tipo(p):
 	elif(p[1] == "cuadrado"):
 		tipoActual = 2
 	elif(p[1] == "rectangulo"):
-		tipoActual = 2
+		tipoActual = 3
 	elif(p[1] == "circulo"):
 		tipoActual = 4
 	elif(p[1] == "linea"):
