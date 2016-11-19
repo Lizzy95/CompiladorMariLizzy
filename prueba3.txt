@@ -4,8 +4,8 @@ inicio
 	rectangulo mN;
 	cuadrado lizzy;
 	
-	dibujar(dB (10,250) rojo);
-	dibujar(mN (10,10) verde);
+	dibujar(dB (10,250) rosa);
+	dibujar(mN (10,10) morado);
 	dibujar(lizzy (0, 50) azul);
 	dibujar(dB (0, 1) rojo);
 

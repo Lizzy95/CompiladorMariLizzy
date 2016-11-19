@@ -11,8 +11,7 @@ func entero factorial(entero mA){
 inicio
 {
 	entero aAA,bBBB, gGGGG;
-	gGGGG = 3;
-	aAA = 9;
 	aAA = factorial(aAA);
+	mostrar aAA;
 }
 fin

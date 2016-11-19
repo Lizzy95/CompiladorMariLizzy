@@ -11,6 +11,7 @@ diccionarioConstantes = {}
 diccionarioGlobal = {}
 listaMemoria = []
 contCuadruplos = 0
+size = 100
 
 def varEntero(variable):
 	global tipoActual
@@ -140,9 +141,7 @@ def suma(operando1, operando2, resultado):
 		print "entraaa"
 		memoria.listaMem[tipoActual][auxResultado] = int(valor1) + int(operando2)
 	else:
-		print "entrssss"
 		if diccionarioConstantes.has_key(operando2):
-			print"entra if"
 			valor2 = diccionarioConstantes[operando2]
 		else:
 			print "enf"
@@ -166,16 +165,17 @@ def suma(operando1, operando2, resultado):
 def resta(operando1, operando2, resultado):
 	global pilaMemoria
 	global diccionarioConstantes
-	print "entra resta", operando1, " ", operando2, " ", resultado
+	print "entra resta", operando1, " ", operando2
 	global contCuadruplos
 	global tipoActual
 	global listaMemoria
-	global listaCuadruplos
 	contCuadruplos = contCuadruplos + 1
 	valor1 = 0
 	valor2 = 0
 	auxMem = listaMemoria.pop()
+	print"----------", auxMem.listaMem
 	if listaCuadruplos[contCuadruplos - 2].operador == '30':
+		print "entraaa"
 		memoria = listaMemoria.pop()
 	elif listaCuadruplos[contCuadruplos].operador == '31':
 		print memoria.listaMem
@@ -183,28 +183,47 @@ def resta(operando1, operando2, resultado):
 	else:
 		memoria = auxMem
 
+	print "Operando 1 = ", operando1 , " Operando 2 = ", operando2
+	print diccionarioConstantes
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
-		aux1 = tipodato[int(operando1)/1000](operando1)
-		valor1  = memoria.listaMem[tipoActual][aux1]  
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			if tipoActual == 16:
+				valor1 = memoria.listaMem[tipoActual][aux1]
+				operando1 = valor1
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				valor1  = memoria.listaMem[tipoActual][aux1]
+			else:
+				valor1  = memoria.listaMem[tipoActual][aux1]
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
+
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
-		aux1 = tipodato[int(operando2)/1000](operando2)
-		valor2 = memoria.listaMem[tipoActual][aux1] 
- 	auxResultado = tipodato[int(resultado)/1000](resultado)
- 	if '.' in str(valor1) or '.' in str(valor2):
- 		memoria.listaMem[tipoActual][auxResultado] = float(valor1) - float(valor2)
- 	else:
+		aux2 = tipodato[int(operando2)/1000](operando2)
+		if tipoActual == 16:
+			valor2 = memoria.listaMem[tipoActual][aux2]
+			operando2 = valor2
+			aux2 = tipodato[int(operando2)/1000](operando2)
+			valor2  = memoria.listaMem[tipoActual][aux2]
+		else:
+			valor2  = memoria.listaMem[tipoActual][aux2] 
+	auxResultado = tipodato[int(resultado)/1000](resultado)
+	print "valor1: ", valor1, "valor2: ",valor2
+	if '.' in str(valor1) or '.' in str(valor2):
+		memoria.listaMem[tipoActual][auxResultado] = float(valor1) - float(valor2)
+	else:
 		memoria.listaMem[tipoActual][auxResultado] = int(valor1) - int(valor2)
 	if listaCuadruplos[contCuadruplos].operador == '31':
 		listaMemoria.append(memoria)
 		listaMemoria.append(auxMem)
 	else:
-		listaMemoria.append(memoria)
+		listaMemoria.append(memoria)	
 	print "la resta es", memoria.listaMem[tipoActual][auxResultado]
-	
 
 def multiplicacion(operando1, operando2, resultado):
 	global pilaMemoria
@@ -225,38 +244,55 @@ def multiplicacion(operando1, operando2, resultado):
 		print memoria.listaMem
 		print auxMem.listaMem
 	else:
-		# print "entraaa21"
-		# auxier = listaMemoria.pop()
 		memoria = auxMem
-		# listaMemoria.append(auxier)
 
 	print "Operando 1 = ", operando1 , " Operando 2 = ", operando2
 	print diccionarioConstantes
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
-		aux1 = tipodato[int(operando1)/1000](operando1)
-		valor1  = memoria.listaMem[tipoActual][aux1]  
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			if tipoActual == 16:
+				valor1 = memoria.listaMem[tipoActual][aux1]
+				operando1 = valor1
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				valor1  = memoria.listaMem[tipoActual][aux1]
+			else:
+				valor1  = memoria.listaMem[tipoActual][aux1]
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
+
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
-		aux1 = tipodato[int(operando2)/1000](operando2)
-		print "aux1 = ", aux1
-		valor2 = memoria.listaMem[tipoActual][aux1] 
- 	auxResultado = tipodato[int(resultado)/1000](resultado)
- 	print "valor1: ", valor1, "valor2: ",valor2
- 	if '.' in str(valor1) or '.' in str(valor2):
- 		memoria.listaMem[tipoActual][auxResultado] = float(valor1) * float(valor2)
- 	else:
+		aux2 = tipodato[int(operando2)/1000](operando2)
+		if tipoActual == 16:
+			valor2 = memoria.listaMem[tipoActual][aux2]
+			operando2 = valor2
+			aux2 = tipodato[int(operando2)/1000](operando2)
+			valor2  = memoria.listaMem[tipoActual][aux2]
+		else:
+			valor2  = memoria.listaMem[tipoActual][aux2] 
+	auxResultado = tipodato[int(resultado)/1000](resultado)
+	print "valor1: ", valor1, "valor2: ",valor2
+	if '.' in str(valor1) or '.' in str(valor2):
+		memoria.listaMem[tipoActual][auxResultado] = float(valor1) * float(valor2)
+	else:
 		memoria.listaMem[tipoActual][auxResultado] = int(valor1) * int(valor2)
-	listaMemoria.append(memoria)
+	if listaCuadruplos[contCuadruplos].operador == '31':
+		listaMemoria.append(memoria)
+		listaMemoria.append(auxMem)
+	else:
+		listaMemoria.append(memoria)
 	print "la multiplicacion es", memoria.listaMem[tipoActual][auxResultado]
 	
 
 def division(operando1, operando2, resultado):
 	global pilaMemoria
 	global diccionarioConstantes
-	print "entra division"
+	print "entra division", operando1, " ", operando2
 	global contCuadruplos
 	global tipoActual
 	global listaMemoria
@@ -264,46 +300,57 @@ def division(operando1, operando2, resultado):
 	valor1 = 0
 	valor2 = 0
 	auxMem = listaMemoria.pop()
+	print"----------", auxMem.listaMem
 	if listaCuadruplos[contCuadruplos - 2].operador == '30':
+		print "entraaa"
 		memoria = listaMemoria.pop()
 	elif listaCuadruplos[contCuadruplos].operador == '31':
 		print memoria.listaMem
 		print auxMem.listaMem
 	else:
 		memoria = auxMem
+
+	print "Operando 1 = ", operando1 , " Operando 2 = ", operando2
+	print diccionarioConstantes
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
-		aux1 = tipodato[int(operando1)/1000](operando1)
-		print "operando1", operando1
-		print "operando2", operando2
-		print "aux1 = ", aux1
-		valor1  = memoria.listaMem[tipoActual][aux1]  
+		try:
+			aux1 = tipodato[int(operando1)/1000](operando1)
+			if tipoActual == 16:
+				valor1 = memoria.listaMem[tipoActual][aux1]
+				operando1 = valor1
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				valor1  = memoria.listaMem[tipoActual][aux1]
+			else:
+				valor1  = memoria.listaMem[tipoActual][aux1]
+		except KeyError:
+			print "Variable no tiene valor asignado"
+			sys.exit()
+
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
-		aux1 = tipodato[int(operando2)/1000](operando2)
-		print "aux1 = ", aux1
-		valor2 = memoria.listaMem[tipoActual][aux1] 
- 	auxResultado = tipodato[int(resultado)/1000](resultado)
- 	print valor1, " ", valor2
- 	if '.' in str(valor1) or '.' in str(valor2):
- 		try:
- 			memoria.listaMem[tipoActual][auxResultado] = float(valor1) / float(valor2)
-			print "la division es", memoria.listaMem[tipoActual][auxResultado]
- 		except ZeroDivisionError:
- 			memoria.listaMem[tipoActual][auxResultado] = 0
- 			print "Error en la division"
- 			sys.exit()
- 	else:
- 		try:
-			memoria.listaMem[tipoActual][auxResultado] = int(valor1) / int(valor2)
-			print "la division es", memoria.listaMem[tipoActual][auxResultado]
-		except ZeroDivisionError:
-			memoria.listaMem[tipoActual][auxResultado] = 0
- 			print "Error en la division"
- 			sys.exit()
-	listaMemoria.append(memoria)
+		aux2 = tipodato[int(operando2)/1000](operando2)
+		if tipoActual == 16:
+			valor2 = memoria.listaMem[tipoActual][aux2]
+			operando2 = valor2
+			aux2 = tipodato[int(operando2)/1000](operando2)
+			valor2  = memoria.listaMem[tipoActual][aux2]
+		else:
+			valor2  = memoria.listaMem[tipoActual][aux2] 
+	auxResultado = tipodato[int(resultado)/1000](resultado)
+	print "valor1: ", valor1, "valor2: ",valor2
+	if '.' in str(valor1) or '.' in str(valor2):
+		memoria.listaMem[tipoActual][auxResultado] = float(valor1) / float(valor2)
+	else:
+		memoria.listaMem[tipoActual][auxResultado] = int(valor1) / int(valor2)
+	if listaCuadruplos[contCuadruplos].operador == '31':
+		listaMemoria.append(memoria)
+		listaMemoria.append(auxMem)
+	else:
+		listaMemoria.append(memoria)
+	print "la division es", memoria.listaMem[tipoActual][auxResultado]
 
 def asignacion(operando1, operando2, resultado):
 	print "entra asignacion", operando2, " ", operando1, " ", resultado
@@ -355,6 +402,8 @@ def asignacion(operando1, operando2, resultado):
 def goto(operando1, operando2, resultado):
 	global contCuadruplos
 	global listaCuadruplos
+	global size
+	size = size + 25
 	print "entra goto \n"
 	print resultado
 	if listaCuadruplos[int(resultado)].operador == 17:
@@ -676,8 +725,21 @@ def gotoFalso(operando1, operando2, resultado):
 		contCuadruplos = contCuadruplos + 1
 	listaMemoria.append(memoria)
 	print "entra gotoFalsor", resultado," ", operando2
-def leer(operando1, operando2, resultado):
-	print "entra leer"
+def imprimir(operando1, operando2, resultado):
+	global contCuadruplos
+	global listaMemoria
+	valor1 = 0
+	memoria = listaMemoria.pop()
+	print "Imprimir"
+	print operando1,operando2,resultado
+	try:
+		aux1 = tipodato[int(operando1)/1000](operando1)
+		valor1  = memoria.listaMem[tipoActual][aux1] 
+	except KeyError:
+		print "Variable no tiene valor asignado"
+		sys.exit()
+	turtle.write(valor1, align = "center", font =("Herculanum",72,"bold"))
+	contCuadruplos = contCuadruplos + 1 
 
 def defineColor(color):
 	if int (color) == 20:
@@ -725,7 +787,7 @@ def dibujarCuadrado(pos, color):
 	defineColor(color)
 	begin_fill()
 	for i in range(4):
-		turtle.fd(100)
+		turtle.fd(size)
 		turtle.left(90)
 	end_fill()
 
@@ -734,26 +796,26 @@ def dibujarRectangulo(pos, color):
 	definePosicion(pos)
 	defineColor(color)	
 	begin_fill()
-	turtle.forward(100)
+	turtle.forward(size)
 	turtle.left(90)
-	turtle.forward(50)
+	turtle.forward(size / 2)
 	turtle.left(90)
-	turtle.forward(100)
+	turtle.forward(size)
 	turtle.left(90)
-	turtle.forward(50)
+	turtle.forward(size / 2)
 	turtle.left(90)
 	end_fill()
 
 def dibujarCirculo(pos, color):
 	definePosicion(pos)
 	defineColor(color)
-	turtle.circle(100)
+	turtle.circle(size)
 
 
 def dibujarLinea(pos, color):
 	definePosicion(pos)
 	defineColor(color)
-	turtle.forward(100)
+	turtle.forward(size)
 
 
 def dibujarEstrella(pos, color):
@@ -764,9 +826,9 @@ def dibujarEstrella(pos, color):
 	angulo = 120
 	begin_fill()
 	for i in range(5):
-	    turtle.forward(50)
+	    turtle.forward(size / 2)
 	    turtle.right(angulo)
-	    turtle.forward(50)
+	    turtle.forward(size / 2)
 	    turtle.right(72 - angulo)
 	end_fill()
 	# exitonclick()
@@ -950,7 +1012,7 @@ options = {
 	'13' : comparacionAND,
 	'16' : gotoFalso,
 	'17' : goto,
-	'18' : leer,
+	'18' : imprimir, 
 	'19' : dibujar,
 	'24' : mover,
 	'25' : izquierda,

@@ -1,0 +1,28 @@
+
+
+inicio
+{
+	entero numero, resultado, iI; 
+
+	numero = 4;
+
+	resultado = 1; 
+
+	iI = 2; 
+
+	if((numero == 0) | (numero == 1)){
+		resultado = 1;
+	}
+
+	
+	while( iI <= numero ){
+		resultado = resultado * iI;
+		iI = iI + 1;
+	}
+	
+
+	mostrar resultado;
+
+
+}
+fin

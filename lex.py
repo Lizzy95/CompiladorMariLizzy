@@ -11,6 +11,7 @@ import ply.lex as lex
 # Palabras reservadas
 reserved = {
 #    'if' : 'IF',
+
     'inicio': 'INICIO', #0
     'entero' : 'ENTERO', #1 
     'decimal' : 'DECIMAL', #2
@@ -18,13 +19,13 @@ reserved = {
     'rectangulo' : 'RECTANGULO', #4
     'circulo' : 'CIRCULO', #5
     'linea' : 'LINEA', #6
-    'estrella' : 'ESTRELLA', #7
-    'leer' : 'LEER', 
+    'estrella' : 'ESTRELLA', #7 
     'else': 'ELSE',
     'dibujar' : 'DIBUJAR',
     'mueve' : 'MUEVE',
     'derecha' : 'DERECHA',
     'izquierda' : 'IZQUIERDA',
+    'mostrar' : 'MOSTRAR',
     'arriba' : 'ARRIBA',
     'abajo' : 'ABAJO',
     'void' : 'VOID', #8

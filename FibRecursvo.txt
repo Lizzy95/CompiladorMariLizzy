@@ -1,0 +1,22 @@
+func entero fibonacci(entero mA){
+	entero resultado, resultado1; 
+	resultado = 1;
+	if ((mA == 1)|(mA == 2)){
+		return 1
+	}
+	resultado = fibonacci(mA - 1);
+	resultado1 = fibonacci(mA - 2);
+ return (resultado + resultado1) 
+	
+}
+
+inicio
+{
+	entero aAA, resultado;
+	resultado=0;
+	aAA = 20;
+	resultado = fibonacci(aAA);
+
+	mostrar resultado; 
+}
+fin

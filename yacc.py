@@ -40,7 +40,7 @@ listaCuadruplos.append(cuadr)
 def p_programa(p):
 	'''programa : vars funcion INICIO funcAgregarInicio bloque  FIN liberarVar
 	  			| vars funcion INICIO FIN '''	
-	print("SE TERMINO EL PROGRAMA PATIO CON EXITO!")
+	print("SE TERMINO EL PROGRAMA CON EXITO!")
 	escribeArchivo()
 	pass
 
@@ -187,6 +187,7 @@ def p_funcAgregar(p):
 	posicion = busquedaLista()
 	if posicion != -1:
 		print "FUNCION PREVIAMENTE DECLARADA"
+		sys.exit()
 	else:
 		print "Entre al else FuncAgregar"
 		listaFunciones.append(objetoFuncion)
@@ -210,6 +211,7 @@ def p_guardarIDParam(p):
 	#checar si ya existe una variable
 	if (busquedaVar(p[-1]) != -1 ):
 		print "SE DECLARO UNA VARIABLE PREVIAMENTE DECLARADA"
+		sys.exit()
 	else:
 		posicion = busquedaLista()
 		var = diccionarioMemoria[tipofuncMem]
@@ -300,6 +302,7 @@ def p_guardarIDs(p):
 	if(tipofuncMem == '1'):
 		if busquedaVarGlobal(p[-1]) == -1:
 			"SE DECLARO UNA VARIABLE PREVIAMENTE DECLARADA"
+			sys.exit()
 		else:
 			var = diccionarioMemoria[tipofuncMem]
 			valormem = var[str(tipoActual)]
@@ -310,6 +313,7 @@ def p_guardarIDs(p):
 	else:
 		if (busquedaVar(p[-1]) != -1 ):
 			print "SE DECLARO UNA VARIABLE PREVIAMENTE DECLARADA"
+			sys.exit()
 		else:
 			posicion = busquedaLista()
 			var = diccionarioMemoria[tipofuncMem]
@@ -444,7 +448,6 @@ def p_estatuto(p):
 	'''estatuto : asignacion estatutoAux
 				| escritura estatutoAux
 				| condicion estatutoAux
-				| lectura estatutoAux
 				| whiles estatutoAux
 				| funcs estatutoAux '''
 	pass
@@ -463,6 +466,7 @@ def p_checaNumParam(p):
 	numParam  = len(listaFunciones[pos].arrParam)
 	if contParam + 1 != numParam:	
 		print "El numero de parametros es incorrecto"
+		sys.exit()
 	pass
 #Regla para generar los GoSub de las llamadas a una funcion
 def p_generaGOSUB(p):
@@ -509,6 +513,7 @@ def p_verProc(p):
 	global llamada
 	if busquedaFunc(p[-2]) == -1 :
 		print "ESTA FUNCION NO ESTA DECLARADA"
+		sys.exit()
 	else:
 		llamada = p[-2]
 	pass
@@ -524,8 +529,6 @@ def p_generarEra(p):
 	arrParametros = listaFunciones[pos].arrParam
 	longitud = len (arrParametros)
 	r = diccionarioVarGlobal[llamada]
-	print "$$$$$$$$$$$$$$$$$$$$$$$$",diccionarioVarGlobal
-	print llamada
 	cuadr = Cuadruplo(30, -1, -1,r )
 	listaCuadruplos.append(cuadr)
 	print "Se guardo ERA ", llamada
@@ -558,6 +561,7 @@ def p_verificarTiposFunc(p):
 	mem = pilaOperandosDirMem.pop()
 	if(auxParam != auxPila):
 		print "TIPO DE PARAMETRO INCORRECTO"
+		sys.exit()
 	else: 
 		aux = arrParametros[contParam].direcmem
 		cuadr = Cuadruplo(31, -1, mem,aux)
@@ -598,6 +602,7 @@ def p_guardarIDPila(p):
 		idActual = p[-1]
 	else:
 		print "NO SE PUEDE HACER UNA ASIGNACION A UNA VARIABLE QUE NO EXISTA"
+		sys.exit()
 
 	pass
 
@@ -641,7 +646,6 @@ def p_finfondoFalsoC(p):
 	print "PARENTESIS ] "
 	global pilaOperadores
 	pilaOperadores.pop
-	print "saca operadooor"
 	pass
 
 def p_opcionmatriz(p):
@@ -767,7 +771,7 @@ def p_valorAsig(p):
 def p_guardarToken(p):
 	'''guardarToken :  '''
 	global pilaOperadores
-	if p[-1] == "leer":
+	if p[-1] == "mostrar":
 		pilaOperadores.append(18)
 	elif p[-1] == "dibujar":
 		pilaOperadores.append(19)
@@ -775,8 +779,9 @@ def p_guardarToken(p):
 		pilaOperadores.append(24)	
 	pass
 
-def p_checarLectura(p):
-	''' checarLectura : '''
+
+def p_checarImpresion(p):
+	''' checarImpresion : '''
 	global pilaOperadores
 	global pilaOperandos
 	global listaCuadruplos
@@ -789,9 +794,6 @@ def p_checarLectura(p):
 		 print "SE GUARDO EL CUADRUPLO DE LECTURA"
 	pass
 
-def p_lectura(p):
-	''' lectura : LEER guardarToken ID guardarIDPila opcionAsignacion ";" checarLectura'''
-	pass
 
 def p_guardarParametros(p):
 	''' guardarParametros : ID guardarIDPila pos color checarDibujar '''	
@@ -817,9 +819,12 @@ def p_checarDibujar(p):
 
 def p_escritura(p):
 	''' escritura : DIBUJAR guardarToken "("  guardarParametros ")" ";"
-				  |  mueve '''
+				  |  mueve
+				  | desplegar '''
 	pass
-
+def p_desplegar(p):
+	''' desplegar : MOSTRAR guardarToken ID guardarIDPila ";" checarImpresion '''
+	pass
 def p_color(p):
 	''' color : AMARILLO
 			  | VERDE
@@ -1038,6 +1043,7 @@ def p_checaroperador4(p):
 			#meter a pila el temporal 
 			if resultado == -1:
 				print "ERROR: Operacion invalida, tipos no compatibles"
+				sys.exit()
 			else:
 				print("SE CHECO EL CUADRUPLO Y ES CORRECTO", operando2, operando1, operadorActual)
 				print pilaOperandosDirMem
@@ -1130,7 +1136,7 @@ def p_factor(p):
 	pass
 
 def p_pos(p):
-	''' pos : "(" varcte "," varcte ")" '''
+	''' pos : "(" expresion "," expresion ")" '''
 	pass
 
 def p_whiles(p):
@@ -1153,6 +1159,7 @@ def p_checarContenido(p):
 	aux = pilaOperandos.pop()
 	if aux != 8:
 		print "Error semantico en while"
+		sys.exit()
 	else:
 		resultado = aux
 		temp = pilaOperandosDirMem.pop()
@@ -1197,7 +1204,7 @@ def p_recibe_ID(p):
 	global listaFunciones
 	global pilaOperandosDirMem
 	global idActual
-	print "------------------------------------------------------------------------"
+
 	print("VARCTE: ", p[1])
 	pos = busquedaLista()
 	print("Guardar: ", p[1])
@@ -1277,7 +1284,7 @@ def p_recibe_CTI(p):
 
 def p_recibe_TRUE(p):
 	''' recibe_TRUE : TRUE '''
-	print("-------------------------------------------------VARCTE: ", p[1])
+	print("VARCTE: ", p[1])
  	global diccionarioMemoria
 	posicion = busquedaLista()
 	var = diccionarioMemoria['4']
@@ -1293,7 +1300,7 @@ def p_recibe_TRUE(p):
 def p_recibe_FALSE(p):
 	''' recibe_FALSE : FALSE '''
 	print("VARCTE: ", p[1])
-	print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++VARCTE: ", p[1])
+	print("VARCTE: ", p[1])
  	global diccionarioMemoria
 	global diccionarioMemoria
 	posicion = busquedaLista()
@@ -1459,11 +1466,11 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 #yacc.yacc()
 
-# file = open("prueba.txt", "r")
-# yacc.parse(file.read())
-# file.close()
-def run(filename):
-	print filename
-	file = open(filename, "r")
-	yacc.parse(file.read())
-	file.close()
+file = open("prueba4.txt", "r")
+yacc.parse(file.read())
+file.close()
+# def run(filename):
+# 	print filename
+# 	file = open(filename, "r")
+# 	yacc.parse(file.read())
+# 	file.close()

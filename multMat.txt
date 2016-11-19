@@ -1,0 +1,18 @@
+inicio
+{
+	entero aAA[4][5];
+	entero bBB[5][6];
+	entero dDD[30];
+	entero resultado; 
+
+	dDD[15] = 20;
+
+	aAA[3][2] =  ((90*45) / 2) + 100;
+
+	bBB[2][1] = 230;
+
+	resultado = aAA[3][2] * bBB[2][1] / dDD[15] ;
+
+	mostrar resultado;
+}
+fin

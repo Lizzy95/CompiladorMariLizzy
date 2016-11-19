@@ -1,0 +1,33 @@
+inicio{
+	entero arr[10];
+	entero cont, cont1, cont2, temp;
+
+	arr[0] = 23;
+	arr[1] = 2;
+	arr[2] = 63;
+	arr[3] = 3;
+	arr[4] = 56;
+	arr[5] = 4;
+	arr[6] = 1;
+	arr[7] = 7;
+	arr[8] = 8;
+	arr[9] = 5;
+	cont = 0;
+	cont2 = 0; 
+	while(cont < 10){
+		cont2 = cont + 1;
+		if(cont2 < 10){
+			 if(arr[cont] < arr[cont+1]){
+				temp = arr[cont];
+				arr[cont] = arr[cont+1];
+				arr[cont+1] = temp;
+				cont = cont+1;
+			}
+		}
+		
+	}
+
+	cont1 = arr[9];
+	mostrar cont1;
+}
+fin
