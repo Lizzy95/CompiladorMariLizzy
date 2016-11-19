@@ -1,0 +1,8 @@
+inicio{
+entero cont = 10
+cuadrado bb;
+if(cont == 10){
+ dibujar(bb (10,20) morado);
+}
+}
+fin

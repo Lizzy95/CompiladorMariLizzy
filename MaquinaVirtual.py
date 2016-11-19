@@ -155,6 +155,7 @@ def suma(operando1, operando2, resultado):
 			else:
 				valor2  = memoria.listaMem[tipoActual][aux2] 
 	 	auxResultado = tipodato[int(resultado)/1000](resultado)
+	 	print operando1, operando2
 	 	if '.' in str(valor1) or '.' in str(valor2):
 	 		memoria.listaMem[tipoActual][auxResultado] = float(valor1) + float(valor2)
 	 	else:
@@ -801,6 +802,7 @@ def dibujar(operando1, operando2, resultado):
 
 def direccion(dir,cantidad):
 	print dir,cantidad
+	turtle.color('#0e7582')
 	turtle.shape("turtle")
 	if dir == 25:
 		print "f"

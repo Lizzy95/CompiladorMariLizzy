@@ -40,18 +40,8 @@ listaCuadruplos.append(cuadr)
 def p_programa(p):
 	'''programa : vars funcion INICIO funcAgregarInicio bloque  FIN liberarVar
 	  			| vars funcion INICIO FIN '''	
-	global pilaOperandos
-	global pilaOperadores
-	global pilaOperandosDirMem
-	global pilaSaltosFunc
-	global listaCuadruplos
-	global listaFunciones
 	print("SE TERMINO EL PROGRAMA PATIO CON EXITO!")
-	# for elemento in listaFunciones:
-	# 	for var in elemento.arrVar:
-	# 		print var.ren , var.col, var.nombre
 	escribeArchivo()
-	#print(pilaOperandos, "la ", pilaOperandosDirMem, "de ", pilaOperadores)
 	pass
 
 #Regla para guardar en diccionario de funciones la funcion de inicio
@@ -79,16 +69,16 @@ def p_vars(p):
 		| empty'''
 	print("VARS: Estructura basica")
 	pass
-
+#Permite la declaracion de diferentes tipos de datos
 def p_masTipos(p):
 	'''masTipos : vars 
 				| empty '''
 	pass
-
+# permite tener mas de un id del mismo tipo
 def p_listaIDS(p):
 	''' listaIDS : ID guardarIDs masIDS '''
 	pass
-
+#Regla que permite tener diferentes IDs
 def p_masIDS(p):
 	'''masIDS :  "," ID guardarIDs masIDS2
 			   | empty '''
@@ -110,7 +100,7 @@ def p_arreglo(p):
 	if len(pilaOperandosDirMem) > 0:
 		pilaOperandosDirMem.pop()
 	pass
-
+#Funcion que guarda el id y valores de un arreglo, manda a llamar la opcion de poner matriz
 def p_guardarExpArr(p):
 	''' guardarExpArr :  "]" matriz '''
 	global pilaOperandos
@@ -139,6 +129,7 @@ def p_matriz(p):
 	''' matriz : "[" expresion guardarExpMat
 			   | empty '''
 	pass
+#Sintaxis para guardar los renglones y columnas de la matriz a su id correspondiente.
 def p_guardarExpMat(p):
 	''' guardarExpMat :  "]" '''
 	global pilaOperandos
@@ -176,7 +167,7 @@ def p_funcion2(p):
 				| empty '''
 	print "Entre a funcion2"
 	pass
-
+#Funcion que contiene los elementos de la declaracion de una funcion
 def p_restoFuncion(p):
 	''' restoFuncion : "(" param ")" bloquefunc'''
 	pass
@@ -204,7 +195,7 @@ def p_funcAgregar(p):
 		diccionarioMemoria['1'][str(tipoActual)] = valormem + 1
 		diccionarioVarGlobal[p[-1]] = valormem
 
-
+#Funcion que maneja los parametros de una funcion
 def p_param(p):
 	''' param : tipo  ID guardarIDParam maspaID 
 		 		| empty'''
@@ -296,12 +287,8 @@ def busquedaVarGlobal(var):
 	global diccionarioVarGlobal
 	if diccionarioVarGlobal.has_key(var):
 		return -1
-
-#def imprimirLista():
-#	print"imprime elementos"
-#	for elemento in listaFunciones:
-#		print elemento.nombre
-#Regla para guardar los ids en la tabla de variables y asignarle memoria
+#Funcion que recibe el ID y la declara en su tabla correspondiente asignandole un valor de memoria.
+#Asimismo guarda su direccion en la pilaOperandosDirMem
 def p_guardarIDs(p):
 	''' guardarIDs : '''
 	global funcionActual
@@ -414,8 +401,6 @@ def p_liberarVar(p):
 	temp['6'] =  21001
 	temp['7'] =  22001
 	temp['8'] =  23001
-
-	
 	pass
 #Regla para actualizar los gotos de una funcion
 def p_guardarCuadruplo(p): 
@@ -433,7 +418,7 @@ def p_guardarCuadruplo(p):
 def p_regresa(p):
 	''' regresa : RETURN expresion generarCuadRetorno'''
 	pass
-
+#Funcion la cual genera el cuadruplo de retorno de una funcion, guardandola en la lista de cuadruplos.
 def p_generarCuadRetorno(p):
 	''' generarCuadRetorno : '''
 	global listaCuadruplos
@@ -443,7 +428,6 @@ def p_generarCuadRetorno(p):
 	global funcionActual
 	global listaFunciones
 	global pilaOperandos
-
 	posicion = busquedaLista()
 	posicion2 = busquedaVar(p[-1])
 	if posicion2 != -1:
@@ -494,21 +478,18 @@ def p_generaGOSUB(p):
 
 	cuadr = Cuadruplo(32,-1,-1,aux1)
 	listaCuadruplos.append(cuadr)
-	#if funcionActual != "inicio":
 	var = diccionarioMemoria['3']
 	mem = var[str(listaFunciones[pos].tipo)]
 	pos2 = diccionarioVarGlobal[llamada]
 	cuadr = Cuadruplo(5,pos2,-1,mem)
 	diccionarioMemoria['3'][listaFunciones[pos].tipo] = mem + 1
-	#pilaOperandos.append(listaFunciones[pos].tipo)
-	#pilaOperandosDirMem.append(mem)
 	listaCuadruplos.append(cuadr)
 	pass
 #Sintaxis de llamada a una funcion 
 def p_funcs(p):
 	''' funcs : ID guardarIDFunc verProc generarERA auxExp  checaNumParam generaGOSUB '''
 	pass
-
+#Funcion que guarda en pilaOperandosDirMem la direccion de memoria del ID de la funcion asi como su tipo en pilaOperandos.
 def p_guardarIDFunc(p):
 	''' guardarIDFunc : '''
 	global pilaOperandos
@@ -1270,19 +1251,25 @@ def p_recibe_CTF(p):
 	pass
 
 def p_recibe_CTI(p):
-	''' recibe_CTI : CTI '''
+	''' recibe_CTI : CTI 
+					| "-" CTI'''
 	print("VARCTE: ", p[1])
 	global diccionarioMemoria
 	global diccConstantes
 	global pilaOperandos
 	global pilaOperandosDirMem
+	print pilaOperadores
+	if(p[1] == "-"):
+		aux = -p[2]
+	else:
+		aux = p[1]
 	posicion = busquedaLista()
 	var = diccionarioMemoria['4']
 	valormem = var[str(1)]
-	agregarVar = TVar(p[1],1, valormem,0,0)
+	agregarVar = TVar(aux,1, valormem,0,0)
 	diccionarioMemoria['4'][str(1)] = valormem + 1
 	listaFunciones[posicion].arrVar.append(agregarVar)
-	diccConstantes[valormem] = p[1]
+	diccConstantes[valormem] = aux
 	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(1)
 	print pilaOperandosDirMem
@@ -1472,11 +1459,11 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 #yacc.yacc()
 
-file = open("prueba.txt", "r")
-yacc.parse(file.read())
-file.close()
-# def run(filename):
-# 	print filename
-# 	file = open("prueba.txt", "r")
-# 	yacc.parse(file.read())
-# 	file.close()
+# file = open("prueba.txt", "r")
+# yacc.parse(file.read())
+# file.close()
+def run(filename):
+	print filename
+	file = open(filename, "r")
+	yacc.parse(file.read())
+	file.close()

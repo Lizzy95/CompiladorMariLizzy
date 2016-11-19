@@ -1,6 +1,10 @@
 inicio
 {
 	estrella dB; 
-	dibujar(dB (10,50) morado);
+	entero cont;
+	cont = -50 * 20.4;
+	dibujar(dB (-10,50) morado);
+
+
 }
 fin

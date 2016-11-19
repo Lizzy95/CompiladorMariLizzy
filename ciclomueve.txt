@@ -1,0 +1,10 @@
+inicio{
+ entero cont;
+ cont = 20;
+  while(cont > 0){
+	mueve izquierda 20;
+	mueve arriba 30;
+	mueve abajo 10;
+  }
+}
+fin
