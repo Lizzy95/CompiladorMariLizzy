@@ -1464,11 +1464,11 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 #yacc.yacc()
 
-file = open("prueba4.txt", "r")
-yacc.parse(file.read())
-file.close()
-# def run(filename):
-# 	print filename
-# 	file = open(filename, "r")
-# 	yacc.parse(file.read())
-# 	file.close()
+# file = open("prueba4.txt", "r")
+# yacc.parse(file.read())
+# file.close()
+def run(filename):
+	print filename
+	file = open(filename, "r")
+	yacc.parse(file.read())
+	file.close()
