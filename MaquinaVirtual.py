@@ -116,8 +116,8 @@ def suma(operando1, operando2, resultado):
 	if listaCuadruplos[contCuadruplos - 2].operador == '30':
 		memoria = listaMemoria.pop()
 	elif listaCuadruplos[contCuadruplos].operador == '31':
-		print memoria.listaMem
-		print auxMem.listaMem
+		print len(memoria.listaMem)
+		print  len(auxMem.listaMem)
 	else:
 		memoria = auxMem
 	if diccionarioConstantes.has_key(operando1):
@@ -178,13 +178,12 @@ def resta(operando1, operando2, resultado):
 		print "entraaa"
 		memoria = listaMemoria.pop()
 	elif listaCuadruplos[contCuadruplos].operador == '31':
-		print memoria.listaMem
-		print auxMem.listaMem
+		print len(memoria.listaMem)
+		print len(auxMem.listaMem)
 	else:
 		memoria = auxMem
 
 	print "Operando 1 = ", operando1 , " Operando 2 = ", operando2
-	print diccionarioConstantes
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
@@ -247,7 +246,6 @@ def multiplicacion(operando1, operando2, resultado):
 		memoria = auxMem
 
 	print "Operando 1 = ", operando1 , " Operando 2 = ", operando2
-	print diccionarioConstantes
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
@@ -311,7 +309,6 @@ def division(operando1, operando2, resultado):
 		memoria = auxMem
 
 	print "Operando 1 = ", operando1 , " Operando 2 = ", operando2
-	print diccionarioConstantes
 	if diccionarioConstantes.has_key(operando1):
 		valor1 = diccionarioConstantes[operando1]
 	else:
@@ -373,11 +370,9 @@ def asignacion(operando1, operando2, resultado):
 				valor1 = diccionarioConstantes[operando1]
 			else:
 				aux1 = tipodato[int(operando1)/1000](operando1)
-				print ":",operando1, aux1, tipoActual, memoria.listaMem[tipoActual]
 				valor1  = memoria.listaMem[tipoActual][aux1] 
 		else:
 			aux1 = tipodato[int(operando1)/1000](operando1)
-			print operando1, aux1, tipoActual, memoria.listaMem
 			valor1  = memoria.listaMem[tipoActual][aux1] 
 
 	contCuadruplos = contCuadruplos + 1
@@ -413,7 +408,6 @@ def goto(operando1, operando2, resultado):
 	#else:
 		#contCuadruplos = int(resultado)
 
-
 def comparacionMenor(operando1, operando2, resultado):
 	print "entra comparacionMenor"
 	global pilaMemoria
@@ -432,16 +426,32 @@ def comparacionMenor(operando1, operando2, resultado):
 	else:
 		try:
 			aux1 = tipodato[int(operando1)/1000](operando1)
-			valor1  = memoria.listaMem[tipoActual][aux1] 
+			if tipoActual == 16:
+				valor1 = memoria.listaMem[tipoActual][aux1]
+				operando1 = valor1
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				valor1  = memoria.listaMem[tipoActual][aux1]
+			else:
+				valor1  = memoria.listaMem[tipoActual][aux1]
 		except KeyError:
 			print "Variable no tiene valor asignado"
 			sys.exit()
+
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
-		aux1 = tipodato[int(operando2)/1000](operando2)
-		valor2 = memoria.listaMem[tipoActual][aux1] 
+		aux2 = tipodato[int(operando2)/1000](operando2)
+		if tipoActual == 16:
+			valor2 = memoria.listaMem[tipoActual][aux2]
+			operando2 = valor2
+			aux2 = tipodato[int(operando2)/1000](operando2)
+			valor2  = memoria.listaMem[tipoActual][aux2]
+		else:
+			valor2  = memoria.listaMem[tipoActual][aux2] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
+
+ 	print  valor1, " ", valor2
+
  	if float(valor1) < float(valor2):
  		memoria.listaMem[tipoActual][auxResultado] = 1
  	else:
@@ -468,15 +478,28 @@ def comparacionMayor(operando1, operando2, resultado):
 	else:
 		try:
 			aux1 = tipodato[int(operando1)/1000](operando1)
-			valor1  = memoria.listaMem[tipoActual][aux1] 
+			if tipoActual == 16:
+				valor1 = memoria.listaMem[tipoActual][aux1]
+				operando1 = valor1
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				valor1  = memoria.listaMem[tipoActual][aux1]
+			else:
+				valor1  = memoria.listaMem[tipoActual][aux1]
 		except KeyError:
 			print "Variable no tiene valor asignado"
 			sys.exit()
+
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
-		aux1 = tipodato[int(operando2)/1000](operando2)
-		valor2 = memoria.listaMem[tipoActual][aux1] 
+		aux2 = tipodato[int(operando2)/1000](operando2)
+		if tipoActual == 16:
+			valor2 = memoria.listaMem[tipoActual][aux2]
+			operando2 = valor2
+			aux2 = tipodato[int(operando2)/1000](operando2)
+			valor2  = memoria.listaMem[tipoActual][aux2]
+		else:
+			valor2  = memoria.listaMem[tipoActual][aux2]  
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
  	if float(valor1) > float(valor2):
@@ -504,15 +527,28 @@ def comparacionMenorIgual(operando1, operando2, resultado):
 	else:
 		try:
 			aux1 = tipodato[int(operando1)/1000](operando1)
-			valor1  = memoria.listaMem[tipoActual][aux1] 
+			if tipoActual == 16:
+				valor1 = memoria.listaMem[tipoActual][aux1]
+				operando1 = valor1
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				valor1  = memoria.listaMem[tipoActual][aux1]
+			else:
+				valor1  = memoria.listaMem[tipoActual][aux1]
 		except KeyError:
 			print "Variable no tiene valor asignado"
 			sys.exit()
+
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
-		aux1 = tipodato[int(operando2)/1000](operando2)
-		valor2 = memoria.listaMem[tipoActual][aux1] 
+		aux2 = tipodato[int(operando2)/1000](operando2)
+		if tipoActual == 16:
+			valor2 = memoria.listaMem[tipoActual][aux2]
+			operando2 = valor2
+			aux2 = tipodato[int(operando2)/1000](operando2)
+			valor2  = memoria.listaMem[tipoActual][aux2]
+		else:
+			valor2  = memoria.listaMem[tipoActual][aux2]
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
  	print "valor 1: ",valor1
@@ -542,15 +578,28 @@ def comparacionMayorIgual(operando1, operando2, resultado):
 	else:
 		try:
 			aux1 = tipodato[int(operando1)/1000](operando1)
-			valor1  = memoria.listaMem[tipoActual][aux1] 
+			if tipoActual == 16:
+				valor1 = memoria.listaMem[tipoActual][aux1]
+				operando1 = valor1
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				valor1  = memoria.listaMem[tipoActual][aux1]
+			else:
+				valor1  = memoria.listaMem[tipoActual][aux1]
 		except KeyError:
 			print "Variable no tiene valor asignado"
 			sys.exit()
+			
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
-		aux1 = tipodato[int(operando2)/1000](operando2)
-		valor2 = memoria.listaMem[tipoActual][aux1] 
+		aux2 = tipodato[int(operando2)/1000](operando2)
+		if tipoActual == 16:
+			valor2 = memoria.listaMem[tipoActual][aux2]
+			operando2 = valor2
+			aux2 = tipodato[int(operando2)/1000](operando2)
+			valor2  = memoria.listaMem[tipoActual][aux2]
+		else:
+			valor2  = memoria.listaMem[tipoActual][aux2]
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
  	if float(valor1) >= float(valor2):
@@ -577,15 +626,28 @@ def comparacionIgual(operando1, operando2, resultado):
 	else:
 		try:
 			aux1 = tipodato[int(operando1)/1000](operando1)
-			valor1  = memoria.listaMem[tipoActual][aux1] 
+			if tipoActual == 16:
+				valor1 = memoria.listaMem[tipoActual][aux1]
+				operando1 = valor1
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				valor1  = memoria.listaMem[tipoActual][aux1]
+			else:
+				valor1  = memoria.listaMem[tipoActual][aux1]
 		except KeyError:
 			print "Variable no tiene valor asignado"
 			sys.exit()
+
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
-		aux1 = tipodato[int(operando2)/1000](operando2)
-		valor2 = memoria.listaMem[tipoActual][aux1] 
+		aux2 = tipodato[int(operando2)/1000](operando2)
+		if tipoActual == 16:
+			valor2 = memoria.listaMem[tipoActual][aux2]
+			operando2 = valor2
+			aux2 = tipodato[int(operando2)/1000](operando2)
+			valor2  = memoria.listaMem[tipoActual][aux2]
+		else:
+			valor2  = memoria.listaMem[tipoActual][aux2] 
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
  	if float(valor1) == float(valor2):
@@ -613,15 +675,29 @@ def comparacionDiferente(operando1, operando2, resultado):
 	else:
 		try:
 			aux1 = tipodato[int(operando1)/1000](operando1)
-			valor1  = memoria.listaMem[tipoActual][aux1] 
+			if tipoActual == 16:
+				valor1 = memoria.listaMem[tipoActual][aux1]
+				operando1 = valor1
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				valor1  = memoria.listaMem[tipoActual][aux1]
+			else:
+				valor1  = memoria.listaMem[tipoActual][aux1]
 		except KeyError:
 			print "Variable no tiene valor asignado"
 			sys.exit()
+
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
-		aux1 = tipodato[int(operando2)/1000](operando2)
-		valor2 = memoria.listaMem[tipoActual][aux1] 
+		aux2 = tipodato[int(operando2)/1000](operando2)
+		if tipoActual == 16:
+			valor2 = memoria.listaMem[tipoActual][aux2]
+			operando2 = valor2
+			aux2 = tipodato[int(operando2)/1000](operando2)
+			valor2  = memoria.listaMem[tipoActual][aux2]
+		else:
+			valor2  = memoria.listaMem[tipoActual][aux2]
+
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
  	if float(valor1) != float(valor2):
@@ -647,15 +723,29 @@ def comparacionOR(operando1, operando2, resultado):
 	else:
 		try:
 			aux1 = tipodato[int(operando1)/1000](operando1)
-			valor1  = memoria.listaMem[tipoActual][aux1] 
+			if tipoActual == 16:
+				valor1 = memoria.listaMem[tipoActual][aux1]
+				operando1 = valor1
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				valor1  = memoria.listaMem[tipoActual][aux1]
+			else:
+				valor1  = memoria.listaMem[tipoActual][aux1]
 		except KeyError:
 			print "Variable no tiene valor asignado"
 			sys.exit()
+
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
-		aux1 = tipodato[int(operando2)/1000](operando2)
-		valor2 = memoria.listaMem[tipoActual][aux1] 
+		aux2 = tipodato[int(operando2)/1000](operando2)
+		if tipoActual == 16:
+			valor2 = memoria.listaMem[tipoActual][aux2]
+			operando2 = valor2
+			aux2 = tipodato[int(operando2)/1000](operando2)
+			valor2  = memoria.listaMem[tipoActual][aux2]
+		else:
+			valor2  = memoria.listaMem[tipoActual][aux2]
+
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
  	if float(valor1) or float(valor2):
@@ -682,15 +772,29 @@ def comparacionAND(operando1, operando2, resultado):
 	else:
 		try:
 			aux1 = tipodato[int(operando1)/1000](operando1)
-			valor1  = memoria.listaMem[tipoActual][aux1] 
+			if tipoActual == 16:
+				valor1 = memoria.listaMem[tipoActual][aux1]
+				operando1 = valor1
+				aux1 = tipodato[int(operando1)/1000](operando1)
+				valor1  = memoria.listaMem[tipoActual][aux1]
+			else:
+				valor1  = memoria.listaMem[tipoActual][aux1]
 		except KeyError:
 			print "Variable no tiene valor asignado"
 			sys.exit()
+
 	if diccionarioConstantes.has_key(operando2):
 		valor2 = diccionarioConstantes[operando2]
 	else:
-		aux1 = tipodato[int(operando2)/1000](operando2)
-		valor2 = memoria.listaMem[tipoActual][aux1] 
+		aux2 = tipodato[int(operando2)/1000](operando2)
+		if tipoActual == 16:
+			valor2 = memoria.listaMem[tipoActual][aux2]
+			operando2 = valor2
+			aux2 = tipodato[int(operando2)/1000](operando2)
+			valor2  = memoria.listaMem[tipoActual][aux2]
+		else:
+			valor2  = memoria.listaMem[tipoActual][aux2]
+
  	auxResultado = tipodato[int(resultado)/1000](resultado)
  	
  	if float(valor1) and float(valor2):
@@ -725,6 +829,7 @@ def gotoFalso(operando1, operando2, resultado):
 		contCuadruplos = contCuadruplos + 1
 	listaMemoria.append(memoria)
 	print "entra gotoFalsor", resultado," ", operando2
+
 def imprimir(operando1, operando2, resultado):
 	global contCuadruplos
 	global listaMemoria
@@ -738,6 +843,8 @@ def imprimir(operando1, operando2, resultado):
 	except KeyError:
 		print "Variable no tiene valor asignado"
 		sys.exit()
+	listaMemoria.append(memoria)
+	print "valor--------", valor1
 	turtle.write(valor1, align = "center", font =("Herculanum",72,"bold"))
 	contCuadruplos = contCuadruplos + 1 
 
@@ -1045,8 +1152,6 @@ linea = archivo.readline()
 
 while linea != '$$\n':
 	lineaAux = linea.split(' ')
-	print lineaAux
-	print len(lineaAux)
 	if(len(lineaAux)) == 4: 
 		cuadr = Cuadruplo(lineaAux[0], lineaAux[1], lineaAux[2],lineaAux[3])
 	elif (len(lineaAux)) == 5:

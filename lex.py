@@ -28,7 +28,6 @@ reserved = {
     'mostrar' : 'MOSTRAR',
     'arriba' : 'ARRIBA',
     'abajo' : 'ABAJO',
-    'void' : 'VOID', #8
     'return' : 'RETURN',
     'bool' : 'BOOL', #9
     'func' : 'FUNC',
@@ -65,39 +64,37 @@ t_COAND = "&&"
 # t_TRUE = "TRUE"
 
 # t_FALSE = "FALSE"
-
+#Checa true
 def t_TRUE(t):
     r'true'
     t.type = reserved.get(t.value, 'TRUE')
     return t
-
+#Regla que checa el false
 def t_FALSE(t):
     r'false'
     t.type = reserved.get(t.value, 'FALSE')
     return t
-
+#Regla que checa el IF
 def t_IF(t):
     r'if'
     t.type = reserved.get(t.value, 'IF')
     return t
-
-
-
+#Regla que checa el while
 def t_WHILE(t):
     r'while'
     t.type = reserved.get(t.value, 'WHILE')
     return t
-
+#Regla que checa el ID
 def t_ID(t):
     r'[a-zA-Z].[a-zA-Z0-9]*'
-    t.type = reserved.get(t.value,'ID')    # Check for reserved words
+    t.type = reserved.get(t.value,'ID')   
     return t
-
+#Regla que checa las CTF
 def t_CTF(t):
     r'[0-9]+\.[0-9]+'
     t.value = float(t.value)
     return t
-
+#Regla que checa las CTI
 def t_CTI(t):
     r'[0-9]+'
     t.value = int(t.value)

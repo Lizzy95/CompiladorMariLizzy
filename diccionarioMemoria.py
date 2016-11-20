@@ -1,3 +1,4 @@
+#Clase que crea el manejo de memoria en compilacion
 diccionarioMemoria ={#globales
 					 '1': {	'1' : 1,
 							'2' : 1001,

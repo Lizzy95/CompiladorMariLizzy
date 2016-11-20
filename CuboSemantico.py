@@ -1,3 +1,6 @@
+#Clase que crea el cubo semantico para verificar las operaciones, asi mismo contine el identificador 
+#que le corresponde a cada operador
+
 #1 +
 #2 -
 #3 *
@@ -15,7 +18,6 @@
 #15 )
 #16 GOTOF
 #17 GOTO 
-
 #19 DIBUJAR
 #20 AMARILLO
 #21 VERDE
@@ -33,9 +35,6 @@
 #33 VER
 #34 rosa
 #35 morado
-
-
-
 
 #enteros
 cuboSemantico = [[[-1 for k in range(14)] for j in range(9)] for i in range(9)]
@@ -65,9 +64,6 @@ cuboSemantico[1][7][9]= 8
 cuboSemantico[1][7][10]= 8
 cuboSemantico[1][7][11]= 8
 
-
-
-
 #decimal
 cuboSemantico[7][7][1]= 7
 cuboSemantico[7][7][2]= 7
@@ -91,7 +87,6 @@ cuboSemantico[7][1][8]= 8
 cuboSemantico[7][1][9]= 8
 cuboSemantico[7][1][10]= 8
 cuboSemantico[7][1][11]= 8
-
 
 #bool
 cuboSemantico[8][8][5]= 8

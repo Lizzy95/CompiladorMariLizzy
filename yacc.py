@@ -258,7 +258,6 @@ def busquedaVar(varActual):
 def busquedaVarDir(varActual):
 	global listaFunciones
 	global funcionActual
-	#imprimirLista()
 	cont = 0
 	for elemento in listaFunciones:
 		if funcionActual == elemento.nombre:
@@ -273,7 +272,6 @@ def busquedaVarDir(varActual):
 def busquedaVarParam(varActual):
 	global listaFunciones
 	global funcionActual
-	#imprimirLista()
 	cont = 0
 	for elemento in listaFunciones:
 		if funcionActual == elemento.nombre:
@@ -493,7 +491,8 @@ def p_generaGOSUB(p):
 def p_funcs(p):
 	''' funcs : ID guardarIDFunc verProc generarERA auxExp  checaNumParam generaGOSUB '''
 	pass
-#Funcion que guarda en pilaOperandosDirMem la direccion de memoria del ID de la funcion asi como su tipo en pilaOperandos.
+#Funcion que guarda en pilaOperandosDirMem la direccion de memoria del ID de la funcion asi como su 
+#tipo en pilaOperandos.
 def p_guardarIDFunc(p):
 	''' guardarIDFunc : '''
 	global pilaOperandos
@@ -506,8 +505,7 @@ def p_guardarIDFunc(p):
 	aux1 = p[-1]
 	pilaOperandosDirMem.append(diccionarioVarGlobal[p[-1]])
 
-
-
+#Funcion que verifica si una funcion esta declarada o no
 def p_verProc(p):
 	''' verProc : '''
 	global llamada
@@ -538,7 +536,7 @@ def p_auxExp(p):
 	''' auxExp : listaExp llegaComa
 				| listaExp  '''
 	pass
-
+#Regla auxiliar para recibir la , de mas expresiones y contar los parametros
 def p_llegaComa(p):
 	''' llegaComa : "," '''
 	global contParam
@@ -576,12 +574,13 @@ def p_masExps(p):
 	''' masExps : llegaComa listaExp
 				|'''
 	pass
-
+#Regla de sintaxis que maneja la asignacion, indicando que atributos debe de tener.
 def p_asignacion(p):
 	''' asignacion : ID guardarIDPila opcionAsignacion valorAsig expresion ";" checarOperadorIgual
 				 '''
 	pass
-
+#Regla con la cual se guarda el ID en la pilaOperandosDirMem que se usa en un estatuto para poder
+# utilizarlo en cada operacion que se indique.
 def p_guardarIDPila(p): 
 	''' guardarIDPila : '''
 	global pilaOperandos
@@ -605,7 +604,7 @@ def p_guardarIDPila(p):
 		sys.exit()
 
 	pass
-
+#Verfica que se pueda hacer una asignacion, es decir que los operandos sean compatibles
 def p_checarOperadorIgual(p):
 	'''checarOperadorIgual :  '''
 	global pilaOperadores
@@ -625,10 +624,9 @@ def p_checarOperadorIgual(p):
 			operando2C = pilaOperandosDirMem.pop()
 			operando1C = pilaOperandosDirMem.pop()
 			cuadr = Cuadruplo(signo, operando2C, -1, operando1C)
-			#pilaOperandosDirMem.append(operando1C)
 			listaCuadruplos.append(cuadr)
 	pass
-
+#Regla para poder hacer una asignacion a una variable dimensionada
 def p_opcionAsignacion(p):
 	''' opcionAsignacion : checaDim fondoFalsoC expresion opcionmatriz 
  						| empty '''
@@ -647,13 +645,13 @@ def p_finfondoFalsoC(p):
 	global pilaOperadores
 	pilaOperadores.pop
 	pass
-
+#Regla para poder manejar las variables dimensionadas
 def p_opcionmatriz(p):
 	'''opcionmatriz : finfondoFalsoC fondoFalsoC expresion generaCuadruploMatriz
 					| generaCuadruploMatriz
 					| empty '''
 	pass
-
+#Funcion que checa si una funcion es dimensionada o no 
 def p_checaDim(p):
 	''' checaDim : '''
 	global pilaOperandosDirMem
@@ -676,7 +674,7 @@ def p_checaDim(p):
 		pilaOperandos.pop()
 		pilaOperandosDirMem.pop()
 	pass
-
+#Genera los cuadruplos necesarios para las variables dimensionadas
 def p_generaCuadruploMatriz(p):
 	''' generaCuadruploMatriz : "]" '''
 	global listaCuadruplos
@@ -691,6 +689,7 @@ def p_generaCuadruploMatriz(p):
 	func = listaFunciones[pos].arrVar
 	longi = len(func)
 	if colArreglo != 0:
+		#genera cuadruplos para matrices
 		pilaOperadores.pop()
 		operando1 = pilaOperandos.pop()
 		operandoMem1 = pilaOperandosDirMem.pop()
@@ -730,9 +729,9 @@ def p_generaCuadruploMatriz(p):
 		pilaOperandos.append(operando1)
 		diccionarioMemoria['3']['9'] = mem1 + 1
 	else:
+		#genera cuadruplos para los arreglos
 		operando1 = pilaOperandos.pop()
 		operandoMem1 = pilaOperandosDirMem.pop()
-		
 		
 		print "renArreglo = ", renArreglo, pilaOperandosDirMem
 
@@ -758,7 +757,7 @@ def p_generaCuadruploMatriz(p):
 		pilaOperandos.append(operando1)
 		diccionarioMemoria['3']['9'] = mem + 1
 	pass
-
+#Regla que maneja el simbolo de =
 def p_valorAsig(p):
 	''' valorAsig : "="
 				  | empty'''
@@ -767,7 +766,8 @@ def p_valorAsig(p):
 		pilaOperadores.append(5)
 
 	pass
-
+#Regla de sintaxis que guarda los signos de mostrar, dibujar, mueve asignandoles su numero
+#numero correspondinete a operador
 def p_guardarToken(p):
 	'''guardarToken :  '''
 	global pilaOperadores
@@ -779,7 +779,7 @@ def p_guardarToken(p):
 		pilaOperadores.append(24)	
 	pass
 
-
+#Genera el cuadruplo de impresion
 def p_checarImpresion(p):
 	''' checarImpresion : '''
 	global pilaOperadores
@@ -794,11 +794,12 @@ def p_checarImpresion(p):
 		 print "SE GUARDO EL CUADRUPLO DE LECTURA"
 	pass
 
-
+#Regla que maneja los atributos que debe de tener un parametro de dibujar
 def p_guardarParametros(p):
 	''' guardarParametros : ID guardarIDPila pos color checarDibujar '''	
 	pass
-
+#Crea el cuadruplo de dibujar, con su operador 19, el id de la figura que se quiere dibujar, las 
+#posiciones donde se quiere dibujar y el color.
 def p_checarDibujar(p):
 	''' checarDibujar : '''
 	global pilaOperadores
@@ -816,15 +817,17 @@ def p_checarDibujar(p):
 		pilaOperandos.pop()
 	
 		print "SE GUARDO EL CUADRUPLO DE DIBUJAR"
-
+#Regla de sintaxis correspondiente a dibujar una figura
 def p_escritura(p):
 	''' escritura : DIBUJAR guardarToken "("  guardarParametros ")" ";"
 				  |  mueve
 				  | desplegar '''
 	pass
+#Regla de sintaxis para mover la tortuja hacia diferentes lugares
 def p_desplegar(p):
 	''' desplegar : MOSTRAR guardarToken ID guardarIDPila ";" checarImpresion '''
 	pass
+#Regla de sintaxis que maneja los colores que se ingresen asignandoles su id de operador
 def p_color(p):
 	''' color : AMARILLO
 			  | VERDE
@@ -845,24 +848,24 @@ def p_color(p):
 	elif p[1] == "morado":
 		pilaOperandos.append(35)
 	pass
-
+#Regla de sintaxis que maneja las condiciones
 def p_condicion(p):
 	''' condicion : IF "(" expresion ")" checarIF bloqueCond finPilaSaltos
 				  | IF "(" expresion ")" checarIF bloqueCond checarElse bloqueCond finPilaSaltos'''
 	pass
-
+#Regla de sintaxis correspondiente al bloque de una funcion
 def p_bloqueCond(p):
 	'''bloqueCond : "{" estatuto regresaCond "}" 
 				  |  "{" regresaCond "}" 
 				  | "{"  "}" '''
 	print("BLOQUE CONDICIONALES")
 	pass
-
+#Regla para generar el retorno de una funcion
 def p_regresaCond(p):
 	''' regresaCond :  RETURN expresion generarCuadRetorno
 					| empty'''
 	pass
-
+#Regla de sintaxis en la cual se checa el if de una expresion
 def p_checarIF(p):
 	'''checarIF : '''
 	print "Entre a checar IF"
@@ -886,7 +889,7 @@ def p_checarIF(p):
 		print pilaOperadores
 
 	pass
-
+#Regla de sintaxis que genera el cuadruplo correspondiente al goto del if, y rellena el gotofalso
 def p_checarElse(p):
 	'''checarElse : ELSE '''
 	print "Entre a checar else"
@@ -901,7 +904,7 @@ def p_checarElse(p):
 	listaCuadruplos[salto].temporal = lenCuadruplos
 	pilaSaltos.append(lenCuadruplos - 1)
 	pass
-
+#Regla para manejar los saltos de gotos
 def p_finPilaSaltos(p):
 	'''finPilaSaltos : '''
 	print "Entre fin pila saltos", pilaSaltos
@@ -909,12 +912,12 @@ def p_finPilaSaltos(p):
 	lenCuadruplos = len(listaCuadruplos)
 	listaCuadruplos[salto].temporal = lenCuadruplos
 	pass
-
+#Regla para manejar las expresiones y operadores logicos
 def p_expresion(p):
 	'''expresion :  exp operacionLogica checaoperador6
 				 | exp '''
 	pass
-
+#Manejo de los operadores logicos, asignandoles su numero identificador
 def p_push_logica(p):
 	'''push_logica : 	  ">" 
 						| "<" 
@@ -943,12 +946,13 @@ def p_push_logica(p):
 	elif p[1] == "&&":
 		pilaOperadores.append(13)
 	pass
-
+#Regla auxiliar para manejar las operaciones logicas con mas expresiones
 def p_operacionLogica(p):
 	'''operacionLogica : push_logica exp
 						 | '''
 	pass
-
+#Regla que verifica que las operaciones logicas que se esten manejando sean las correctas y se crea 
+#el cuadruplo
 def p_checaoperador6(p):
 	'''checaoperador6 : '''
 	global pilaOperadores
@@ -988,7 +992,7 @@ def p_checaoperador6(p):
 				print "asdasd ", pilaOperandos, " ", resultadoT
 
 	pass
-
+#Regla que maneja los terminos y manda a checar operador de + y -
 def p_exp(p):
 	'''exp : termino  checaroperador4'''
 	global pilaOperandosDirMem
@@ -1010,13 +1014,7 @@ def p_finFondoFalso(p):
 	global pilaOperadores
 	print("Entra Fondo Folso: ", pilaOperadores.pop())
 	pass
-
-# def p_operacion(p):
-# 	'''operacion : termino checaroperador4
-# 		   		 | termino checaroperador4 signo '''
-# 	print "entre a operacion"
-# 	pass
-
+#Regla de sintaxis para verificar que la operacion que se quiere hacer sea valida y genera el cuadruplo
 def p_checaroperador4(p):
 	'''checaroperador4 : signo
 					   | '''
@@ -1055,11 +1053,11 @@ def p_checaroperador4(p):
 				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)
 	pass
-
+#Funcion auxiliar para manejar +- y exp
 def p_signo(p):
 	'''signo : push_pm exp
 			 | '''
-
+#Regla que maneja los operadores +- asigandoles su identificador y metiendolos a la pila de operadores
 def p_push_pm(p):
 	'''push_pm : "+" 
 			| "-" '''
@@ -1070,12 +1068,12 @@ def p_push_pm(p):
 	else:
 		pilaOperadores.append(2)
 	pass 
-
+#Regla que maneja factor y checaroperador5 para las operaciones *-
 def p_termino(p):
 	'''termino : factor checaroperador5'''
 	print ("Entre Termino ", p[1])
 	pass
-
+#Funcion para verificar que la operacion que se quiere hacer sea valida y genera el cuadruplo
 def p_checaroperador5(p):
 	'''checaroperador5 : masop
 					   | '''
@@ -1113,11 +1111,11 @@ def p_checaroperador5(p):
 				listaCuadruplos.append(cuadr)
 				pilaOperandos.append(resultado)
 	pass
-
+#Funcion auxiliar para manejar *- y terminos
 def p_masop(p):
 	'''masop : push_td termino
 			| '''
-
+#Funcion que maneja */ asignandoles su operador y metiendolo a la pila
 def p_push_td(p):
 	'''push_td : "*"
  			   | "/"'''
@@ -1128,21 +1126,21 @@ def p_push_td(p):
 	else:
 		pilaOperadores.append(4)
  	pass
-
+#Funcion que maneja expresion y variables constantes en una operacion
 def p_factor(p):
 	'''factor : fondoFalso expresion finFondoFalso
 			  | varcte '''
 	print "Entre a Factor"
 	pass
-
+#Funcion la cual maneja las posiciones en dibujar
 def p_pos(p):
 	''' pos : "(" expresion "," expresion ")" '''
 	pass
-
+#Regla de sintaxis para los whiles
 def p_whiles(p):
 	''' whiles : WHILE checarWhile "(" expresion ")" checarContenido bloqueCond finPilaSaltosWhile '''
 	pass
-
+#Regla que maneja los saltos de whiles
 def p_checarWhile(p):
 	''' checarWhile : '''
 	global pilaSaltos
@@ -1150,7 +1148,7 @@ def p_checarWhile(p):
 	lenCuadruplos = len(listaCuadruplos)
 	pilaSaltos.append(lenCuadruplos)
 	pass
-
+#Regla de sintaxis que verifica que el while este correcto y genera el cuadruplo goto falso
 def p_checarContenido(p):
 	''' checarContenido : '''
 	global pilaSaltos
@@ -1158,7 +1156,7 @@ def p_checarContenido(p):
 	global pilaOperandos
 	aux = pilaOperandos.pop()
 	if aux != 8:
-		print "Error semantico en while"
+		print "Error en while"
 		sys.exit()
 	else:
 		resultado = aux
@@ -1169,7 +1167,7 @@ def p_checarContenido(p):
 		pilaSaltos.append(len(listaCuadruplos) - 1)
 		print "Se guardo GOTO FALSO WHILE: ", cuadr.operador, cuadr.temporal
 	pass
-
+#Regla que maneja la pila de saltos de while
 def p_finPilaSaltosWhile(p):
 	'''finPilaSaltosWhile : '''
 	global pilaSaltos
@@ -1182,7 +1180,7 @@ def p_finPilaSaltosWhile(p):
 	listaCuadruplos[saltos].temporal = lenCuadruplos
 	print "Se guardo GOTO RETORNO: ", cuadr.operador, cuadr.temporal
 	pass
-
+#Regla de sintaxis que maneja las variables ingresadas
 def p_varcte(p):
 	''' varcte : recibe_ID opcionAsignacion
 			   | recibe_CTF 
@@ -1192,11 +1190,9 @@ def p_varcte(p):
 			   | funcs
 			   '''
 	pass
-
-# def p_recibeArreglo(p):
-# 	'''recibeArreglo : recibe_ID opcionAsignacion '''
-# 	pass
-
+#Regla que maneja los ID que recibe, metiendolos a la pila de operandos y en caso de ser dimensionada 
+#asignarle a la variable renArreglo y colArreglo el valor de los renglones y columnas de la variable 
+#dimensionada para usarlas en el manejo de acceso de una variable dimensionada
 def p_recibe_ID(p):
 	''' recibe_ID : ID '''
 	global renArreglo
@@ -1216,10 +1212,10 @@ def p_recibe_ID(p):
 	if(pos2 != -1):
 		var = listaFunciones[pos].arrVar[pos2].tipo
 		print "renArreglo = ", renArreglo
-		renArreglo = listaFunciones[pos].arrVar[pos2].ren
-		colArreglo = listaFunciones[pos].arrVar[pos2].col
-		if renArreglo != 0 or colArreglo != 0:
+		if listaFunciones[pos].arrVar[pos2].ren != 0 or listaFunciones[pos].arrVar[pos2].col != 0:
 			idActual = p[1]
+			renArreglo = listaFunciones[pos].arrVar[pos2].ren
+			colArreglo = listaFunciones[pos].arrVar[pos2].col
 		direc = listaFunciones[pos].arrVar[pos2].direcmem
 		pilaOperandosDirMem.append(direc)
 		pilaOperandos.append(var)
@@ -1228,8 +1224,10 @@ def p_recibe_ID(p):
 		print "colArreglo = ", colArreglo
 		renArreglo = listaFunciones[pos].arrParam[pos2].ren
 		colArreglo = listaFunciones[pos].arrParam[pos2].col
-		if renArreglo != 0 or colArreglo != 0:
+		if listaFunciones[pos].arrVar[pos2].ren != 0 or listaFunciones[pos].arrVar[pos2].col != 0:
 			idActual = p[1]
+			renArreglo = listaFunciones[pos].arrVar[pos2].ren
+			colArreglo = listaFunciones[pos].arrVar[pos2].col
 		direc = listaFunciones[pos].arrParam[pos3].direcmem
 		pilaOperandosDirMem.append(direc)
 		pilaOperandos.append(var)
@@ -1240,7 +1238,8 @@ def p_recibe_ID(p):
 		print "ERROR: NO SE ENCUENTRA EL ID QUE QUIERES USAR"
 		sys.exit()
 	pass
-
+#Regla de sintaxis que maneja las variables flotantes metiendolas a la pilaOperandosDirMem y asignarle 
+#memoria
 def p_recibe_CTF(p):
 	''' recibe_CTF : CTF '''
 	print("VARCTE: ", p[1])
@@ -1256,7 +1255,7 @@ def p_recibe_CTF(p):
 	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(7)
 	pass
-
+#Regla que maneja las variables constantes y asigna memoria
 def p_recibe_CTI(p):
 	''' recibe_CTI : CTI 
 					| "-" CTI'''
@@ -1281,7 +1280,7 @@ def p_recibe_CTI(p):
 	pilaOperandos.append(1)
 	print pilaOperandosDirMem
 	pass
-
+#Regla que maneja true 
 def p_recibe_TRUE(p):
 	''' recibe_TRUE : TRUE '''
 	print("VARCTE: ", p[1])
@@ -1296,7 +1295,7 @@ def p_recibe_TRUE(p):
 	pilaOperandosDirMem.append(valormem)
 	pilaOperandos.append(8)
 	pass
-
+#Regla que maneja false
 def p_recibe_FALSE(p):
 	''' recibe_FALSE : FALSE '''
 	print("VARCTE: ", p[1])
@@ -1314,11 +1313,11 @@ def p_recibe_FALSE(p):
 	pilaOperandos.append(8)
 	pass
 
+#Regla que maneja los tipos de datos que se pueden declarar
 def p_tipo(p):
 	''' tipo : ENTERO 
 			 | DECIMAL 
 			 | BOOL
-			 | VOID 
 			 | CUADRADO 
 			 | RECTANGULO 
 			 | CIRCULO 
@@ -1339,20 +1338,19 @@ def p_tipo(p):
 		tipoActual = 5
 	elif(p[1] == "estrella"):
 		tipoActual = 6
-	elif(p[1] == "void"):
-		tipoActual = 9
 	elif(p[1] == "bool"):
 		tipoActual = 8
 	pass
-
+#Regla de sintaxis que maneja la opcion de mover a la tortuga.
 def p_mueve(p):
 	''' mueve : MUEVE guardarToken opcionMue '''
 	pass
-
+#Regla auxiliar con los componentes de la regla mover
 def p_opcionMue(p):
 	''' opcionMue : direccion recibe_CTI checarMover ";" '''
 	pass
-
+#Funcion que maneja las direcciones en las que se puede mover asignandoles su operador y 
+#metiendolos a la pila
 def p_direccion(p):
 	''' direccion : IZQUIERDA
 				| DERECHA
@@ -1369,7 +1367,7 @@ def p_direccion(p):
 	elif p[1] == "abajo":
 		pilaOperandos.append(28)
 	pass
-
+#Funcion que crea el cuadruplo de mover
 def p_checarMover(p):
 	''' checarMover : '''
 	global pilaOperadores
