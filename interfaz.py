@@ -29,7 +29,6 @@ def guardar():
 	texto = T.get("1.0",'end-1c')
 	with open(archivo2, "w") as f:	
 		f.writelines(texto)
-	yacc.run(archivo2)
 #Funcion mediante la cual se ejecuta la Maquina virtual
 def ejecutar():
 	os.system('python MaquinaVirtual.py')

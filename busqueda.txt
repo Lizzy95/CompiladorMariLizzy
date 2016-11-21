@@ -1,0 +1,33 @@
+inicio{
+	entero arr[10];
+	entero cont, cont1, temp, aux, buscar;
+
+	arr[0] = 23;
+	arr[1] = 2;
+	arr[2] = 63;
+	arr[3] = 3;
+	arr[4] = 56;
+	arr[5] = 4;
+	arr[6] = 1;
+	arr[7] = 7;
+	arr[8] = 8;
+	arr[9] = 5;
+	cont1 = 0;
+
+	cont = 0;
+	buscar = 36;
+	aux = 0;
+	while(cont < 10){
+		if(arr[cont] == buscar){
+			mostrar cont;
+			aux = cont;
+			cont = 10;
+		}
+		else{
+			aux = -1;
+		}
+		cont = cont + 1;
+	}
+	mostrar aux;
+}
+fin

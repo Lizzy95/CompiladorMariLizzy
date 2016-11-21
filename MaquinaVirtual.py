@@ -13,6 +13,7 @@ diccionarioGlobal = {}
 listaMemoria = []
 contCuadruplos = 0
 size = 100
+setup( width = 600, height = 600, startx = 650, starty = None)
 #Funcion que recibe la direccion de memoria de un entero y regresa su offset, asi como guarda
 #el tipo actual para poder accesar de forma rapida a el en memoria.
 def varEntero(variable):
