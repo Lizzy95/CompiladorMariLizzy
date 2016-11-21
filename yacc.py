@@ -1464,7 +1464,7 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 #yacc.yacc()
 
-# file = open("prueba4.txt", "r")
+# file = open("prueba3.txt", "r")
 # yacc.parse(file.read())
 # file.close()
 def run(filename):
