@@ -1,0 +1,26 @@
+func entero movertur(entero conti){
+	entero aux;
+	aux = conti;
+	while(aux > 0){
+		mueve izquierda 20;
+		mueve arriba 20;
+		mueve izquierda 20;
+		mueve arriba 20;
+		aux = aux -1;
+	}
+	return 0
+}
+inicio
+{
+	entero cont;
+	estrella est1;
+	circulo figu2;
+	cont = 10;
+	while(cont > 0){
+		dibujar(est1 (cont*10, cont/2) rosa);
+	 	cont = cont - 1;
+	}
+	movertur(10)
+}
+fin
+

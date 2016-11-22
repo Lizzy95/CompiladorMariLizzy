@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from turtle import *
 import ply.yacc as yacc
-import yacc
+
 from Tkinter import *
 import Tkinter,tkFileDialog
 import os
@@ -14,14 +14,14 @@ root.configure(bg = '#ffc0cb')
 
 #Funcion para compilar el programa
 def compilar():
-	#os.system('python yacc.py')
-	global nombrearchivo
-	print  nombrearchivo
-	yacc.run(archivo2)
+	guardarAux()
+	os.system('python yacc.py')
+	
 #Funcion que guarda lo ingresado en el area de texto en el archivo de texto que indique el usuario.
 def guardar():
 	global nombrearchivo
 	global archivo2
+	archivo2 = ""
 	file = tkFileDialog.asksaveasfile(mode='w', defaultextension=".txt")
 	nombrearchivo = file.name
 	(f1, archivo2) = os.path.split(nombrearchivo)
@@ -29,20 +29,30 @@ def guardar():
 	texto = T.get("1.0",'end-1c')
 	with open(archivo2, "w") as f:	
 		f.writelines(texto)
+#Funcion que guarda el programa en un archivo para que lo lea el yacc
+def guardarAux():
+	global nombrearchivo
+	global archivo2
+	print archivo2
+	texto = T.get("1.0",'end-1c')
+	with open("lectyacc.txt", "w") as f:	
+		f.writelines(texto)
 #Funcion mediante la cual se ejecuta la Maquina virtual
 def ejecutar():
 	os.system('python MaquinaVirtual.py')
 #Funcion que borra la pantalla de texto del programa 
 def borrarpantallatexto():
-	T.delete(1.0,END)
+	T.delete("1.0",'end-1c')
 #Funcion que carga el programa de un archivo de texto proporcionada por el usuario
 def cargar():
 	global archivo2
+	archivo2 = ""
+	T.delete("1.0",'end-1c')
 	nombrearchivo = tkFileDialog.askopenfile()
 	(f1, archivo2) = os.path.split(nombrearchivo.name)
 	print archivo2
 	if nombrearchivo:
-		T.delete(1.0,END)
+		T.delete("1.0",'end-1c')
 		with open(nombrearchivo.name) as archivoabierto:
 			for linea in archivoabierto:
 				T.insert(END, linea)
